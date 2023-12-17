@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recette Tarte poires amandines</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .recette {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ingredient {
+            margin-bottom: 10px;
+        }
+
+        /* Ajout de transitions de couleur au survol */
+        .ingredient:hover,
+        .etape:hover {
+            color: #e74c3c;
+            /* Changer la couleur selon vos préférences */
+            transition: color 0.3s ease;
+        }
+
+        .etapes {
+            margin-bottom: 10px;
+        }
+
+        .etape {
+            margin-bottom: 10px;
+        }
+
+        .image-recette {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .nutrition {
+            margin-top: 20px;
+        }
+
+        .etape {
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .etape:hover {
+            background-color: #f2f2f2;
+        }
+
+        /* Effet de changement d'opacité sur l'image */
+        .image-recette {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            transform: opacity 0.3s ease;
+        }
+
+        .image-recette:hover {
+            opacity: 0.7;
+        }
+
+        .bouton {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bouton:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+        /* Ajout d'une animation pour le lien "Retour à la page d'acceuil" */
+        .recette-acceuil {
+            display: inline-block;
+            font-size: 14px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px dashed transparent;
+            transition: border-bottom 0.3s ease;
+        }
+
+        .retour-acceuil:hover {
+            border-bottom: 1px dashed #333;
+        }
+
+        /* Styles pour le bouton "Recette suivante" */
+        .recette-suivante {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .recette-suivante a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0051a8;
+            /* Couleur de fond du bouton */
+            color: #fff;
+            /* Couleur du texte */
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .recette-suivante a:hover {
+            background-color: #003772;
+            /* Couleur de fond du bouton au survol */
+            transform: scale(1.05);
+        }
+
+        .difficulte {
+            color: orange;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Tarte poires amandines</h1>
+
+    </header>
+    <div class="recette">
+        <h2>Difficultée :</h2>
+        <p class="difficulte"><b>Moyenne</b></p>
+        <h2>Ingrédients :</h2>
+        <ul class="ingredient">
+            <li>Pâte feuilletée</li>
+            <li>100g de chocolat</li>
+            <li>Lait</li>
+            <li>125g d'amandes</li>
+            <li>100g de sucre</li>
+            <li>100g de beurre</li>
+            <li>2 oeufs</li>
+            <li>4 poires</li>
+            <li>1 sachet de sucre vanillé</li>
+        </ul>
+
+        <h2>Préparation :</h2>
+        <ol class="etapes">
+            <li class="etape">Préchaffer le four à 180°C.</li>
+            <li class="etape">Etaler la pâte feuilletée dans un plat et la piquer grâce à une fourchette.</li>
+            <li class="etape">Faire fondre le chocolat au micro-onde avec 3 c. à soupe de lait. (1 minute)</li>
+            <li class="etape">Mettre le chocolat fondu dans le fond de la pâte.</li>
+            <li class="etape">Faire fondre le beurre 30 sec au micro-onde</li>
+            <li class="etape">Mélanger les amandes, le sucre, le beurre ainsi que les oeufs.</li>
+            <li class="etape">Couler le mélange sur le chocolat de la pâte.</li>
+            <li class="etape">Découper en lamelle les poires puis poser sur la garniture.</li>
+            <li class="etape">Vider 1 sachet de sucre vanillé sur les poires.</li>
+            <li class="etape">Mettre la préparation au four à 180°C pendant 25 minutes.</li>
+
+            <p><b>Bon appétit !</b></p>
+
+        </ol>
+
+        <img src="poire amandine.jpg" alt="Poire amandine" class="image-recette">
+
+        <div class="nutrition">
+            <h2>Informations Nutritionnelles :</h2>
+            <p>Portion : 6 personnes</p>
+            <ul>
+                <li>Calories : 443</li>
+                <li>Protéines : 7 g</li>
+                <li>Glucides : 36 g</li>
+                <li>Lipides : 16.3 g</li>
+                <li>Fibres : 2 g</li>
+            </ul>
+        </div>
+    </div>
+    <div class="recette">
+        <a href="#" class="bouton">Imprimer la recette</a>
+    </div>
+    <a href="index.html" class="retour-acceuil">Retour à la page des recettes</a>
+    <div class="recette-suivante">
+        <a href="recetteSuivante.html">Prochaine recette en cours de dévelopement...💤</a>
+    </div>
+    
+</body>
+
+</html>
