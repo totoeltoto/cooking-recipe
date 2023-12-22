@@ -40,11 +40,69 @@
             background-color: #555;
             transform: scale(1.05);
         }
+
+        .recherche-container {
+            text-align: center;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .input-recherche {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .bouton-recherche {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .bouton-recherche:hover {
+            background-color: #555;
+        }
+
+        .suggestions {
+            position: absolute;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 323px;
+            border: 1px solid #333;
+            border-top: none;
+            border-radius: 5px;
+            background-color: #fff;
+            display: none;
+            left: 50%;
+            transform: translateX(-67.5%);
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #eee;
+        }
     </style>
 </head>
 
 <body>
     <h1>Liste des Recettes</h1>
+
+    <div class="recherche-container">
+        <input type="text" class="input-recherche" placeholder="Rechercher une recette..."
+            oninput="showSuggestions(event)">
+        <button class="bouton-recherche" onclick="searchRecipe()">Rechercher</button>
+        <ul class="suggestions" id="suggestion-list"></ul>
+    </div>
+
     <div class="liste-recettes">
         <li><a href="tomateMozza1.html" class="bouton-recette">Salade de tomate mozzarella</a></li>
         <li><a href="cookie2.html" class="bouton-recette">Cookie</a></li>
@@ -55,6 +113,59 @@
         <li><a href="recetteSuivante.html" class="bouton-recette">Recette en cours de développement... 💤</a></li>
         <!-- Ajoutez d'autres boutons pour chaque recette -->
     </div>
+
+    <script>
+        function showSuggestions() {
+            const input = document.querySelector('.input-recherche');
+            const suggestionsList = document.getElementById('suggestion-list');
+            const inputValue = input.value.toLowerCase().trim();
+            const recipes = document.querySelectorAll('.bouton-recette');
+
+            suggestionsList.innerHTML = '';
+
+            recipes.forEach(recipe => {
+                const recipeName = recipe.textContent.toLowerCase();
+                if (recipeName.includes(inputValue) && recipeName !== "recherche") {
+                    const suggestionItem = document.createElement('li');
+                    suggestionItem.classList.add('suggestion-item');
+                    suggestionItem.textContent = recipe.textContent;
+                    suggestionItem.addEventListener('click', () => {
+                        input.value = recipe.textContent;
+                        suggestionsList.style.display = 'none';
+                    });
+                    suggestionsList.appendChild(suggestionItem);
+                }
+            });
+
+            if (suggestionsList.children.length > 0) {
+                suggestionsList.style.display = 'block';
+            } else {
+                suggestionsList.style.display = 'none';
+            }
+        }
+
+        function searchRecipe() {
+            const input = document.querySelector('.input-recherche');
+            const inputValue = input.value.toLowerCase().trim();
+            const recipes = document.querySelectorAll('.bouton-recette');
+
+            recipes.forEach(recipe => {
+                const recipeName = recipe.textContent.toLowerCase();
+                if (recipeName === inputValue) {
+                    window.location.href = recipe.getAttribute('href');
+                }
+            });
+        }
+
+        document.addEventListener('click', function (event) {
+            const input = document.querySelector('.input-recherche');
+            const suggestionsList = document.getElementById('suggestion-list');
+
+            if (event.target !== input && !input.contains(event.target) && event.target !== suggestionsList && !suggestionsList.contains(event.target)) {
+                suggestionsList.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 
 </html>
