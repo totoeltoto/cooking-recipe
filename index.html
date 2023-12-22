@@ -115,6 +115,8 @@
     </div>
 
     <script>
+        let selectedSuggestionIndex = -1;
+
         function showSuggestions() {
             const input = document.querySelector('.input-recherche');
             const suggestionsList = document.getElementById('suggestion-list');
@@ -163,6 +165,44 @@
 
             if (event.target !== input && !input.contains(event.target) && event.target !== suggestionsList && !suggestionsList.contains(event.target)) {
                 suggestionsList.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            const suggestionsList = document.getElementById('suggestion-list');
+            const suggestionItems = document.querySelectorAll('.suggestion-item');
+
+            if (suggestionItems.length > 0) {
+                if (event.key === 'ArrowUp') {
+                    selectedSuggestionIndex = (selectedSuggestionIndex - 1 + suggestionItems.length) % suggestionItems.length;
+                } else if (event.key === 'ArrowDown') {
+                    selectedSuggestionIndex = (selectedSuggestionIndex + 1) % suggestionItems.length;
+                }
+
+                // Applique la classe 'selected' à la suggestion sélectionnée et met à jour la valeur de la barre de recherche
+                suggestionItems.forEach((item, index) => {
+                    if (index === selectedSuggestionIndex) {
+                        item.classList.add('selected');
+                        document.querySelector('.input-recherche').value = item.textContent;
+                    } else {
+                        item.classList.remove('selected');
+                    }
+                });
+            }
+        });
+
+        // Ajoutez cet écouteur d'événements pour la touche "Enter" sur le champ de recherche
+        document.querySelector('.input-recherche').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                const inputValue = this.value.toLowerCase().trim();
+                const recipes = document.querySelectorAll('.bouton-recette');
+
+                recipes.forEach(recipe => {
+                    const recipeName = recipe.textContent.toLowerCase();
+                    if (recipeName === inputValue) {
+                        window.location.href = recipe.getAttribute('href');
+                    }
+                });
             }
         });
     </script>
