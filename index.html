@@ -172,20 +172,14 @@
         });
 
         document.addEventListener('keydown', function (event) {
+            const suggestionsList = document.getElementById('suggestion-list');
             const suggestionItems = document.querySelectorAll('.suggestion-item');
 
             if (suggestionItems.length > 0) {
-                if (event.key === 'ArrowUp' && selectedSuggestionIndex > 0) {
-                    selectedSuggestionIndex--;
-                } else if (event.key === 'ArrowDown' && selectedSuggestionIndex < suggestionItems.length - 1) {
-                    selectedSuggestionIndex++;
-                } else if (event.key === 'Enter') {
-                    // Navigue vers la page correspondante si une suggestion est sélectionnée
-                    if (selectedSuggestionIndex !== -1) {
-                        const selectedSuggestion = suggestionItems[selectedSuggestionIndex];
-                        document.querySelector('.input-recherche').value = selectedSuggestion.textContent;
-                        window.location.href = selectedSuggestion.getAttribute('data-href');
-                    }
+                if (event.key === 'ArrowUp') {
+                    selectedSuggestionIndex = (selectedSuggestionIndex - 1 + suggestionItems.length) % suggestionItems.length;
+                } else if (event.key === 'ArrowDown') {
+                    selectedSuggestionIndex = (selectedSuggestionIndex + 1) % suggestionItems.length;
                 }
 
                 // Applique la classe 'selected' à la suggestion sélectionnée et met à jour la valeur de la barre de recherche
@@ -201,10 +195,7 @@
         });
 
         // Ajoutez cet écouteur d'événements pour la touche "Enter" sur le champ de recherche
-        document.querySelector('.input-recherche').addEventListener('input', function () {
-            const inputValue = this.value.toLowerCase().trim();
-            const recipes = document.querySelectorAll('.bouton-recette');
-            const suggestionList = document.getElementById('suggestion-list');
+        document.querySelector('.input-recherche').addEventListener('keydown', function (event) {
             if (event.key === 'Enter') {
                 const inputValue = this.value.toLowerCase().trim();
                 const recipes = document.querySelectorAll('.bouton-recette');
@@ -215,12 +206,6 @@
                         window.location.href = recipe.getAttribute('href');
                     }
                 });
-            }
-        });
-
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Shift') {
-                selectedSuggestionIndex = -1;
             }
         });
     </script>

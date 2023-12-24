@@ -129,6 +129,37 @@
         .difficulte {
             color: green;
         }
+
+        /* Créer des notes en étoiles */
+        .etoiles {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .etoile {
+            color: #ddd;
+            transition: color 0.3s ease;
+        }
+
+        .etoile.notee {
+            color: #ffcc00;
+        }
+
+        .notation {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Espace commentaire */
+        .commentaire {
+            width: 50%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            /* Permet à l'utilisateur de redimensionner verticalement */
+        }
     </style>
 </head>
 
@@ -174,6 +205,19 @@
             </ul>
         </div>
     </div>
+
+    <div class="notation">
+        <p>Noter la recette :</p>
+        <div class="etoiles" onclick="noterRecette(event)">
+            <span class="etoile" data-valeur="1">&#9733;</span>
+            <span class="etoile" data-valeur="2">&#9733;</span>
+            <span class="etoile" data-valeur="3">&#9733;</span>
+            <span class="etoile" data-valeur="4">&#9733;</span>
+            <span class="etoile" data-valeur="5">&#9733;</span>
+        </div>
+        <textarea class="commentaire" placeholder="Ajouter un commentaire..."></textarea>
+    </div>
+
     <div class="recette">
         <a href="index.html" class="bouton">Retour à la page d'acceuil</a>
     </div>
@@ -181,6 +225,29 @@
         <a href="index.html">Page d'acceuil 👨‍🍳</a>
         <a href="cookie2.html">Recette suivante ➡️</a>
     </div>
+
+    <script>
+
+        function noterRecette(event) {
+            const etoiles = document.querySelectorAll('.etoile');
+            const notationContainer = document.querySelector('.notation');
+            const valeurNotation = event.target.getAttribute('data-valeur');
+
+            etoiles.forEach(etoile => {
+                etoile.classList.remove('notee');
+            });
+
+            for (let i = 0; i < valeurNotation; i++) {
+                etoiles[i].classList.add('notee');
+            }
+
+            // Récupérer le commentaire
+            const commentaire = document.querySelector('.commentaire').value;
+            console.log('Commentaire:', commentaire);
+
+            // Vous pouvez envoyer le commentaire à un serveur ici pour le sauvegarder, ou le stocker localement.
+        }
+    </script>
 </body>
 
 </html>
