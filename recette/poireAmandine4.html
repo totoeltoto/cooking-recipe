@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/difficultée/moyen.css">
+    <title>Recette Tarte poires amandines</title>
+</head>
+
+<body>
+    <header>
+        <h1>Tarte poires amandines</h1>
+
+    </header>
+    <div class="recette">
+        <h2>Difficultée :</h2>
+        <p class="difficulte"><b>Moyenne</b></p>
+        <h2>Ingrédients :</h2>
+        <ul class="ingredient">
+            <li>Pâte feuilletée</li>
+            <li>100g de chocolat</li>
+            <li>Lait</li>
+            <li>125g d'amandes</li>
+            <li>100g de sucre</li>
+            <li>100g de beurre</li>
+            <li>2 oeufs</li>
+            <li>4 poires</li>
+            <li>1 sachet de sucre vanillé</li>
+        </ul>
+
+        <h2>Préparation :</h2>
+        <ol class="etapes">
+            <li class="etape">Préchaffer le four à 180°C.</li>
+            <li class="etape">Etaler la pâte feuilletée dans un plat et la piquer grâce à une fourchette.</li>
+            <li class="etape">Faire fondre le chocolat au micro-onde avec 3 c. à soupe de lait. (1 minute)</li>
+            <li class="etape">Mettre le chocolat fondu dans le fond de la pâte.</li>
+            <li class="etape">Faire fondre le beurre 30 sec au micro-onde</li>
+            <li class="etape">Mélanger les amandes, le sucre, le beurre ainsi que les oeufs.</li>
+            <li class="etape">Couler le mélange sur le chocolat de la pâte.</li>
+            <li class="etape">Découper en lamelle les poires puis poser sur la garniture.</li>
+            <li class="etape">Vider 1 sachet de sucre vanillé sur les poires.</li>
+            <li class="etape">Mettre la préparation au four à 180°C pendant 25 minutes.</li>
+
+            <p><b>Bon appétit !</b></p>
+
+        </ol>
+
+        <img src="/images/poirAmandine.jpg" alt="Poire amandine" class="image-recette">
+
+        <div class="nutrition">
+            <h2>Informations Nutritionnelles :</h2>
+            <p>Portion : 6 personnes</p>
+            <ul>
+                <li>Calories : 443</li>
+                <li>Protéines : 7 g</li>
+                <li>Glucides : 36 g</li>
+                <li>Lipides : 16.3 g</li>
+                <li>Fibres : 2 g</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="notation">
+        <p>Noter la recette :</p>
+        <div class="etoiles" onclick="noterRecette(event)">
+            <span class="etoile" data-valeur="1">&#9733;</span>
+            <span class="etoile" data-valeur="2">&#9733;</span>
+            <span class="etoile" data-valeur="3">&#9733;</span>
+            <span class="etoile" data-valeur="4">&#9733;</span>
+            <span class="etoile" data-valeur="5">&#9733;</span>
+        </div>
+        <textarea class="commentaire" placeholder="Ajouter un commentaire..."></textarea>
+    </div>
+
+    <div class="recette">
+        <a href="/index.html" class="bouton">Retour à la page d'acceuil</a>
+    </div>
+    <div class="recette-suivante">
+        <a href="tarteChocolat3.html">⬅️ Recette précédente</a>
+        <a href="buche5.html">Recette suivante ➡️</a>
+    </div>
+
+    <script>
+        function noterRecette(event) {
+            const etoiles = document.querySelectorAll('.etoile');
+            const notationContainer = document.querySelector('.notation');
+            const valeurNotation = event.target.getAttribute('data-valeur');
+
+            etoiles.forEach(etoile => {
+                etoile.classList.remove('notee');
+            });
+
+            for (let i = 0; i < valeurNotation; i++) {
+                etoiles[i].classList.add('notee');
+            }
+
+            // Récupérer le commentaire
+            const commentaire = document.querySelector('.commentaire').value;
+            console.log('Commentaire:', commentaire);
+
+            // Vous pouvez envoyer le commentaire à un serveur ici pour le sauvegarder, ou le stocker localement.
+        }
+    </script>
+</body>
+
+</html>
