@@ -5,47 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="facile.css">
-    <title>Recette de cookies</title>
+    <title>Recette de Salade de Tomates et Mozzarella</title>
 </head>
 
 <body>
     <header>
-        <h1>Cookie</h1>
-
+        <h1>Salade de Tomates et Mozzarella</h1>
     </header>
     <div class="recette">
         <h2>Difficultée :</h2>
         <p class="difficulte"><b>Facile</b></p>
         <h2>Ingrédients :</h2>
         <ul class="ingredient">
-            <li>106.5g de beurre tendre</li>
-            <li>106.5g de sucre</li>
-            <li>Vanille ou 1 sachet de sucre vanillé</li>
-            <li>187.5g de farine</li>
-            <li>125g de chocolat noir</li>
-            <li>1.5 cuillère à soupe de sel</li>
-            <li>1.5 cuillère à soupe de levure chimique</li>
-            <li>1.5 oeuf</li>
+            <li>3 tomates mûres</li>
+            <li>1 boule de mozzarella</li>
+            <li>Feuilles de basilic frais</li>
+            <li>2 cuillères à soupe d'huile d'olive</li>
+            <li>1 cuillère à soupe de vinaigre balsamique</li>
+            <li>Sel et poivre au goût</li>
         </ul>
 
         <h2>Préparation :</h2>
         <ol class="etapes">
-            <li class="etape">Détailler le chacolat en pépites.</li>
-            <li class="etape">Préchauffer le four à 180°C (thermostat 6). Dans un saladier, mettre 75g de beurre, le
-                sucre, l'oeuf entier, la vanille et mélanger le tout avec une cuillère en bois.</li>
-            <li class="etape">Ajouter petit à petit la farine mélangée à la levure, le sel et le chocolat.</li>
-            <li class="etape">Avec une feuille de papier essuie-tout, beurrer une plaque allant au four et former les
-                cookies sur la pkaque.</li>
-            <li class="etape">Pour former les cookies, utiliser 2 cuillères à soupe et faire des petits tas espacés les
-                uns des autres; ils grandiront à la cuisson.</li>
-            <li class="etape">Enfourner pour 10 minutes de cuisson.</li>
+            <li class="etape">Lavez les tomates et coupez-les en tranches.</li>
+            <li class="etape">Coupez la mozzarella en tranches.</li>
+            <li class="etape">Disposez les tranches de tomates et de mozzarella sur une assiette en alternance.</li>
+            <li class="etape">Répartissez les feuilles de basilic frais sur le dessus.</li>
+            <li class="etape">Dans un petit bol, mélangez l'huile d'olive, le vinaigre balsamique, le sel et le poivre.
+                Versez cette vinaigrette sur la salade.</li>
+            <li class="etape">Servez immédiatement et dégustez !</li>
         </ol>
 
-        <img src="cookie.jpg" alt="Cookie" class="image-recette">
+        <img src="salade.jpg" alt="Salade de Tomates et Mozzarella" class="image-recette">
 
         <div class="nutrition">
             <h2>Informations Nutritionnelles :</h2>
-            <p>Portion : 5 personnes</p>
+            <p>Portion : 1 assiette</p>
             <ul>
                 <li>Calories : 250</li>
                 <li>Protéines : 12 g</li>
@@ -72,11 +67,12 @@
         <a href="index.html" class="bouton">Retour à la page d'acceuil</a>
     </div>
     <div class="recette-suivante">
-        <a href="tomateMozza1.html">⬅️ Recette précédente</a>
-        <a href="tarteChocolat3.html">Recette suivante ➡️</a>
+        <a href="index.html">Page d'acceuil 👨‍🍳</a>
+        <a href="2cookie.html">Recette suivante ➡️</a>
     </div>
 
     <script>
+
         function noterRecette(event) {
             const etoiles = document.querySelectorAll('.etoile');
             const notationContainer = document.querySelector('.notation');
