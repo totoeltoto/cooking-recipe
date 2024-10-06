@@ -1,246 +1,336 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Liste des Recettes</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+      }
 
-        h1 {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-            color: #fff;
-        }
+      h1 {
+        text-align: center;
+        padding: 20px;
+        background-color: #333;
+        color: #fff;
+      }
 
-        .liste-recettes {
-            text-align: center;
-            margin: 20px auto;
-        }
+      .liste-recettes {
+        text-align: center;
+        margin: 20px auto;
+      }
 
-        .bouton-recette {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            background-color: #333;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
+      .recette-container {
+        position: relative;
+        display: inline-block;
+        margin: 10px;
+      }
 
-        .bouton-recette:hover {
-            background-color: #555;
-            transform: scale(1.05);
-        }
+      .recette-container img {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
 
-        .recherche-container {
-            text-align: center;
-            margin: 20px auto;
-            position: relative;
-        }
+      .bouton-recette {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 10px 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
 
-        .input-recherche {
-            padding: 10px;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
+      .bouton-recette:hover {
+        background-color: rgba(0, 0, 0, 0.9);
+        transform: scale(1.05);
+      }
 
-        .bouton-recherche {
-            padding: 10px 20px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      .recherche-container {
+        text-align: center;
+        margin: 20px auto;
+        position: relative;
+      }
 
-        .bouton-recherche:hover {
-            background-color: #555;
-        }
+      .input-recherche {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
 
-        .suggestions {
-            position: absolute;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            width: 323px;
-            border: 1px solid #333;
-            border-top: none;
-            border-radius: 5px;
-            background-color: #fff;
-            display: none;
-            left: 50%;
-            transform: translateX(-67.5%);
-        }
+      .bouton-recherche {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-        .suggestion-item {
-            padding: 10px;
-            cursor: pointer;
-        }
+      .bouton-recherche:hover {
+        background-color: #555;
+      }
 
-        .suggestion-item:hover {
-            background-color: #eee;
-        }
+      .suggestions {
+        position: absolute;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 323px;
+        border: 1px solid #333;
+        border-top: none;
+        border-radius: 5px;
+        background-color: #fff;
+        display: none;
+        left: 50%;
+        transform: translateX(-67.5%);
+      }
 
-        .reseaux-sociaux {
-            margin-top: 20px;
-            /* Ajustez la marge selon vos besoins */
-            text-align: center;
-        }
+      .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+      }
 
-        .reseaux-sociaux a {
-            display: inline-block;
-            margin: 0 10px;
-            /* Ajustez la marge entre les icônes selon vos besoins */
-            transition: transform 0.3s ease;
-            /* Ajoute une transition d'animation au survol */
-        }
+      .suggestion-item:hover {
+        background-color: #eee;
+      }
 
-        .reseaux-sociaux a:hover {
-            transform: scale(1.2);
-            /* Ajustez la mise à l'échelle au survol selon vos besoins */
-        }
+      .reseaux-sociaux {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .reseaux-sociaux a {
+        display: inline-block;
+        margin: 0 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .reseaux-sociaux a:hover {
+        transform: scale(1.2);
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Liste des Recettes</h1>
 
     <div class="recherche-container">
-        <input type="text" class="input-recherche" placeholder="Rechercher une recette..."
-            oninput="showSuggestions(event)">
-        <button class="bouton-recherche" onclick="searchRecipe()">Rechercher</button>
-        <ul class="suggestions" id="suggestion-list"></ul>
+      <input
+        type="text"
+        class="input-recherche"
+        placeholder="Rechercher une recette..."
+        oninput="showSuggestions(event)"
+      />
+      <button class="bouton-recherche" onclick="searchRecipe()">
+        Rechercher
+      </button>
+      <ul class="suggestions" id="suggestion-list"></ul>
     </div>
 
     <div class="liste-recettes">
-        <li><a href="1tomateMozza.html" class="bouton-recette">Salade de tomate mozzarella</a></li>
-        <li><a href="2cookie.html" class="bouton-recette">Cookie</a></li>
-        <li><a href="3tarteChocolat.html" class="bouton-recette">Tarte au chocolat</a></li>
-        <li><a href="4poireAmandine.html" class="bouton-recette">Tarte poires amandines</a></li>
-        <li><a href="5buche.html" class="bouton-recette">Buche de Noël 🎅</a></li>
-        <li><a href="6pancakes.html" class="bouton-recette">Pancakes</a></li>
-        <li><a href="7stJaques.html" class="bouton-recette">Noix de St Jaques à la crème</a></li>
-        <li><a href="8petitsFinaciers.html" class="bouton-recette">Petits Financiers</a></li>
-        <li><a href="9briocheEtoile.html" class="bouton-recette">Brioche étoilée à la pâte à tartiner</a></li>
-        <li><a href="10tartiflette.html" class="bouton-recette">Tartiflette</a></li>
-        <li><a href="11galetteDesRois.html" class="bouton-recette">Galette des Rois</a></li>
-        <li><a href="12brioche.html" class="bouton-recette">Brioche</a></li>
-        <li><a href="recetteSuivante.html" class="bouton-recette">Recette en cours de développement... 💤</a></li>
-        <!-- Ajoutez d'autres boutons pour chaque recette -->
+      <div class="recette-container">
+        <img src="tomateMozza.jpg" alt="Salade de tomate mozzarella" />
+        <a href="1tomateMozza.html" class="bouton-recette"
+          >Salade de tomate mozzarella</a
+        >
+      </div>
+      <div class="recette-container">
+        <img src="cookie.jpg" alt="Cookie" />
+        <a href="2cookie.html" class="bouton-recette">Cookie</a>
+      </div>
+      <div class="recette-container">
+        <img src="tarteChocolat.jpg" alt="Tarte au chocolat" />
+        <a href="3tarteChocolat.html" class="bouton-recette"
+          >Tarte au chocolat</a
+        >
+      </div>
+      <div class="recette-container">
+        <img src="poirAmandine.jpg" alt="Tarte poires amandines" />
+        <a href="4poireAmandine.html" class="bouton-recette"
+          >Tarte poires amandines</a
+        >
+      </div>
+      <div class="recette-container">
+        <img src="buche.jpg" alt="Buche de Noël" />
+        <a href="5buche.html" class="bouton-recette">Buche de Noël 🎅</a>
+      </div>
+      <div class="recette-container">
+        <img src="pancakes.jpg" alt="Pancakes" />
+        <a href="6pancakes.html" class="bouton-recette">Pancakes</a>
+      </div>
+      <div class="recette-container">
+        <img src="stJaques.jpg" alt="Noix de St Jaques à la crème" />
+        <a href="7stJaques.html" class="bouton-recette"
+          >Noix de St Jaques à la crème</a
+        >
+      </div>
+      <div class="recette-container">
+        <img src="petitsFinanciers.jpg" alt="Petits Financiers" />
+        <a href="8petitsFinaciers.html" class="bouton-recette"
+          >Petits Financiers</a
+        >
+      </div>
+      <div class="recette-container">
+        <img
+          src="briocheEtoile.jpg"
+          alt="Brioche étoilée à la pâte à tartiner"
+        />
+        <a href="9briocheEtoile.html" class="bouton-recette"
+          >Brioche étoilée à la pâte à tartiner</a
+        >
+      </div>
+      <div class="recette-container">
+        <img src="Tartiflette.jpg" alt="Tartiflette" />
+        <a href="10tartiflette.html" class="bouton-recette">Tartiflette</a>
+      </div>
+      <div class="recette-container">
+        <img src="galette.jpg" alt="Galette des Rois" />
+        <a href="11galetteDesRois.html" class="bouton-recette"
+          >Galette des Rois</a
+        >
+      </div>
+      <div class="recette-container">
+        <img src="brioche.jpg" alt="Brioche" />
+        <a href="12brioche.html" class="bouton-recette">Brioche</a>
+      </div>
+      <div class="recette-container">
+        <img src="gratinButternut.jpg" alt="Gratin de Butternut" />
+        <a href="13gratinButternut.html" class="bouton-recette"
+          >Gratin de Butternut</a
+        >
+      </div>
+      <div class="recette-container">
+        <img
+          src="recetteSuivante.jpg"
+          alt="Recette en cours de développement"
+        />
+        <a href="recetteSuivante.html" class="bouton-recette"
+          >Recette en cours de développement... 💤</a
+        >
+      </div>
     </div>
 
     <div class="reseaux-sociaux">
-        <a href="https://www.twitch.tv/shootix__" target="_blank">
-            <img src="Twitch.png" alt="Twitch" width="30" height="30">
-        </a>
-        <a href="https://www.instagram.com/theo_nbs" target="_blank">
-            <img src="Instagram.png" alt="Instagram" width="30" height="30">
-        </a>
+      <a href="https://www.twitch.tv/shootix__" target="_blank">
+        <img src="Twitch.png" alt="Twitch" width="30" height="30" />
+      </a>
+      <a href="https://www.instagram.com/theo_nbs" target="_blank">
+        <img src="Instagram.png" alt="Instagram" width="30" height="30" />
+      </a>
     </div>
 
     <script>
-        let selectedSuggestionIndex = -1;
+      let selectedSuggestionIndex = -1;
 
-        function showSuggestions() {
-            const input = document.querySelector('.input-recherche');
-            const suggestionsList = document.getElementById('suggestion-list');
-            const inputValue = input.value.toLowerCase().trim();
-            const recipes = document.querySelectorAll('.bouton-recette');
+      function showSuggestions() {
+        const input = document.querySelector(".input-recherche");
+        const suggestionsList = document.getElementById("suggestion-list");
+        const inputValue = input.value.toLowerCase().trim();
+        const recipes = document.querySelectorAll(".bouton-recette");
 
-            suggestionsList.innerHTML = '';
+        suggestionsList.innerHTML = "";
 
-            recipes.forEach(recipe => {
-                const recipeName = recipe.textContent.toLowerCase();
-                if (recipeName.includes(inputValue) && recipeName !== "recherche") {
-                    const suggestionItem = document.createElement('li');
-                    suggestionItem.classList.add('suggestion-item');
-                    suggestionItem.textContent = recipe.textContent;
-                    suggestionItem.addEventListener('click', () => {
-                        input.value = recipe.textContent;
-                        suggestionsList.style.display = 'none';
-                    });
-                    suggestionsList.appendChild(suggestionItem);
-                }
+        recipes.forEach((recipe) => {
+          const recipeName = recipe.textContent.toLowerCase();
+          if (recipeName.includes(inputValue) && recipeName !== "recherche") {
+            const suggestionItem = document.createElement("li");
+            suggestionItem.classList.add("suggestion-item");
+            suggestionItem.textContent = recipe.textContent;
+            suggestionItem.addEventListener("click", () => {
+              input.value = recipe.textContent;
+              suggestionsList.style.display = "none";
             });
+            suggestionsList.appendChild(suggestionItem);
+          }
+        });
 
-            if (suggestionsList.children.length > 0) {
-                suggestionsList.style.display = 'block';
+        if (suggestionsList.children.length > 0) {
+          suggestionsList.style.display = "block";
+        } else {
+          suggestionsList.style.display = "none";
+        }
+      }
+
+      function searchRecipe() {
+        const input = document.querySelector(".input-recherche");
+        const inputValue = input.value.toLowerCase().trim();
+        const recipes = document.querySelectorAll(".bouton-recette");
+
+        recipes.forEach((recipe) => {
+          const recipeName = recipe.textContent.toLowerCase();
+          if (recipeName === inputValue) {
+            window.location.href = recipe.getAttribute("href");
+          }
+        });
+      }
+
+      document.addEventListener("click", function (event) {
+        const input = document.querySelector(".input-recherche");
+        const suggestionsList = document.getElementById("suggestion-list");
+
+        if (
+          event.target !== input &&
+          !input.contains(event.target) &&
+          event.target !== suggestionsList &&
+          !suggestionsList.contains(event.target)
+        ) {
+          suggestionsList.style.display = "none";
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        const suggestionsList = document.getElementById("suggestion-list");
+        const suggestionItems = document.querySelectorAll(".suggestion-item");
+
+        if (suggestionItems.length > 0) {
+          if (event.key === "ArrowUp") {
+            selectedSuggestionIndex =
+              (selectedSuggestionIndex - 1 + suggestionItems.length) %
+              suggestionItems.length;
+          } else if (event.key === "ArrowDown") {
+            selectedSuggestionIndex =
+              (selectedSuggestionIndex + 1) % suggestionItems.length;
+          }
+
+          suggestionItems.forEach((item, index) => {
+            if (index === selectedSuggestionIndex) {
+              item.classList.add("selected");
+              document.querySelector(".input-recherche").value =
+                item.textContent;
             } else {
-                suggestionsList.style.display = 'none';
+              item.classList.remove("selected");
             }
+          });
         }
+      });
 
-        function searchRecipe() {
-            const input = document.querySelector('.input-recherche');
-            const inputValue = input.value.toLowerCase().trim();
-            const recipes = document.querySelectorAll('.bouton-recette');
+      document
+        .querySelector(".input-recherche")
+        .addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            const inputValue = this.value.toLowerCase().trim();
+            const recipes = document.querySelectorAll(".bouton-recette");
 
-            recipes.forEach(recipe => {
-                const recipeName = recipe.textContent.toLowerCase();
-                if (recipeName === inputValue) {
-                    window.location.href = recipe.getAttribute('href');
-                }
+            recipes.forEach((recipe) => {
+              const recipeName = recipe.textContent.toLowerCase();
+              if (recipeName === inputValue) {
+                window.location.href = recipe.getAttribute("href");
+              }
             });
-        }
-
-        document.addEventListener('click', function (event) {
-            const input = document.querySelector('.input-recherche');
-            const suggestionsList = document.getElementById('suggestion-list');
-
-            if (event.target !== input && !input.contains(event.target) && event.target !== suggestionsList && !suggestionsList.contains(event.target)) {
-                suggestionsList.style.display = 'none';
-            }
-        });
-
-        document.addEventListener('keydown', function (event) {
-            const suggestionsList = document.getElementById('suggestion-list');
-            const suggestionItems = document.querySelectorAll('.suggestion-item');
-
-            if (suggestionItems.length > 0) {
-                if (event.key === 'ArrowUp') {
-                    selectedSuggestionIndex = (selectedSuggestionIndex - 1 + suggestionItems.length) % suggestionItems.length;
-                } else if (event.key === 'ArrowDown') {
-                    selectedSuggestionIndex = (selectedSuggestionIndex + 1) % suggestionItems.length;
-                }
-
-                // Applique la classe 'selected' à la suggestion sélectionnée et met à jour la valeur de la barre de recherche
-                suggestionItems.forEach((item, index) => {
-                    if (index === selectedSuggestionIndex) {
-                        item.classList.add('selected');
-                        document.querySelector('.input-recherche').value = item.textContent;
-                    } else {
-                        item.classList.remove('selected');
-                    }
-                });
-            }
-        });
-
-        // Ajoutez cet écouteur d'événements pour la touche "Enter" sur le champ de recherche
-        document.querySelector('.input-recherche').addEventListener('keydown', function (event) {
-            if (event.key === 'Enter') {
-                const inputValue = this.value.toLowerCase().trim();
-                const recipes = document.querySelectorAll('.bouton-recette');
-
-                recipes.forEach(recipe => {
-                    const recipeName = recipe.textContent.toLowerCase();
-                    if (recipeName === inputValue) {
-                        window.location.href = recipe.getAttribute('href');
-                    }
-                });
-            }
+          }
         });
     </script>
-</body>
-
+  </body>
 </html>
