@@ -31,6 +31,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             margin-bottom: 10px;
+            overflow: hidden; /* Pour masquer le contenu en dehors */
         }
 
         .accordion-header {
@@ -49,10 +50,17 @@
 
         .accordion-content {
             padding: 10px;
-            display: none; /* Caché par défaut */
             border: 1px solid #ccc;
             border-radius: 0 0 5px 5px;
             background-color: #fff;
+            max-height: 0; /* Initialement, la hauteur maximale est zéro */
+            overflow: hidden; /* Pour masquer le contenu lors de l'affichage */
+            transition: max-height 0.5s ease, padding 0.5s ease; /* Animation de glissement */
+        }
+
+        .accordion-content.show {
+            max-height: 500px; /* Ajustez la valeur pour s'adapter au contenu */
+            padding: 10px; /* Restaure le padding lors de l'affichage */
         }
 
         .recette-container {
@@ -154,8 +162,22 @@
             header.addEventListener('click', function () {
                 const content = this.nextElementSibling;
 
-                // Toggle visibility
-                content.style.display = content.style.display === "block" ? "none" : "block";
+                // Toggle visibility avec animation
+                if (content.classList.contains('show')) {
+                    content.classList.remove('show');
+                    content.style.maxHeight = 0; // Réinitialiser la hauteur maximale
+                    content.style.padding = 0; // Réinitialiser le padding
+                } else {
+                    // Fermez les autres sections
+                    document.querySelectorAll('.accordion-content').forEach(otherContent => {
+                        otherContent.classList.remove('show');
+                        otherContent.style.maxHeight = 0; // Réinitialiser la hauteur maximale des autres
+                        otherContent.style.padding = 0; // Réinitialiser le padding
+                    });
+                    content.classList.add('show');
+                    content.style.maxHeight = content.scrollHeight + "px"; // Ajuste la hauteur en fonction du contenu
+                    content.style.padding = "10px"; // Restaure le padding lors de l'affichage
+                }
             });
         });
     </script>
