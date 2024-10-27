@@ -1,166 +1,229 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Liste des Recettes</title>
     <style>
-      :root {
-        --background-color: #f5f5f5;
-        --text-color: #333;
-        --header-background: #333;
-        --header-text-color: #fff;
-      }
+        :root {
+            --background-color: #f5f5f5;
+            --text-color: #333;
+            --header-background: #333;
+            --header-text-color: #fff;
+        }
 
-      body.dark-mode {
-        --background-color: #333;
-        --text-color: #000000;
-        --header-background: #222;
-        --header-text-color: #fff;
-      }
+        body.dark-mode {
+            --background-color: #333;
+            --text-color: #fff;
+            --header-background: #222;
+            --header-text-color: #fff;
+        }
 
-      body {
-        font-family: Arial, sans-serif;
-        background-color: var(--background-color);
-        color: var(--text-color);
-        margin: 0;
-        padding: 0;
-        transition: background-color 0.3s, color 0.3s;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-      h1 {
-        text-align: center;
-        padding: 20px;
-        background-color: var(--header-background);
-        color: var(--header-text-color);
-      }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--header-background);
+            color: var(--header-text-color);
+        }
 
-      /* Centered Logo Styles */
-      .logo-container {
-        text-align: center;
-        margin: 20px 0;
-      }
+        .logo-container {
+            text-align: center;
+            margin: 20px 0;
+        }
 
-      .logo {
-        max-width: 200px;
-        height: auto;
-        transition: transform 0.3s ease, filter 0.3s ease;
-        cursor: pointer;
-      }
+        .logo {
+            max-width: 200px;
+            height: auto;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            cursor: pointer;
+        }
 
-      .logo:hover {
-        transform: scale(1.1);
-        filter: brightness(1.1);
-      }
+        .logo:hover {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+        }
 
-      /* Theme Toggle Button */
-      .theme-toggle {
-        position: fixed;
-        top: 25px;
-        right: 20px;
-        background-color: var(--header-background);
-        color: var(--header-text-color);
-        border: none;
-        padding: 10px;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 20px;
-        transition: background-color 0.3s;
-      }
+        .theme-toggle {
+            position: fixed;
+            top: 25px;
+            right: 20px;
+            background-color: var(--header-background);
+            color: var(--header-text-color);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s;
+        }
 
-      /* Shopping List Button */
-      .shopping-list-button {
-        position: fixed;
-        top: 25px;
-        right: 80px; /* Espace de séparation avec le bouton thème */
-        background-color: var(--header-background);
-        color: var(--header-text-color);
-        border: none;
-        padding: 10px;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 20px;
-        transition: background-color 0.3s;
-      }
+        .shopping-list-button {
+            position: fixed;
+            top: 25px;
+            right: 80px;
+            background-color: var(--header-background);
+            color: var(--header-text-color);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s;
+        }
 
-      .section {
-        margin: 20px auto;
-        width: 80%;
-        max-width: 800px;
-      }
+        .search-container {
+            margin: 20px auto;
+            text-align: center;
+        }
 
-      .accordion {
-        background-color: #eee;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        margin-bottom: 10px;
-      }
+        .search-input {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-      .accordion-header {
-        padding: 15px;
-        cursor: pointer;
-        background-color: #ddd;
-        text-align: left;
-        font-weight: bold;
-        border-radius: 5px 5px 0 0;
-        transition: background-color 0.3s ease;
-      }
+        .section {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 800px;
+        }
 
-      .accordion-header:hover {
-        background-color: #ccc;
-      }
+        .accordion {
+            background-color: #eee;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
 
-      .accordion-content {
-        padding: 10px;
-        display: none;
-        border: 1px solid #ccc;
-        border-radius: 0 0 5px 5px;
-        background-color: #fff;
-      }
+        .accordion-header {
+            padding: 15px;
+            cursor: pointer;
+            background-color: #ddd;
+            text-align: left;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            transition: background-color 0.3s ease;
+        }
 
-      .recette-container {
-        position: relative;
-        display: inline-block;
-        margin: 10px;
-      }
+        .accordion-header:hover {
+            background-color: #ccc;
+        }
 
-      .recette-container img {
-        width: 300px;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 10px;
-      }
+        .accordion-content {
+            padding: 10px;
+            display: none;
+            border: 1px solid #ccc;
+            border-radius: 0 0 5px 5px;
+            background-color: #fff;
+        }
 
-      .bouton-recette {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 10px 20px;
-        background-color: rgba(0, 0, 0, 0.7);
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.2s ease, transform 0.2s ease;
-      }
+        .accordion-content.show {
+            display: block;
+        }
 
-      .bouton-recette:hover {
-        background-color: rgba(0, 0, 0, 0.85);
-        transform: translate(-50%, -48%) scale(1.03);
-      }
+        .recette-container {
+            position: relative;
+            display: inline-block;
+            margin: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .recette-container:hover {
+            transform: scale(1.05);
+        }
+
+        .recette-container img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .bouton-recette {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .bouton-recette:hover {
+            background-color: rgba(0, 0, 0, 0.85);
+            transform: translate(-50%, -48%) scale(1.03);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popular-recipes {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .popular-recipes h2 {
+            text-align: center;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
-    <!-- Centered Logo Section -->
+<body>
     <div class="logo-container">
-      <img src="logo.png" alt="Logo du site" class="logo" />
+        <img src="logo.png" alt="Logo du site" class="logo" />
     </div>
 
     <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-    <button class="shopping-list-button" onclick="window.location.href='liste_courses.html'">🛒</button> <!-- Bouton ajouté -->
+    <button class="shopping-list-button" onclick="window.location.href='liste_courses.html'">🛒</button>
 
     <h1>Liste des Recettes</h1>
+
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Rechercher une recette..." oninput="filterRecipes()" />
+    </div>
+
+    <div class="popular-recipes">
+        <h2>Recettes Populaires</h2>
+        <div class="recette-container">
+            <img src="cookie.jpg" alt="Cookies" />
+            <a href="2cookie.html" class="bouton-recette">Cookies</a>
+        </div>
+        <div class="recette-container">
+            <img src="tarteChocolat.jpg" alt="Tarte au chocolat" />
+            <a href="3tarteChocolat.html" class="bouton-recette">Tarte au chocolat</a>
+        </div>
+        <div class="recette-container">
+            <img src="tartiflette.jpg" alt="Tartiflette" />
+            <a href="10tartiflette.html" class="bouton-recette">Tartiflette</a>
+        </div>
+    </div>
 
     <div class="section">
       <div class="accordion">
@@ -264,21 +327,74 @@
       </div>
     </div>
 
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">Retour en Haut</button>
+
     <script>
-      const accordions = document.querySelectorAll(".accordion-header");
-
-      accordions.forEach((header) => {
-        header.addEventListener("click", function () {
-          const content = this.nextElementSibling;
-
-          content.style.display =
-            content.style.display === "block" ? "none" : "block";
+        // Fonction pour ouvrir/fermer les accordéons
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.classList.toggle('show');
+            });
         });
-      });
 
-      function toggleTheme() {
-        document.body.classList.toggle("dark-mode");
-      }
+        // Fonction pour filtrer les recettes
+        function filterRecipes() {
+            const searchInput = document.querySelector('.search-input').value.toLowerCase();
+            const recetteContainers = document.querySelectorAll('.recette-container');
+
+            let accordionOpened = false; // Pour vérifier si un accordéon a été ouvert
+
+            recetteContainers.forEach(container => {
+                const recetteName = container.querySelector('a').textContent.toLowerCase();
+                if (recetteName.includes(searchInput)) {
+                    container.style.display = 'inline-block'; // Affiche la recette
+                    const accordion = container.closest('.accordion-content');
+                    if (accordion) {
+                        accordion.classList.add('show'); // Ouvre l'accordéon
+                        accordion.previousElementSibling.classList.add('active'); // Active l'en-tête
+                        accordionOpened = true;
+                    }
+                } else {
+                    container.style.display = 'none'; // Masque la recette
+                }
+            });
+
+            // Ferme les accordéons si aucune recette n'est trouvée
+            if (!accordionOpened) {
+                document.querySelectorAll('.accordion-content').forEach(content => {
+                    content.classList.remove('show'); // Ferme tous les accordéons
+                });
+            }
+        }
+
+        // Fonction pour faire défiler vers le haut
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Fonction pour gérer le bouton "Retour en Haut"
+        window.onscroll = function () {
+            const backToTopButton = document.getElementById('backToTop');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+
+        // Fonction pour gérer le thème sombre
+        function toggleTheme() {
+            document.body.classList.toggle("dark-mode");
+            localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+        }
+
+        // Charger le thème au démarrage
+        window.onload = function () {
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("dark-mode");
+            }
+        };
     </script>
-  </body>
+</body>
 </html>
