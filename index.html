@@ -52,10 +52,7 @@
             filter: brightness(1.1);
         }
 
-        .theme-toggle {
-            position: fixed;
-            top: 25px;
-            right: 20px;
+        .theme-toggle, .shopping-list-button {
             background-color: var(--header-background);
             color: var(--header-text-color);
             border: none;
@@ -70,14 +67,12 @@
             position: fixed;
             top: 25px;
             right: 80px;
-            background-color: var(--header-background);
-            color: var(--header-text-color);
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            transition: background-color 0.3s;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 25px;
+            right: 20px;
         }
 
         .search-container {
@@ -137,35 +132,35 @@
             display: inline-block;
             margin: 10px;
             transition: transform 0.2s ease;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden; /* Pour les coins arrondis */
+            background-color: #fff; /* Fond blanc */
         }
 
         .recette-container:hover {
             transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* Ombre légère */
         }
 
         .recette-container img {
-            width: 300px;
-            height: 200px;
+            width: 100%; /* Prendre toute la largeur */
+            height: 150px; /* Hauteur fixe pour toutes les images */
             object-fit: cover;
-            border-radius: 10px;
         }
 
         .bouton-recette {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 10px 20px;
+            display: block;
+            padding: 10px;
             background-color: rgba(0, 0, 0, 0.7);
             color: #fff;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.2s ease, transform 0.2s ease;
+            text-align: center; /* Centrer le texte */
+            transition: background-color 0.2s ease;
         }
 
         .bouton-recette:hover {
             background-color: rgba(0, 0, 0, 0.85);
-            transform: translate(-50%, -48%) scale(1.03);
         }
 
         .back-to-top {
@@ -327,45 +322,36 @@
       </div>
     </div>
 
-    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">Retour en Haut</button>
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
     <script>
-        // Fonction pour ouvrir/fermer les accordéons
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                content.classList.toggle('show');
-            });
-        });
+        // Fonction pour basculer le mode sombre
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            // Enregistrer l'état dans le localStorage
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('dark-mode', isDarkMode);
+        }
+
+        // Récupérer l'état du mode sombre à partir du localStorage
+        function loadTheme() {
+            const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
+        }
 
         // Fonction pour filtrer les recettes
         function filterRecipes() {
-            const searchInput = document.querySelector('.search-input').value.toLowerCase();
-            const recetteContainers = document.querySelectorAll('.recette-container');
+            const searchInput = document.querySelector('.search-input');
+            const filter = searchInput.value.toLowerCase();
+            const recettes = document.querySelectorAll('.recette-container');
 
-            let accordionOpened = false; // Pour vérifier si un accordéon a été ouvert
-
-            recetteContainers.forEach(container => {
-                const recetteName = container.querySelector('a').textContent.toLowerCase();
-                if (recetteName.includes(searchInput)) {
-                    container.style.display = 'inline-block'; // Affiche la recette
-                    const accordion = container.closest('.accordion-content');
-                    if (accordion) {
-                        accordion.classList.add('show'); // Ouvre l'accordéon
-                        accordion.previousElementSibling.classList.add('active'); // Active l'en-tête
-                        accordionOpened = true;
-                    }
-                } else {
-                    container.style.display = 'none'; // Masque la recette
-                }
+            recettes.forEach(recette => {
+                const recipeTitle = recette.querySelector('a').textContent.toLowerCase();
+                recette.style.display = recipeTitle.includes(filter) ? 'block' : 'none';
             });
-
-            // Ferme les accordéons si aucune recette n'est trouvée
-            if (!accordionOpened) {
-                document.querySelectorAll('.accordion-content').forEach(content => {
-                    content.classList.remove('show'); // Ferme tous les accordéons
-                });
-            }
         }
 
         // Fonction pour faire défiler vers le haut
@@ -373,26 +359,24 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Fonction pour gérer le bouton "Retour en Haut"
-        window.onscroll = function () {
-            const backToTopButton = document.getElementById('backToTop');
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                backToTopButton.style.display = "block";
+        // Gérer l'accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.classList.toggle('show');
+            });
+        });
+
+        // Charger le thème lors du chargement de la page
+        loadTheme();
+
+        // Afficher le bouton "retour en haut" lors du défilement
+        window.onscroll = function() {
+            const button = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                button.style.display = 'block';
             } else {
-                backToTopButton.style.display = "none";
-            }
-        };
-
-        // Fonction pour gérer le thème sombre
-        function toggleTheme() {
-            document.body.classList.toggle("dark-mode");
-            localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
-        }
-
-        // Charger le thème au démarrage
-        window.onload = function () {
-            if (localStorage.getItem("theme") === "dark") {
-                document.body.classList.add("dark-mode");
+                button.style.display = 'none';
             }
         };
     </script>
