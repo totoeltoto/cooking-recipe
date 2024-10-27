@@ -5,18 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Liste des Recettes</title>
     <style>
+      :root {
+        --background-color: #f5f5f5;
+        --text-color: #333;
+        --header-background: #333;
+        --header-text-color: #fff;
+      }
+
+      body.dark-mode {
+        --background-color: #333;
+        --text-color: #000000;
+        --header-background: #222;
+        --header-text-color: #fff;
+      }
+
       body {
         font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
+        background-color: var(--background-color);
+        color: var(--text-color);
         margin: 0;
         padding: 0;
+        transition: background-color 0.3s, color 0.3s;
       }
 
       h1 {
         text-align: center;
         padding: 20px;
-        background-color: #333;
-        color: #fff;
+        background-color: var(--header-background);
+        color: var(--header-text-color);
+      }
+
+      /* Centered Logo Styles */
+      .logo-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .logo {
+        max-width: 200px;
+        height: auto;
+        transition: transform 0.3s ease, filter 0.3s ease;
+        cursor: pointer;
+      }
+
+      .logo:hover {
+        transform: scale(1.1);
+        filter: brightness(1.1);
+      }
+
+      /* Theme Toggle Button */
+      .theme-toggle {
+        position: fixed;
+        top: 25px;
+        right: 20px;
+        background-color: var(--header-background);
+        color: var(--header-text-color);
+        border: none;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 20px;
+        transition: background-color 0.3s;
+      }
+
+      /* Shopping List Button */
+      .shopping-list-button {
+        position: fixed;
+        top: 25px;
+        right: 80px; /* Espace de séparation avec le bouton thème */
+        background-color: var(--header-background);
+        color: var(--header-text-color);
+        border: none;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 20px;
+        transition: background-color 0.3s;
       }
 
       .section {
@@ -30,7 +94,6 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         margin-bottom: 10px;
-        overflow: hidden; /* Pour masquer le contenu en dehors */
       }
 
       .accordion-header {
@@ -49,17 +112,10 @@
 
       .accordion-content {
         padding: 10px;
+        display: none;
         border: 1px solid #ccc;
         border-radius: 0 0 5px 5px;
         background-color: #fff;
-        max-height: 0; /* Initialement, la hauteur maximale est zéro */
-        overflow: hidden; /* Pour masquer le contenu lors de l'affichage */
-        transition: max-height 0.5s ease, padding 0.5s ease; /* Animation de glissement */
-      }
-
-      .accordion-content.show {
-        max-height: 500px; /* Ajustez la valeur pour s'adapter au contenu */
-        padding: 10px; /* Restaure le padding lors de l'affichage */
       }
 
       .recette-container {
@@ -92,29 +148,19 @@
         background-color: rgba(0, 0, 0, 0.85);
         transform: translate(-50%, -48%) scale(1.03);
       }
-
-      .logo {
-        transition: transform 0.3s ease, filter 0.3s ease; /* Animation de la transformation et du filtre */
-      }
-
-      .logo:hover {
-        transform: scale(1.1); /* Agrandissement de 10% au survol */
-        filter: brightness(1.1); /* Légère augmentation de la luminosité */
-      }
     </style>
   </head>
 
   <body>
-    <h1>Liste des Recettes</h1>
-
-    <div style="text-align: center; margin: 20px 0">
-      <img
-        src="logo.png"
-        alt="Logo du site"
-        class="logo"
-        style="max-width: 200px; height: auto"
-      />
+    <!-- Centered Logo Section -->
+    <div class="logo-container">
+      <img src="logo.png" alt="Logo du site" class="logo" />
     </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <button class="shopping-list-button" onclick="window.location.href='liste_courses.html'">🛒</button> <!-- Bouton ajouté -->
+
+    <h1>Liste des Recettes</h1>
 
     <div class="section">
       <div class="accordion">
@@ -143,12 +189,46 @@
             >
           </div>
           <div class="recette-container">
-            <img src="buche.jpg" alt="Buche de Noël" />
-            <a href="5buche.html" class="bouton-recette">Buche de Noël</a>
+            <img src="poirAmandine.jpg" alt="poirAmandine" />
+            <a href="4poireAmandine.html" class="bouton-recette"
+              >Poire Amandine</a
+            >
           </div>
           <div class="recette-container">
-            <img src="tarteAuPommes.jpg" alt="Tarte au pommes" />
-            <a href="14tarteAuPomme.html" class="bouton-recette">Tarte au pommes</a>
+            <img src="buche.jpg" alt="Buche" />
+            <a href="5buche.html" class="bouton-recette">Buche</a>
+          </div>
+          <div class="recette-container">
+            <img src="pancakes.jpg" alt="Pancakes" />
+            <a href="6pancakes.html" class="bouton-recette">Pancakes</a>
+          </div>
+          <div class="recette-container">
+            <img src="petitsFinanciers.jpg" alt="petitsFinanciers" />
+            <a href="8petitsFinaciers.html" class="bouton-recette"
+              >Petits Financiers</a
+            >
+          </div>
+          <div class="recette-container">
+            <img src="briocheEtoile.jpg" alt="briocheEtoile" />
+            <a href="9briocheEtoile.html" class="bouton-recette"
+              >Brioche Etoile</a
+            >
+          </div>
+          <div class="recette-container">
+            <img src="galette.jpg" alt="Galette" />
+            <a href="11galetteDesRois.html" class="bouton-recette"
+              >Galettes des Rois</a
+            >
+          </div>
+          <div class="recette-container">
+            <img src="brioche.jpg" alt="Brioche" />
+            <a href="12brioche.html" class="bouton-recette">Brioche</a>
+          </div>
+          <div class="recette-container">
+            <img src="tarteAuPommes.jpg" alt="tarteAuPommes" />
+            <a href="14tarteAuPomme.html" class="bouton-recette"
+              >Tartes au pommes</a
+            >
           </div>
         </div>
       </div>
@@ -161,9 +241,13 @@
             <a href="10tartiflette.html" class="bouton-recette">Tartiflette</a>
           </div>
           <div class="recette-container">
-            <img src="poirAmandine.jpg" alt="Tarte poires amandines" />
-            <a href="4poireAmandine.html" class="bouton-recette"
-              >Tarte poires amandines</a
+            <img src="stJaques.jpg" alt="stJaques" />
+            <a href="7stJaques.html" class="bouton-recette">StJaques</a>
+          </div>
+          <div class="recette-container">
+            <img src="gratinButternut.jpg" alt="gratinButternut" />
+            <a href="13gratinButernut.html" class="bouton-recette"
+              >Gratin de butternut</a
             >
           </div>
         </div>
@@ -178,7 +262,6 @@
           </div>
         </div>
       </div>
-      <!-- Ajoutez d'autres sections ici -->
     </div>
 
     <script>
@@ -188,26 +271,14 @@
         header.addEventListener("click", function () {
           const content = this.nextElementSibling;
 
-          // Toggle visibility avec animation
-          if (content.classList.contains("show")) {
-            content.classList.remove("show");
-            content.style.maxHeight = 0; // Réinitialiser la hauteur maximale
-            content.style.padding = 0; // Réinitialiser le padding
-          } else {
-            // Fermez les autres sections
-            document
-              .querySelectorAll(".accordion-content")
-              .forEach((otherContent) => {
-                otherContent.classList.remove("show");
-                otherContent.style.maxHeight = 0; // Réinitialiser la hauteur maximale des autres
-                otherContent.style.padding = 0; // Réinitialiser le padding
-              });
-            content.classList.add("show");
-            content.style.maxHeight = content.scrollHeight + "px"; // Ajuste la hauteur en fonction du contenu
-            content.style.padding = "10px"; // Restaure le padding lors de l'affichage
-          }
+          content.style.display =
+            content.style.display === "block" ? "none" : "block";
         });
       });
+
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+      }
     </script>
   </body>
 </html>

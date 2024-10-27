@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liste de Courses</title>
+    <style>
+      :root {
+        --background-color: #f5f5f5;
+        --text-color: #333;
+        --header-background: #333;
+        --header-text-color: #fff;
+      }
+
+      body.dark-mode {
+        --background-color: #333;
+        --text-color: #000000;
+        --header-background: #222;
+        --header-text-color: #fff;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 20px;
+        background-color: var(--header-background);
+        color: var(--header-text-color);
+      }
+
+      /* Centered Logo Styles */
+      .logo-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .logo {
+        max-width: 200px;
+        height: auto;
+        transition: transform 0.3s ease, filter 0.3s ease;
+        cursor: pointer;
+      }
+
+      .logo:hover {
+        transform: scale(1.1);
+        filter: brightness(1.1);
+      }
+
+      /* Theme Toggle Button */
+      .theme-toggle,
+      .home-button {
+        position: fixed;
+        top: 25px;
+        background-color: var(--header-background);
+        color: var(--header-text-color);
+        border: none;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 20px;
+        transition: background-color 0.3s;
+      }
+
+      .home-button {
+        right: 80px; /* Adjusted position for home button */
+      }
+
+      .theme-toggle {
+        right: 20px; /* Adjusted position for theme button */
+      }
+
+      .section {
+        margin: 20px auto;
+        width: 80%;
+        max-width: 800px;
+      }
+
+      .course-list {
+        background-color: #eee;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 15px;
+        margin-top: 20px;
+      }
+
+      .course-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .course-item:last-child {
+        border-bottom: none;
+      }
+
+      .remove-button {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .remove-button:hover {
+        background-color: #c9302c;
+      }
+
+      .add-course {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .add-course input {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .add-course button {
+        padding: 10px;
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .add-course button:hover {
+        background-color: #4cae4c;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Centered Logo Section -->
+    <div class="logo-container">
+      <img src="logo.png" alt="Logo du site" class="logo" />
+    </div>
+
+    <button class="home-button" onclick="goHome()">🏠</button>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+    <h1>Liste de Courses</h1>
+
+    <div class="section">
+      <div class="course-list" id="courseList">
+        <h2>Mes Articles</h2>
+        <!-- Les articles de la liste de courses seront ajoutés ici -->
+      </div>
+
+      <div class="add-course">
+        <input type="text" id="newCourse" placeholder="Ajouter un nouvel article" />
+        <button onclick="addCourse()">Ajouter</button>
+      </div>
+    </div>
+
+    <script>
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+      }
+
+      function goHome() {
+        window.location.href = "index.html"; // Remplacez "index.html" par le nom de votre fichier d'accueil si nécessaire
+      }
+
+      function addCourse() {
+        const courseInput = document.getElementById("newCourse");
+        const courseName = courseInput.value.trim();
+
+        if (courseName) {
+          const courseList = document.getElementById("courseList");
+
+          // Créer un nouvel élément de liste
+          const courseItem = document.createElement("div");
+          courseItem.classList.add("course-item");
+          courseItem.innerHTML = `
+            <span>${courseName}</span>
+            <button class="remove-button" onclick="removeCourse(this)">Supprimer</button>
+          `;
+
+          // Ajouter l'élément à la liste
+          courseList.appendChild(courseItem);
+          courseInput.value = ""; // Réinitialiser le champ d'entrée
+        }
+      }
+
+      function removeCourse(button) {
+        const courseItem = button.parentElement;
+        courseItem.remove(); // Supprimer l'élément de la liste
+      }
+    </script>
+  </body>
+</html>
