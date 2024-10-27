@@ -102,7 +102,8 @@
             border-bottom: none;
         }
 
-        .remove-button {
+        .remove-button,
+        .remove-selected-button {
             background-color: #d9534f;
             color: white;
             border: none;
@@ -112,8 +113,13 @@
             transition: background-color 0.2s;
         }
 
-        .remove-button:hover {
+        .remove-button:hover,
+        .remove-selected-button:hover {
             background-color: #c9302c;
+        }
+
+        .remove-selected-button {
+            margin-top: 15px;
         }
 
         .add-course {
@@ -122,11 +128,13 @@
             justify-content: space-between;
         }
 
-        .add-course input {
-            width: 70%;
+        .add-course input,
+        .add-course select {
+            width: 25%; /* Ajustement de la largeur */
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            margin-right: 5px; /* Espacement réduit */
         }
 
         .add-course button {
@@ -174,6 +182,22 @@
             text-decoration: line-through;
             color: #aaa; /* Change color for completed items */
         }
+
+        /* Style pour le bouton de partage */
+        #shareButton {
+            background-color: #007bff; /* Couleur de fond bleue */
+            color: white; /* Couleur du texte en blanc */
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 15px; /* Ajouter un espace au-dessus */
+        }
+
+        #shareButton:hover {
+            background-color: #0056b3; /* Couleur de fond au survol */
+        }
     </style>
 </head>
 
@@ -194,8 +218,19 @@
             <!-- Les articles de la liste de courses seront ajoutés ici -->
         </div>
 
+        <button class="remove-selected-button" id="removeSelectedButton" style="display: none;" onclick="removeSelected()">Supprimer Sélectionnés</button>
+        <button class="remove-selected-button" id="shareButton" style="display: none;" onclick="shareList()">Partager la Liste</button>
+
         <div class="add-course">
             <input type="text" id="newCourse" placeholder="Ajouter un nouvel article" />
+            <select id="courseCategory">
+                <option value="Fruits">Fruits</option>
+                <option value="Légumes">Légumes</option>
+                <option value="Produits Laitiers">Produits Laitiers</option>
+                <option value="Viande">Viande</option>
+                <option value="Autres">Autres</option>
+            </select>
+            <input type="number" id="courseQuantity" placeholder="Quantité" min="1" value="1" />
             <button onclick="addCourse()">Ajouter</button>
         </div>
     </div>
@@ -204,7 +239,11 @@
         // Fonction pour ajouter un article à la liste
         function addCourse() {
             const courseInput = document.getElementById("newCourse");
+            const categorySelect = document.getElementById("courseCategory");
+            const quantityInput = document.getElementById("courseQuantity");
             const courseName = courseInput.value.trim();
+            const categoryName = categorySelect.value;
+            const quantityValue = quantityInput.value;
 
             if (courseName) {
                 const courseList = document.getElementById("courseList");
@@ -214,7 +253,7 @@
                 courseItem.classList.add("course-item");
                 courseItem.innerHTML = `
                     <div class="custom-checkbox" onclick="toggleComplete(this)"></div>
-                    <span>${courseName}</span>
+                    <span>${courseName} (${categoryName}) - Quantité: ${quantityValue}</span>
                     <button class="remove-button" onclick="removeCourse(this)">Supprimer</button>
                 `;
 
@@ -224,6 +263,10 @@
                 // Sauvegarder la liste dans le stockage local
                 saveCourses();
                 courseInput.value = ""; // Réinitialiser le champ d'entrée
+                quantityInput.value = 1; // Réinitialiser le champ de quantité
+
+                // Mettre à jour l'affichage des boutons
+                updateRemoveButtonVisibility();
             }
         }
 
@@ -233,54 +276,119 @@
             const courses = [];
             courseItems.forEach((item) => {
                 const checkbox = item.querySelector(".custom-checkbox");
-                const courseName = item.querySelector("span").textContent;
-                courses.push({ name: courseName, completed: checkbox.classList.contains('checked') });
+                const courseName = item.querySelector("span").textContent.split(" - ")[0]; // Obtenir le nom de l'article
+                const quantity = item.querySelector("span").textContent.match(/Quantité: (\d+)/)[1]; // Obtenir la quantité
+                const completed = checkbox.classList.contains("checked");
+                courses.push({ name: courseName, quantity, completed });
             });
-            localStorage.setItem("courseList", JSON.stringify(courses));
+            localStorage.setItem("courses", JSON.stringify(courses));
         }
 
-        // Fonction pour charger la liste depuis le stockage local
+        // Fonction pour charger la liste de courses sauvegardée
         function loadCourses() {
-            const savedCourses = JSON.parse(localStorage.getItem("courseList"));
+            const savedCourses = JSON.parse(localStorage.getItem("courses"));
             if (savedCourses) {
-                savedCourses.forEach((course) => {
+                savedCourses.forEach(course => {
                     const courseList = document.getElementById("courseList");
-
-                    // Créer un nouvel élément de liste
                     const courseItem = document.createElement("div");
                     courseItem.classList.add("course-item");
                     courseItem.innerHTML = `
                         <div class="custom-checkbox ${course.completed ? 'checked' : ''}" onclick="toggleComplete(this)"></div>
-                        <span class="${course.completed ? "completed" : ""}">${course.name}</span>
+                        <span class="${course.completed ? 'completed' : ''}">${course.name} - Quantité: ${course.quantity}</span>
                         <button class="remove-button" onclick="removeCourse(this)">Supprimer</button>
                     `;
-
-                    // Ajouter l'élément à la liste
                     courseList.appendChild(courseItem);
                 });
+            }
+            updateRemoveButtonVisibility(); // Met à jour l'affichage des boutons après chargement
+
+            // Charger l'état du thème
+            const isDarkMode = localStorage.getItem("darkMode") === "true"; // Vérifier l'état du thème dans le local storage
+            if (isDarkMode) {
+                document.body.classList.add("dark-mode");
             }
         }
 
         // Fonction pour supprimer un article
         function removeCourse(button) {
-            button.parentElement.remove(); // Supprime l'élément de la liste
-            saveCourses(); // Met à jour le stockage local
+            const courseItem = button.parentElement; // Obtenir l'élément parent (l'article)
+            courseItem.remove(); // Supprimer l'article de la liste
+            saveCourses(); // Sauvegarder la liste mise à jour
+            updateRemoveButtonVisibility(); // Mettre à jour l'affichage des boutons
         }
 
-        // Fonction pour marquer un article comme complété
+        // Fonction pour supprimer les articles sélectionnés
+        function removeSelected() {
+            const courseItems = document.querySelectorAll(".course-item");
+            courseItems.forEach(item => {
+                const checkbox = item.querySelector(".custom-checkbox");
+                if (checkbox.classList.contains('checked')) {
+                    item.remove(); // Supprimer l'article
+                }
+            });
+            saveCourses(); // Sauvegarder la liste mise à jour
+            updateRemoveButtonVisibility(); // Mettre à jour l'affichage des boutons
+        }
+
+        // Fonction pour mettre à jour la visibilité des boutons
+        function updateRemoveButtonVisibility() {
+            const courseItems = document.querySelectorAll(".course-item");
+            const removeSelectedButton = document.getElementById("removeSelectedButton");
+            const shareButton = document.getElementById("shareButton");
+
+            const hasItems = courseItems.length > 0;
+            removeSelectedButton.style.display = hasItems ? "block" : "none"; // Affiche le bouton si des articles existent
+            shareButton.style.display = hasItems ? "block" : "none"; // Affiche le bouton de partage si des articles existent
+        }
+
+        // Fonction pour basculer la case à cocher (compléter l'article)
         function toggleComplete(checkbox) {
             checkbox.classList.toggle("checked");
-            const courseName = checkbox.nextElementSibling;
-            if (checkbox.classList.contains("checked")) {
-                courseName.classList.add("completed");
-            } else {
-                courseName.classList.remove("completed");
-            }
-            saveCourses(); // Met à jour le stockage local
+            const courseItem = checkbox.parentElement;
+            const span = courseItem.querySelector("span");
+            span.classList.toggle("completed"); // Toggle class for strikethrough effect
+            saveCourses(); // Sauvegarder la liste mise à jour
         }
 
-        // Charger la liste de courses lors du chargement de la page
-        document.addEventListener("DOMContentLoaded", loadCourses);
+        // Fonction pour partager la liste
+        function shareList() {
+            const courseItems = document.querySelectorAll(".course-item");
+            let shareText = "Voici ma liste de courses :\n\n"; // Texte à partager
+
+            courseItems.forEach((item) => {
+                const span = item.querySelector("span").textContent; // Récupérer le texte de l'article
+                shareText += span + "\n"; // Ajouter chaque article à la liste
+            });
+
+            // Utilisation de l'API de partage si disponible
+            if (navigator.share) { // Vérifie si l'API de partage est disponible
+                navigator.share({
+                    title: 'Ma Liste de Courses',
+                    text: shareText,
+                    url: window.location.href // Optionnel : inclure l'URL de la page
+                })
+                .then(() => console.log('Partagé avec succès'))
+                .catch((error) => console.error('Erreur de partage:', error));
+            } else {
+                // Si l'API de partage n'est pas disponible, affichez une alerte
+                alert("Fonction de partage non disponible dans ce navigateur.");
+            }
+        }
+
+        // Fonction pour basculer le thème clair/sombre
+        function toggleTheme() {
+            document.body.classList.toggle("dark-mode");
+            const isDarkMode = document.body.classList.contains("dark-mode");
+            localStorage.setItem("darkMode", isDarkMode); // Enregistrer l'état du thème dans le local storage
+        }
+
+        // Fonction pour aller à la page d'accueil (vous pouvez le remplacer par votre URL)
+        function goHome() {
+            window.location.href = "index.html"; // Remplacer par votre page d'accueil
+        }
+
+        // Charger les articles au démarrage
+        window.onload = loadCourses;
     </script>
 </body>
 </html>
