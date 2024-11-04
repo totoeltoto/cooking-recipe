@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Favoris</title>
+    <link rel="stylesheet" href="style.css"> <!-- Assurez-vous que ce fichier CSS contient les mêmes styles que votre page d'accueil -->
+</head>
+<body>
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo du site" class="logo">
+    </div>
+
+    <h1>Mes Recettes Favorites</h1>
+
+    <div class="section">
+        <div id="favoris-container" class="popular-recipes">
+            <!-- Les favoris seront affichés ici -->
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour charger les favoris depuis le localStorage
+        function loadFavorites() {
+            const favorisContainer = document.getElementById('favoris-container');
+            favorisContainer.innerHTML = ''; // Vider le conteneur
+
+            const favoris = JSON.parse(localStorage.getItem('favoris')) || [];
+
+            if (favoris.length === 0) {
+                favorisContainer.innerHTML = '<p>Aucun favori n\'a été ajouté pour le moment.</p>';
+                return;
+            }
+
+            favoris.forEach(favori => {
+                const recetteContainer = document.createElement('div');
+                recetteContainer.classList.add('recette-container');
+
+                recetteContainer.innerHTML = `
+                    <img src="${favori.image}" alt="${favori.nom}">
+                    <a href="${favori.url}" class="bouton-recette">${favori.nom}</a>
+                `;
+
+                favorisContainer.appendChild(recetteContainer);
+            });
+        }
+
+        // Charger les favoris lors du chargement de la page
+        document.addEventListener('DOMContentLoaded', loadFavorites);
+    </script>
+</body>
+</html>
