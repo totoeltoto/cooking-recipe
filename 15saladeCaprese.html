@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="facile.css">
+    <title>Recette de Salade Caprese</title>
+</head>
+
+<body>
+    <header>
+        <h1>Salade Caprese</h1>
+    </header>
+    <div class="recette">
+        <h2>Difficulté :</h2>
+        <p class="difficulte"><b>Facile</b></p>
+        
+        <h2>Ingrédients :</h2>
+        <ul class="ingredient">
+            <li>3 tomates mûres</li>
+            <li>200g de mozzarella</li>
+            <li>Quelques feuilles de basilic frais</li>
+            <li>3 cuillères à soupe d'huile d'olive extra vierge</li>
+            <li>1 cuillère à café de vinaigre balsamique (optionnel)</li>
+            <li>Sel et poivre au goût</li>
+        </ul>
+
+        <h2>Préparation :</h2>
+        <ol class="etapes">
+            <li class="etape">Laver et trancher les tomates en rondelles fines.</li>
+            <li class="etape">Couper la mozzarella en tranches d'environ la même épaisseur que les tomates.</li>
+            <li class="etape">Disposer les tranches de tomate et de mozzarella en alternance dans une assiette, en les chevauchant légèrement.</li>
+            <li class="etape">Garnir avec les feuilles de basilic frais.</li>
+            <li class="etape">Assaisonner avec l'huile d'olive, un peu de vinaigre balsamique (si désiré), du sel et du poivre.</li>
+        </ol>
+
+        <img src="saladeCaprese.jpg" alt="Salade Caprese" class="image-recette">
+
+        <div class="nutrition">
+            <h2>Informations Nutritionnelles :</h2>
+            <p>Portion : 4 personnes</p>
+            <ul>
+                <li>Calories : 180</li>
+                <li>Protéines : 8 g</li>
+                <li>Glucides : 6 g</li>
+                <li>Lipides : 15 g</li>
+                <li>Fibres : 2 g</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="notation">
+        <p>Noter la recette :</p>
+        <div class="etoiles" onclick="noterRecette(event)">
+            <span class="etoile" data-valeur="1">&#9733;</span>
+            <span class="etoile" data-valeur="2">&#9733;</span>
+            <span class="etoile" data-valeur="3">&#9733;</span>
+            <span class="etoile" data-valeur="4">&#9733;</span>
+            <span class="etoile" data-valeur="5">&#9733;</span>
+        </div>
+        <textarea class="commentaire" placeholder="Ajouter un commentaire..."></textarea>
+    </div>
+
+    <div class="recette">
+        <a href="index.html" class="bouton">Retour à la page d'accueil</a>
+    </div>
+    <div class="recette-suivante">
+        <a href="14tarteAuPomme.html">⬅️ Recette précédente</a>
+        <a href="recette_suivante.html">Recette suivante ➡️</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -70,6 +70,25 @@
         right: 80px;
       }
 
+      /* Style pour le bouton de création de recette */
+      .create-recipe-button {
+        position: fixed;
+        margin-top: 25px;
+        padding: 12px 20px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .create-recipe-button:hover {
+        background-color: #218838;
+      }
+
       .theme-toggle {
         position: fixed;
         top: 25px;
@@ -197,6 +216,7 @@
     </div>
 
     <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
     <button
       class="shopping-list-button"
       onclick="window.location.href='liste_courses.html'"
@@ -220,14 +240,15 @@
       <div class="recette-container">
         <img src="cookie.jpg" alt="Cookies" />
         <a href="2cookie.html" class="bouton-recette">Cookies</a>
-        
       </div>
+
       <div class="recette-container">
         <img src="tarteChocolat.jpg" alt="Tarte au chocolat" />
         <a href="3tarteChocolat.html" class="bouton-recette"
           >Tarte au chocolat</a
         >
       </div>
+
       <div class="recette-container">
         <img src="tartiflette.jpg" alt="Tartiflette" />
         <a href="10tartiflette.html" class="bouton-recette">Tartiflette</a>
@@ -244,6 +265,12 @@
               >Salade de tomate mozzarella</a
             >
           </div>
+
+          <div class="recette-container">
+            <img src="saladeCaprese.jpg" alt="salade caprese" />
+            <a href="15saladeCaprese.html" class="bouton-recette"
+            >Salade Caprese</a>
+          </div>
         </div>
       </div>
 
@@ -254,48 +281,57 @@
             <img src="cookie.jpg" alt="Cookies" />
             <a href="2cookie.html" class="bouton-recette">Cookies</a>
           </div>
+
           <div class="recette-container">
             <img src="tarteChocolat.jpg" alt="Tarte au chocolat" />
             <a href="3tarteChocolat.html" class="bouton-recette"
               >Tarte au chocolat</a
             >
           </div>
+
           <div class="recette-container">
             <img src="poirAmandine.jpg" alt="poirAmandine" />
             <a href="4poireAmandine.html" class="bouton-recette"
               >Poire Amandine</a
             >
           </div>
+
           <div class="recette-container">
             <img src="buche.jpg" alt="Buche" />
             <a href="5buche.html" class="bouton-recette">Buche</a>
           </div>
+
           <div class="recette-container">
             <img src="pancakes.jpg" alt="Pancakes" />
             <a href="6pancakes.html" class="bouton-recette">Pancakes</a>
           </div>
+
           <div class="recette-container">
             <img src="petitsFinanciers.jpg" alt="petitsFinanciers" />
             <a href="8petitsFinaciers.html" class="bouton-recette"
               >Petits Financiers</a
             >
           </div>
+
           <div class="recette-container">
             <img src="briocheEtoile.jpg" alt="briocheEtoile" />
             <a href="9briocheEtoile.html" class="bouton-recette"
               >Brioche Etoile</a
             >
           </div>
+
           <div class="recette-container">
             <img src="galette.jpg" alt="Galette" />
             <a href="11galetteDesRois.html" class="bouton-recette"
               >Galettes des Rois</a
             >
           </div>
+
           <div class="recette-container">
             <img src="brioche.jpg" alt="Brioche" />
             <a href="12brioche.html" class="bouton-recette">Brioche</a>
           </div>
+
           <div class="recette-container">
             <img src="tarteAuPommes.jpg" alt="tarteAuPommes" />
             <a href="14tarteAuPomme.html" class="bouton-recette"
@@ -312,10 +348,12 @@
             <img src="tartiflette.jpg" alt="Tartiflette" />
             <a href="10tartiflette.html" class="bouton-recette">Tartiflette</a>
           </div>
+
           <div class="recette-container">
             <img src="stJaques.jpg" alt="stJaques" />
             <a href="7stJaques.html" class="bouton-recette">StJaques</a>
           </div>
+
           <div class="recette-container">
             <img src="gratinButternut.jpg" alt="gratinButternut" />
             <a href="13gratinButernut.html" class="bouton-recette"
