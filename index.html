@@ -53,8 +53,7 @@
       }
 
       .theme-toggle,
-      .shopping-list-button,
-      .favorite-button {
+      .shopping-list-button {
         background-color: var(--header-background);
         color: var(--header-text-color);
         border: none;
@@ -69,12 +68,6 @@
         position: fixed;
         top: 25px;
         right: 80px;
-      }
-
-      .favorite-button {
-        position: fixed;
-        top: 25px;
-        right: 140px;
       }
 
       .theme-toggle {
@@ -195,20 +188,6 @@
       .popular-recipes h2 {
         text-align: center;
       }
-
-      .add-favorite-button {
-        margin: 10px;
-        padding: 5px 10px;
-        background-color: #ff4742;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      .add-favorite-button:hover {
-        background-color: #ff2e2a;
-      }
     </style>
   </head>
 
@@ -223,13 +202,6 @@
       onclick="window.location.href='liste_courses.html'"
     >
       🛒
-    </button>
-    <button
-      class="favorite-button"
-      onclick="window.location.href='favoris.html'"
-      id="favoris-button"
-    >
-      ❤️
     </button>
 
     <h1>Liste des Recettes</h1>
@@ -248,34 +220,17 @@
       <div class="recette-container">
         <img src="cookie.jpg" alt="Cookies" />
         <a href="2cookie.html" class="bouton-recette">Cookies</a>
-        <button
-          class="add-favorite-button"
-          onclick="addToFavorites('cookie.jpg', 'Cookies', '2cookie.html')"
-        >
-          Ajouter aux favoris ❤️
-        </button>
+        
       </div>
       <div class="recette-container">
         <img src="tarteChocolat.jpg" alt="Tarte au chocolat" />
         <a href="3tarteChocolat.html" class="bouton-recette"
           >Tarte au chocolat</a
         >
-        <button
-          class="add-favorite-button"
-          onclick="addToFavorites('tarteChocolat.jpg', 'Tarte au chocolat', '3tarteChocolat.html')"
-        >
-          Ajouter aux favoris ❤️
-        </button>
       </div>
       <div class="recette-container">
         <img src="tartiflette.jpg" alt="Tartiflette" />
         <a href="10tartiflette.html" class="bouton-recette">Tartiflette</a>
-        <button
-          class="add-favorite-button"
-          onclick="addToFavorites('tartiflette.jpg', 'Tartiflette', '10tartiflette.html')"
-        >
-          Ajouter aux favoris ❤️
-        </button>
       </div>
     </div>
 
@@ -288,12 +243,6 @@
             <a href="1tomateMozza.html" class="bouton-recette"
               >Salade de tomate mozzarella</a
             >
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('tomateMozza.jpg', 'Salade de tomate mozzarella', '1tomateMozza.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
         </div>
       </div>
@@ -304,114 +253,54 @@
           <div class="recette-container">
             <img src="cookie.jpg" alt="Cookies" />
             <a href="2cookie.html" class="bouton-recette">Cookies</a>
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('cookie.jpg', 'Cookies', '2cookie.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="tarteChocolat.jpg" alt="Tarte au chocolat" />
             <a href="3tarteChocolat.html" class="bouton-recette"
               >Tarte au chocolat</a
             >
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('tarteChocolat.jpg', 'Tarte au chocolat', '3tarteChocolat.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="poirAmandine.jpg" alt="poirAmandine" />
             <a href="4poireAmandine.html" class="bouton-recette"
               >Poire Amandine</a
             >
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('poirAmandine.jpg', 'poirAmandine', '4poireAmandine.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="buche.jpg" alt="Buche" />
             <a href="5buche.html" class="bouton-recette">Buche</a>
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('buche.jpg', 'Buche', '5buche.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="pancakes.jpg" alt="Pancakes" />
             <a href="6pancakes.html" class="bouton-recette">Pancakes</a>
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('pancakes.jpg', 'Pancakes', '6pancakes.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="petitsFinanciers.jpg" alt="petitsFinanciers" />
             <a href="8petitsFinaciers.html" class="bouton-recette"
               >Petits Financiers</a
             >
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('petitsFinanciers.jpg', 'petitsFinanciers', '8petitsFinaciers.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="briocheEtoile.jpg" alt="briocheEtoile" />
             <a href="9briocheEtoile.html" class="bouton-recette"
               >Brioche Etoile</a
             >
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('briocheEtoile.jpg', 'briocheEtoile', '9briocheEtoile.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="galette.jpg" alt="Galette" />
             <a href="11galetteDesRois.html" class="bouton-recette"
               >Galettes des Rois</a
             >
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('galette.jpg', 'Galette', '11galetteDesRois.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="brioche.jpg" alt="Brioche" />
             <a href="12brioche.html" class="bouton-recette">Brioche</a>
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('brioche.jpg', 'Brioche', '12brioche.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="tarteAuPommes.jpg" alt="tarteAuPommes" />
             <a href="14tarteAuPomme.html" class="bouton-recette"
               >Tartes au pommes</a
             >
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('tarteAuPommes.jpg', 'tarteAuPommes', '14tarteAuPomme.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
         </div>
       </div>
@@ -422,34 +311,16 @@
           <div class="recette-container">
             <img src="tartiflette.jpg" alt="Tartiflette" />
             <a href="10tartiflette.html" class="bouton-recette">Tartiflette</a>
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('tartiflette.jpg', 'Tartiflette', '10tartiflette.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="stJaques.jpg" alt="stJaques" />
             <a href="7stJaques.html" class="bouton-recette">StJaques</a>
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('stJaques.jpg', 'stJaques', '7stJaques.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
           <div class="recette-container">
             <img src="gratinButternut.jpg" alt="gratinButternut" />
             <a href="13gratinButernut.html" class="bouton-recette"
               >Gratin de butternut</a
             >
-            <button
-              class="add-favorite-button"
-              onclick="addToFavorites('gratinButternut.jpg', 'gratinButternut', '13gratinButernut.html')"
-            >
-              Ajouter aux favoris ❤️
-            </button>
           </div>
         </div>
       </div>
@@ -529,40 +400,6 @@
           button.style.display = "none";
         }
       };
-
-      // Fonction pour ajouter une recette aux favoris
-      function addToFavorites(nom, url, image) {
-        const favoris = JSON.parse(localStorage.getItem("favoris")) || [];
-
-        // Vérifier si la recette est déjà dans les favoris
-        if (favoris.some((favori) => favori.url === url)) {
-          alert("Cette recette est déjà dans vos favoris.");
-          return;
-        }
-
-        // Ajouter la recette aux favoris
-        favoris.push({ nom, url, image });
-        localStorage.setItem("favoris", JSON.stringify(favoris));
-        alert("Recette ajoutée aux favoris !");
-      }
-      function addToFavorites(nom, url, image) {
-        const favoris = JSON.parse(localStorage.getItem("favoris")) || [];
-
-        // Vérifier si la recette est déjà dans les favoris
-        if (favoris.some((favori) => favori.url === url)) {
-          alert("Cette recette est déjà dans vos favoris.");
-          return;
-        }
-
-        // Ajouter la recette aux favoris
-        favoris.push({ nom, url, image });
-        localStorage.setItem("favoris", JSON.stringify(favoris));
-
-        // Mettre à jour l'icône des favoris
-        const favoriteButton = event.target;
-        favoriteButton.textContent = "❤️"; // Change l'icône pour un cœur rempli
-        alert("Recette ajoutée aux favoris !");
-      }
     </script>
   </body>
 </html>
