@@ -1,52 +1,186 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Favoris</title>
-    <link rel="stylesheet" href="style.css"> <!-- Assurez-vous que ce fichier CSS contient les mêmes styles que votre page d'accueil -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Favoris</title>
+  <style>
+    /* Réinitialisation et style de base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* En-tête */
+    header {
+      width: 100%;
+      background-color: #28a745;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 36px;
+    }
+
+    /* Conteneur des favoris */
+    .favorites-container {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      width: 90%;
+      max-width: 1200px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    /* Carte de recette */
+    .favorite-recipe-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .favorite-recipe-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .recipe-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .recipe-content {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .recipe-title {
+      font-size: 18px;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    /* Boutons */
+    .view-recipe-button, .remove-favorite-button {
+      display: inline-block;
+      padding: 10px 15px;
+      margin: 5px;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    .view-recipe-button {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    .view-recipe-button:hover {
+      background-color: #218838;
+    }
+
+    .remove-favorite-button {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    .remove-favorite-button:hover {
+      background-color: #c82333;
+    }
+
+    /* Message quand aucun favori n'est présent */
+    .no-favorites-message {
+      text-align: center;
+      font-size: 18px;
+      color: #666;
+      margin-top: 40px;
+    }
+
+    /* Ajout d'un effet de transition global */
+    body, h1, .recipe-title {
+      transition: color 0.3s, font-size 0.3s;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="logo-container">
-        <img src="logo.png" alt="Logo du site" class="logo">
-    </div>
+  <header>
+    <h1>Mes Recettes Favoris</h1>
+  </header>
 
-    <h1>Mes Recettes Favorites</h1>
+  <div class="favorites-container" id="favoritesContainer"></div>
 
-    <div class="section">
-        <div id="favoris-container" class="popular-recipes">
-            <!-- Les favoris seront affichés ici -->
-        </div>
-    </div>
+  <p class="no-favorites-message" id="noFavoritesMessage">Vous n'avez pas encore ajouté de recettes aux favoris.</p>
 
-    <script>
-        // Fonction pour charger les favoris depuis le localStorage
-        function loadFavorites() {
-            const favorisContainer = document.getElementById('favoris-container');
-            favorisContainer.innerHTML = ''; // Vider le conteneur
+  <script>
+    // Fonction pour charger les favoris
+    function loadFavorites() {
+      const favorites = JSON.parse(localStorage.getItem("favoris")) || [];
+      const container = document.getElementById("favoritesContainer");
+      const noFavoritesMessage = document.getElementById("noFavoritesMessage");
 
-            const favoris = JSON.parse(localStorage.getItem('favoris')) || [];
+      // Vider le conteneur avant de l'afficher
+      container.innerHTML = "";
 
-            if (favoris.length === 0) {
-                favorisContainer.innerHTML = '<p>Aucun favori n\'a été ajouté pour le moment.</p>';
-                return;
-            }
+      if (favorites.length === 0) {
+        noFavoritesMessage.style.display = "block";
+      } else {
+        noFavoritesMessage.style.display = "none";
 
-            favoris.forEach(favori => {
-                const recetteContainer = document.createElement('div');
-                recetteContainer.classList.add('recette-container');
+        // Pour chaque recette favorite
+        favorites.forEach(favorite => {
+          const card = document.createElement("div");
+          card.className = "favorite-recipe-card";
 
-                recetteContainer.innerHTML = `
-                    <img src="${favori.image}" alt="${favori.nom}">
-                    <a href="${favori.url}" class="bouton-recette">${favori.nom}</a>
-                `;
+          card.innerHTML = `
+            <img src="${favorite.image}" alt="${favorite.nom}" class="recipe-image">
+            <div class="recipe-content">
+              <h3 class="recipe-title">${favorite.nom}</h3>
+              <a href="${favorite.url}" class="view-recipe-button">Voir la recette</a>
+              <button class="remove-favorite-button" onclick="removeFromFavorites('${favorite.url}')">Retirer</button>
+            </div>
+          `;
 
-                favorisContainer.appendChild(recetteContainer);
-            });
-        }
+          container.appendChild(card);
+        });
+      }
+    }
 
-        // Charger les favoris lors du chargement de la page
-        document.addEventListener('DOMContentLoaded', loadFavorites);
-    </script>
+    // Fonction pour retirer un favori
+    function removeFromFavorites(url) {
+      let favorites = JSON.parse(localStorage.getItem("favoris")) || [];
+
+      // Filtrer pour exclure la recette à supprimer
+      favorites = favorites.filter(favorite => favorite.url !== url);
+
+      // Mettre à jour le localStorage et recharger les favoris
+      localStorage.setItem("favoris", JSON.stringify(favorites));
+      loadFavorites();
+    }
+
+    // Charger les favoris au démarrage de la page
+    window.onload = loadFavorites;
+  </script>
 </body>
 </html>

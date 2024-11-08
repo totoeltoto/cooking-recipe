@@ -545,6 +545,24 @@
         localStorage.setItem("favoris", JSON.stringify(favoris));
         alert("Recette ajoutée aux favoris !");
       }
+      function addToFavorites(nom, url, image) {
+        const favoris = JSON.parse(localStorage.getItem("favoris")) || [];
+
+        // Vérifier si la recette est déjà dans les favoris
+        if (favoris.some((favori) => favori.url === url)) {
+          alert("Cette recette est déjà dans vos favoris.");
+          return;
+        }
+
+        // Ajouter la recette aux favoris
+        favoris.push({ nom, url, image });
+        localStorage.setItem("favoris", JSON.stringify(favoris));
+
+        // Mettre à jour l'icône des favoris
+        const favoriteButton = event.target;
+        favoriteButton.textContent = "❤️"; // Change l'icône pour un cœur rempli
+        alert("Recette ajoutée aux favoris !");
+      }
     </script>
   </body>
 </html>
