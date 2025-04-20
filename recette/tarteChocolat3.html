@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="facile.css">
+    <link rel="stylesheet" href="/difficultée/facile.css">
     <title>Recette Tarte au chocolat</title>
 </head>
 
@@ -39,7 +39,7 @@
             <p><b>Bon appétit !</b></p>
         </ol>
 
-        <img src="tarte au chocolat.jpg" alt="Tarte au chocolat" class="image-recette">
+        <img src="/images/tarte au chocolat.jpg" alt="Tarte au chocolat" class="image-recette">
 
         <div class="nutrition">
             <h2>Informations Nutritionnelles :</h2>
@@ -67,15 +67,34 @@
     </div>
 
     <div class="recette">
-        <a href="index.html" class="bouton">Retour à la page d'acceuil</a>
+        <a href="/index.html" class="bouton">Retour à la page d'acceuil</a>
     </div>
     <div class="recette-suivante">
-        <a href="2cookie.html">⬅️ Recette précédente</a>
-        <a href="4poireAmandine.html">recette-suivante ➡️</a>
+        <a href="cookie2.html">⬅️ Recette précédente</a>
+        <a href="poireAmandine4.html">recette-suivante ➡️</a>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function noterRecette(event) {
+            const etoiles = document.querySelectorAll('.etoile');
+            const notationContainer = document.querySelector('.notation');
+            const valeurNotation = event.target.getAttribute('data-valeur');
 
+            etoiles.forEach(etoile => {
+                etoile.classList.remove('notee');
+            });
+
+            for (let i = 0; i < valeurNotation; i++) {
+                etoiles[i].classList.add('notee');
+            }
+
+            // Récupérer le commentaire
+            const commentaire = document.querySelector('.commentaire').value;
+            console.log('Commentaire:', commentaire);
+
+            // Vous pouvez envoyer le commentaire à un serveur ici pour le sauvegarder, ou le stocker localement.
+        }
+    </script>
 </body>
 
 </html>

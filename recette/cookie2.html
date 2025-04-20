@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="facile.css">
+    <link rel="stylesheet" href="/difficultée/facile.css">
     <title>Recette de cookies</title>
 </head>
 
@@ -41,7 +41,7 @@
             <li class="etape">Enfourner pour 10 minutes de cuisson.</li>
         </ol>
 
-        <img src="cookie.jpg" alt="Cookie" class="image-recette">
+        <img src="/images/cookie.jpg" alt="Cookie" class="image-recette">
 
         <div class="nutrition">
             <h2>Informations Nutritionnelles :</h2>
@@ -69,15 +69,34 @@
     </div>
 
     <div class="recette">
-        <a href="index.html" class="bouton">Retour à la page d'acceuil</a>
+        <a href="/index.html" class="bouton">Retour à la page d'acceuil</a>
     </div>
     <div class="recette-suivante">
-        <a href="1tomateMozza.html">⬅️ Recette précédente</a>
-        <a href="3tarteChocolat.html">Recette suivante ➡️</a>
+        <a href="tomateMozza1.html">⬅️ Recette précédente</a>
+        <a href="tarteChocolat3.html">Recette suivante ➡️</a>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function noterRecette(event) {
+            const etoiles = document.querySelectorAll('.etoile');
+            const notationContainer = document.querySelector('.notation');
+            const valeurNotation = event.target.getAttribute('data-valeur');
 
+            etoiles.forEach(etoile => {
+                etoile.classList.remove('notee');
+            });
+
+            for (let i = 0; i < valeurNotation; i++) {
+                etoiles[i].classList.add('notee');
+            }
+
+            // Récupérer le commentaire
+            const commentaire = document.querySelector('.commentaire').value;
+            console.log('Commentaire:', commentaire);
+
+            // Vous pouvez envoyer le commentaire à un serveur ici pour le sauvegarder, ou le stocker localement.
+        }
+    </script>
 </body>
 
 </html>
