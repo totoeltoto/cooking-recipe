@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .register-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    .input-field,
+    .select-field {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #555;
+    }
+
+    .secret-code-container {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>S'inscrire</h1>
+
+  <div class="register-container">
+    <form id="register-form">
+      <input type="email" id="email" class="input-field" placeholder="Votre email" required>
+      <input type="password" id="password" class="input-field" placeholder="Votre mot de passe" required>
+
+      <!-- Menu déroulant pour le rôle -->
+      <select id="role" class="select-field" required>
+        <option value="utilisateur">Utilisateur</option>
+        <option value="admin">Administrateur</option>
+      </select>
+
+      <!-- Code secret, caché par défaut -->
+      <div id="secret-code-container" class="secret-code-container">
+        <input type="text" id="secret-code" class="input-field" placeholder="Code secret">
+      </div>
+
+      <button type="submit" class="btn">S'inscrire</button>
+    </form>
+  </div>
+
+  <script>
+    // Afficher ou masquer le champ du code secret en fonction du choix du rôle
+    document.getElementById('role').addEventListener('change', function () {
+      const secretCodeContainer = document.getElementById('secret-code-container');
+      const secretCodeInput = document.getElementById('secret-code');
+      if (this.value === 'admin') {
+        secretCodeContainer.style.display = 'block';
+        secretCodeInput.setAttribute('required', 'required'); // Rendre requis uniquement quand il est visible
+      } else {
+        secretCodeContainer.style.display = 'none';
+        secretCodeInput.removeAttribute('required'); // Retirer l'attribut 'required' si le champ est masqué
+      }
+    });
+
+    // Fonction pour enregistrer un utilisateur
+    document.getElementById('register-form').addEventListener('submit', function (e) {
+      e.preventDefault(); // Empêcher l'envoi du formulaire
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+      const secretCode = document.getElementById('secret-code').value;
+
+      // Vérifier si l'utilisateur existe déjà
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const existingUser = users.find(u => u.email === email);
+
+      if (existingUser) {
+        alert("Cet email est déjà utilisé.");
+      } else {
+        // Si l'utilisateur veut être administrateur, vérifier le code secret
+        if (role === 'admin' && secretCode !== 'monCodeSecret123') {  // Remplace "monCodeSecret123" par ton vrai code secret
+          alert("Code secret incorrect.");
+          return;
+        }
+
+        // Ajouter l'utilisateur au localStorage
+        users.push({ email, password, role });
+        localStorage.setItem('users', JSON.stringify(users));
+        alert("Inscription réussie!");
+        window.location.href = '/login.html'; // Rediriger vers la page de connexion
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+.recherche-container {
+    text-align: center;
+    margin: 20px auto;
+    position: relative;
+}
+
+.input-recherche {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.bouton-recherche {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.bouton-recherche:hover {
+    background-color: #555;
+}
+
+.suggestions {
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 323px;
+    border: 1px solid #333;
+    border-top: none;
+    border-radius: 5px;
+    background-color: #fff;
+    display: none;
+    left: 50%;
+    transform: translateX(-67.5%);
+    z-index: 2;
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #eee;
+}
+
+.liste-recettes {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.bouton-recette {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.bouton-recette:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.filtre-recettes {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.bouton-filtre {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.bouton-filtre:hover {
+    background-color: #555;
+}
+
+/* Bouton mode sombre */
+.mode-sombre-btn {
+    position: fixed;
+    top: 35px;
+    right: 10px;
+    padding: 10px 15px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.mode-sombre-btn:hover {
+    background-color: #555;
+}
+
+/* Mode sombre */
+body.dark-mode {
+    background-color: #222;
+    color: #ddd;
+}
+
+body.dark-mode h1 {
+    background-color: #111;
+}
+
+body.dark-mode .bouton-recette,
+body.dark-mode .bouton-filtre,
+body.dark-mode .bouton-recherche,
+body.dark-mode .mode-sombre-btn {
+    background-color: #444;
+    color: #fff;
+}
+
+body.dark-mode .bouton-recette:hover,
+body.dark-mode .bouton-filtre:hover,
+body.dark-mode .bouton-recherche:hover,
+body.dark-mode .mode-sombre-btn:hover {
+    background-color: #666;
+}
+
+body.dark-mode .input-recherche {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+body.dark-mode .suggestions {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #666;
+}
+
+body.dark-mode .suggestion-item:hover {
+    background-color: #555;
+}
+
+/* Style commun pour les boutons */
+button,
+.user-link {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover,
+.user-link:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+/* Style spécifique pour les liens (évite qu'ils ressemblent à du texte simple) */
+.user-link {
+    text-decoration: none;
+}
+
+/* Zone d'info utilisateur */
+#user-info {
+    text-align: center;
+    margin: 20px 0;
+}
