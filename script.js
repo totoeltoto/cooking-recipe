@@ -7,7 +7,10 @@ function showSuggestions() {
     const inputValue = input.value.toLowerCase().trim();
     const recipes = document.querySelectorAll('.bouton-recette');
 
-    suggestionsList.innerHTML = '';
+    suggestionsList.innerHTML = ''; // Vider la liste des suggestions
+
+    // Vérifier si des suggestions correspondent à la recherche
+    let hasSuggestions = false;
 
     recipes.forEach(recipe => {
         const recipeName = recipe.textContent.toLowerCase();
@@ -20,10 +23,12 @@ function showSuggestions() {
                 suggestionsList.style.display = 'none';
             });
             suggestionsList.appendChild(suggestionItem);
+            hasSuggestions = true;
         }
     });
 
-    suggestionsList.style.display = suggestionsList.children.length > 0 ? 'block' : 'none';
+    // Si aucune suggestion n'est trouvée, cacher la liste
+    suggestionsList.style.display = hasSuggestions ? 'block' : 'none';
 }
 
 // Recherche la recette et redirige
@@ -31,13 +36,19 @@ function searchRecipe() {
     const input = document.querySelector('.input-recherche');
     const inputValue = input.value.toLowerCase().trim();
     const recipes = document.querySelectorAll('.bouton-recette');
+    let found = false;
 
     recipes.forEach(recipe => {
         const recipeName = recipe.textContent.toLowerCase();
         if (recipeName === inputValue) {
             window.location.href = recipe.getAttribute('href');
+            found = true;
         }
     });
+
+    if (!found && inputValue !== "") {
+        alert("Recette non trouvée.");
+    }
 }
 
 // Filtre les recettes par type
@@ -56,7 +67,16 @@ function filtrerRecettes(type) {
 // Active/Désactive le mode sombre
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
+    // Mémoriser l'état du mode sombre dans le localStorage
+    localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
 }
+
+// Charger l'état du mode sombre depuis le localStorage
+window.addEventListener('load', () => {
+    if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+    }
+});
 
 // Ferme les suggestions si on clique ailleurs
 document.addEventListener('click', function (event) {

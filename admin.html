@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Admin Panel</title>
+  <title>Panneau d'administration</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -36,7 +36,7 @@
     }
 
     table {
-      width: 80%;
+      width: 90%;
       margin: 0 auto;
       border-collapse: collapse;
       background-color: #fff;
@@ -65,32 +65,98 @@
     }
 
     button {
-      padding: 6px 12px;
-      background-color: #ff4d4d;
+      padding: 6px 10px;
+      margin: 2px;
+      background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     button:hover {
+      background-color: #45a049;
+    }
+
+    .delete-btn {
+      background-color: #ff4d4d;
+    }
+
+    .delete-btn:hover {
       background-color: #ff1a1a;
     }
 
-    #user-list {
-      margin-top: 30px;
+    .remove-warning-btn {
+      background-color: #ffaa00;
+    }
+
+    .remove-warning-btn:hover {
+      background-color: #e69500;
+    }
+
+    .info-btn {
+      background-color: #2196F3;
+    }
+
+    .info-btn:hover {
+      background-color: #1976D2;
+    }
+
+    /* Modale */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      text-align: left;
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: black;
+    }
+
+    .filters {
+      margin: 20px 0;
       text-align: center;
     }
 
-    #user-list ul {
-      list-style: none;
-      padding: 0;
+    .filters input,
+    .filters select {
+      padding: 8px;
+      margin: 5px;
+      font-size: 16px;
     }
 
-    #user-list li {
-      font-size: 18px;
-      margin-bottom: 8px;
+    .filters button {
+      padding: 8px 16px;
+      margin: 5px;
+      font-size: 16px;
     }
   </style>
 </head>
@@ -100,24 +166,44 @@
   <h1>Panneau d'administration</h1>
   <p><a href="index.html">⬅ Retour à l'accueil</a></p>
 
+  <!-- Filtres -->
+  <div class="filters">
+    <input type="text" id="searchEmail" placeholder="Rechercher par email..." oninput="filterUsers()">
+    <select id="searchRole" onchange="filterUsers()">
+      <option value="">Filtrer par rôle</option>
+      <option value="utilisateur">Utilisateur</option>
+      <option value="admin">Admin</option>
+    </select>
+    <button onclick="clearFilters()">Réinitialiser les filtres</button>
+    <button onclick="sortTable('email')">Trier par Email</button>
+    <button onclick="sortTable('role')">Trier par Rôle</button>
+    <button onclick="sortTable('warnings')">Trier par Avertissements</button>
+  </div>
+
   <table>
     <thead>
       <tr>
         <th>Email</th>
         <th>Rôle</th>
         <th>Avertissements</th>
-        <th>Action</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody id="user-table">
-      <!-- Les utilisateurs seront ajoutés ici via JavaScript -->
+      <!-- Utilisateurs via JS -->
     </tbody>
   </table>
 
-  <div id="user-list"></div>
+  <!-- Modale avertissements -->
+  <div id="warningModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Détails des avertissements</h2>
+      <div id="warning-details"></div>
+    </div>
+  </div>
 
   <script>
-    // Vérifie que l'utilisateur est bien admin
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     if (!currentUser || currentUser.role !== "admin") {
       alert("Accès refusé.");
@@ -125,52 +211,163 @@
     }
 
     const users = JSON.parse(localStorage.getItem('users')) || [];
+    let filteredUsers = [...users]; // Variable pour gérer les filtres dynamiques
+
     const table = document.getElementById("user-table");
 
-    // Fonction pour afficher les utilisateurs
-    function afficherUtilisateurs() {
-      table.innerHTML = ""; // Clear current table
-      users.forEach((u, i) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${u.email}</td>
-          <td>${u.role || 'utilisateur'}</td>
-          <td>${u.warnings}</td>
-          <td>
-            <button onclick="ajouterAvertissement(${i})">Ajouter Avertissement</button>
-            <button onclick="supprimer(${i})">Supprimer</button>
-          </td>
-        `;
-        table.appendChild(row);
-      });
-    }
-
-    // Fonction pour ajouter un avertissement
-    function ajouterAvertissement(index) {
-      const user = users[index];
-      user.warnings++;
-
-      // Si l'utilisateur a 3 avertissements, on le supprime
-      if (user.warnings >= 3) {
-        alert(`L'utilisateur ${user.email} a atteint 3 avertissements et sera supprimé.`);
-        supprimer(index); // Supprimer l'utilisateur
+    function renderUsers(usersList) {
+      table.innerHTML = "";
+      if (usersList.length === 0) {
+        table.innerHTML = "<tr><td colspan='4'>Aucun utilisateur enregistré.</td></tr>";
       } else {
-        localStorage.setItem("users", JSON.stringify(users));
-        afficherUtilisateurs(); // Actualiser la table
+        usersList.forEach((u, i) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${u.email}</td>
+            <td>${u.role || 'utilisateur'}</td>
+            <td>${u.warnings || 0}</td>
+            <td>
+              <button onclick="ajouterAvertissement(${i})">+1 Avert.</button>
+              <button class="remove-warning-btn" onclick="retirerAvertissement(${i})">-1 Avert.</button>
+              <button class="info-btn" onclick="voirAvertissements(${i})">ℹ️</button>
+              <select onchange="modifierRole(${i}, this.value)">
+                <option value="">Modifier rôle</option>
+                <option value="utilisateur" ${u.role === "utilisateur" ? "selected" : ""}>Utilisateur</option>
+                <option value="admin" ${u.role === "admin" ? "selected" : ""}>Admin</option>
+              </select>
+              <button class="delete-btn" onclick="supprimer(${i})">Supprimer</button>
+            </td>
+          `;
+          table.appendChild(row);
+        });
       }
     }
 
-    // Fonction pour supprimer un utilisateur
+    // Fonction pour filtrer les utilisateurs
+    function filterUsers() {
+      const searchEmail = document.getElementById("searchEmail").value.toLowerCase();
+      const searchRole = document.getElementById("searchRole").value;
+
+      filteredUsers = users.filter(u => {
+        const emailMatch = u.email.toLowerCase().includes(searchEmail);
+        const roleMatch = searchRole ? u.role === searchRole : true;
+        return emailMatch && roleMatch;
+      });
+
+      renderUsers(filteredUsers);
+    }
+
+    // Fonction pour réinitialiser les filtres
+    function clearFilters() {
+      document.getElementById("searchEmail").value = "";
+      document.getElementById("searchRole").value = "";
+      filteredUsers = [...users];
+      renderUsers(filteredUsers);
+    }
+
+    // Fonction pour trier la table
+    function sortTable(key) {
+      filteredUsers.sort((a, b) => {
+        if (key === 'email') {
+          return a.email.localeCompare(b.email);
+        } else if (key === 'role') {
+          return a.role.localeCompare(b.role);
+        } else if (key === 'warnings') {
+          return a.warnings - b.warnings;
+        }
+      });
+
+      renderUsers(filteredUsers);
+    }
+
+    // Initialisation de l'affichage
+    renderUsers(filteredUsers);
+
+    // Fonctions existantes pour gérer les avertissements et autres actions
+    function ajouterAvertissement(index) {
+      const raison = prompt("Veuillez entrer la raison de l'avertissement :");
+      if (!raison) {
+        alert("Avertissement annulé : raison obligatoire.");
+        return;
+      }
+      if (!users[index].warnings) users[index].warnings = 0;
+      users[index].warnings++;
+      if (!users[index].warningsHistory) users[index].warningsHistory = [];
+      users[index].warningsHistory.push({ date: new Date().toLocaleString(), raison: raison });
+
+      if (users[index].warnings >= 3) {
+        alert(`${users[index].email} a reçu 3 avertissements et sera supprimé.`);
+        users.splice(index, 1);
+      }
+
+      localStorage.setItem("users", JSON.stringify(users));
+      renderUsers(filteredUsers);
+    }
+
+    function retirerAvertissement(index) {
+      if (!users[index].warnings) users[index].warnings = 0;
+      if (users[index].warnings > 0) {
+        users[index].warnings--;
+        if (users[index].warningsHistory && users[index].warningsHistory.length > 0) {
+          users[index].warningsHistory.pop();
+        }
+        localStorage.setItem("users", JSON.stringify(users));
+        renderUsers(filteredUsers);
+      } else {
+        alert("Cet utilisateur n'a aucun avertissement.");
+      }
+    }
+
+    function voirAvertissements(index) {
+      const modal = document.getElementById("warningModal");
+      const details = document.getElementById("warning-details");
+      const user = users[index];
+
+      if (!user.warningsHistory || user.warningsHistory.length === 0) {
+        details.innerHTML = "<p>Aucun avertissement.</p>";
+      } else {
+        details.innerHTML = "<ul>" + user.warningsHistory.map(w => `<li><strong>${w.date}</strong> — ${w.raison}</li>`).join('') + "</ul>";
+      }
+
+      modal.style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("warningModal").style.display = "none";
+    }
+
+    function modifierRole(index, role) {
+      if (role === "") return;
+
+      if (role === "admin") {
+        const codeSecret = prompt("Code secret admin :");
+        if (codeSecret !== "456") {
+          alert("Code incorrect. Rôle non modifié.");
+          return;
+        }
+      }
+
+      if (confirm(`Confirmer le changement de rôle en "${role}" pour ${users[index].email} ?`)) {
+        users[index].role = role;
+        localStorage.setItem("users", JSON.stringify(users));
+        renderUsers(filteredUsers);
+      }
+    }
+
     function supprimer(index) {
-      if (confirm("Confirmer la suppression de cet utilisateur ?")) {
+      const userToDelete = users[index];
+
+      if (currentUser.email === userToDelete.email) {
+        alert("Action refusée : vous ne pouvez pas vous supprimer vous-même.");
+        return;
+      }
+
+      if (confirm(`Confirmer la suppression de ${userToDelete.email} ?`)) {
         users.splice(index, 1);
         localStorage.setItem("users", JSON.stringify(users));
-        afficherUtilisateurs(); // Actualiser la table
+        renderUsers(filteredUsers);
       }
     }
-
-    // Appel pour afficher les utilisateurs
-    afficherUtilisateurs();
 
   </script>
 
