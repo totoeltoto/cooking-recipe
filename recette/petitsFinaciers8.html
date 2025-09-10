@@ -1,114 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/difficultée/facile.css">
-  <title>Petits Financiers</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recette : Petits Financiers - Le Coin Gourmand</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .dark { color: #e2e8f0; }
+        .dark body { background-color: #1a202c; }
+        .dark .bg-white { background-color: #2d3748; }
+        .dark .text-gray-800 { color: #e2e8f0; }
+        .dark .text-gray-600 { color: #a0aec0; }
+        .dark .border-gray-200 { border-color: #4a5568; }
+        .dark .prose-li:before { background-color: #e2e8f0; }
+    </style>
 </head>
+<body class="bg-gray-50">
 
-<body>
-  <header>
-    <h1>Petits Ficanciers</h1>
+    <!-- Header simple avec lien de retour et bouton mode sombre -->
+    <header class="bg-white shadow-sm dark:bg-gray-800 dark:border-b dark:border-gray-700">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/index.html" class="text-green-600 font-bold hover:underline text-lg">
+                &larr; Le Coin Gourmand
+            </a>
+            <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="Changer le thème">
+              <svg id="theme-icon-sun" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+              </svg>
+          </button>
+        </div>
+    </header>
 
-  </header>
-  <div class="recette">
-    <h2>Difficultée :</h2>
-    <p class="difficulte"><b>Facile</b></p>
-    <h2>Ingrédients :</h2>
-    <ul class="ingredient">
-      <li>200g de chocolat noir pâtissier</li>
-      <li>2 oranges</li>
-      <li>1 gousse de vanille</li>
-      <li>1 cuillère à soupe d'épices quatre-épices</li>
-      <li>200g de sucre glace</li>
-      <li>70g de farine</li>
-      <li>125g d'amandes en poudre</li>
-      <li>25g de cerneau de noix</li>
-      <li>8 blancs d'oeuf</li>
-      <li>150g de beurre demi-sel fondu</li>
-    </ul>
+    <main class="container mx-auto px-4 py-8">
 
-    <h2>Préparation :</h2>
-    <ol class="etapes">
-      <li class="etape">Préchauffez le four à 180°C (thermsotat 6).</li>
-      <li class="etape">Mélangez les éléments secs : poudre d'amandes, farine, sucre glace, noix hachées en petits
-        morceaux, quatre-épices.</li>
-      <li class="etape">Râpez le zeste des deux oranges, grattez les graines de la gousse de vanille et ajoutez au
-        mélange sec. Bien mélanger au fouet.</li>
-      <li class="etape">Incorporez un à un les blancs d'oeuf en remuant soigneusement au fouet pour obtenir une pâte
-        homogène.</li>
-      <li class="etape">Ajoutez le beurre fondu et remuez. Terminez en incorporant le jus d'une demi-orange. Mélangez
-        énergiquement.</li>
-      <li class="etape">Remplir les moules à financiers aux 2/3 et enfournez pour 15 minutes environ. Surveillez la
-        première fournée, chaque four est différent ! Les financiers doivent prendre une jolie couleur dorée.</li>
-      <li class="etape">Laissez refroidir les financiers.</li>
-      <li class="etape">Lorsque vous avez cuit toute la pâte et que vos financiers ont refroidi, faites fondre au
-        bain-marie le chocolat.</li>
-      <li class="etape">Utilisez vos moules à financiers lavés et mettez une cuillère à café de chocolat dans chaque
-        compartiment. Replacez un financier dans chaque compartiment et appuyez votre financier pour que le chocolat se
-        répartisse sur tout le fond.</li>
-      <li class="etape">Placez le moule au congélateur juste le temps que le chocolat fige (3 minutes). Démoulez vos
-        financiers en douceur pour ne pas casser la coque de chocolat.</li>
-      <li class="etape">Laissez-les reprendre une température ambiante puis... dégustez !</li>
-    </ol>
+        <div class="max-w-4xl mx-auto">
+            <!-- Titre et image -->
+            <div class="mb-8">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Petits Financiers Orange & Chocolat</h1>
+                <img src="/images/petitsFinanciers.jpg" alt="Petits Financiers" class="w-full h-auto md:h-96 object-cover rounded-lg shadow-lg">
+            </div>
 
-    <img src="/images/petitsFinanciers.jpg" alt="Petits Financiers" class="image-recette">
+            <!-- Infos Clés -->
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <div class="text-center">
+                    <span class="text-gray-600 text-sm">Difficulté</span>
+                    <p class="font-bold text-lg">Facile</p>
+                </div>
+                <div class="text-center">
+                    <span class="text-gray-600 text-sm">Temps Total</span>
+                    <p class="font-bold text-lg">~35 min</p>
+                </div>
+                <div class="text-center">
+                    <span class="text-gray-600 text-sm">Portions</span>
+                    <p class="font-bold text-lg">~20 financiers</p>
+                </div>
+            </div>
 
-    <div class="nutrition">
-      <h2>Informations Nutritionnelles :</h2>
-      <ul>
-        <li>Calories : 70</li>
-        <li>Glucides : 7g</li>
-        <li>Protéines : 1.4g</li>
-        <li>Lipides : 4.1g</li>
-        <li>Fibres : 0.4g</li>
-      </ul>
-    </div>
-  </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Colonne des ingrédients -->
+                <aside class="md:col-span-1 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4 border-b pb-2">Ingrédients</h2>
+                    <ul class="space-y-2 text-gray-700 dark:text-gray-700">
+                        <li><span class="font-bold">125g</span> de poudre d'amandes</li>
+                        <li><span class="font-bold">200g</span> de sucre glace</li>
+                        <li><span class="font-bold">70g</span> de farine</li>
+                        <li><span class="font-bold">8</span> blancs d'oeufs</li>
+                        <li><span class="font-bold">150g</span> de beurre demi-sel fondu</li>
+                        <li><span class="font-bold">2</span> oranges (pour le zeste)</li>
+                        <li><span class="font-bold">25g</span> de cerneaux de noix</li>
+                        <li><span class="font-bold">1</span> gousse de vanille</li>
+                        <li><span class="font-bold">1 c.à.s</span> de quatre-épices</li>
+                        <li><span class="font-bold">200g</span> de chocolat noir (pour la coque)</li>
+                    </ul>
+                </aside>
 
-  <div class="notation">
-    <p>Noter la recette :</p>
-    <div class="etoiles" onclick="noterRecette(event)">
-      <span class="etoile" data-valeur="1">&#9733;</span>
-      <span class="etoile" data-valeur="2">&#9733;</span>
-      <span class="etoile" data-valeur="3">&#9733;</span>
-      <span class="etoile" data-valeur="4">&#9733;</span>
-      <span class="etoile" data-valeur="5">&#9733;</span>
-    </div>
-    <textarea class="commentaire" placeholder="Ajouter un commentaire..."></textarea>
-  </div>
+                <!-- Colonne de la préparation -->
+                <article class="md:col-span-2 bg-white p-6 rounded-lg shadow-md prose max-w-none">
+                    <h2 class="text-2xl font-bold mb-4 border-b pb-2">Préparation</h2>
+                    <ol class="space-y-4">
+                        <li>Préchauffez le four à 180°C (thermostat 6).</li>
+                        <li>Dans un grand saladier, mélangez tous les ingrédients secs : la poudre d'amandes, la farine, le sucre glace, les noix hachées et le quatre-épices.</li>
+                        <li>Râpez finement le zeste des deux oranges et grattez les graines de la gousse de vanille. Ajoutez-les au mélange sec et mélangez bien.</li>
+                        <li>Incorporez les blancs d'oeufs un par un en fouettant pour obtenir une pâte lisse et homogène.</li>
+                        <li>Versez le beurre fondu et remuez. Terminez en ajoutant le jus d'une demi-orange et mélangez énergiquement.</li>
+                        <li>Remplissez vos moules à financiers aux 2/3. Enfournez pour environ 15 minutes, jusqu'à ce qu'ils soient bien dorés.</li>
+                        <li>Laissez les financiers refroidir complètement sur une grille.</li>
+                        <li>Pendant ce temps, faites fondre le chocolat noir au bain-marie.</li>
+                        <li>Une fois les financiers refroidis, trempez leur base dans le chocolat fondu.</li>
+                        <li>Placez les financiers sur du papier sulfurisé et laissez le chocolat durcir au réfrigérateur pendant quelques minutes.</li>
+                    </ol>
+                </article>
+            </div>
+             <!-- Section Navigation -->
+            <div class="mt-12 flex justify-between items-center">
+                <a href="stJaques7.html" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                    &larr; Recette Précédente
+                </a>
+                <a href="briocheEtoile9.html" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition-colors">
+                    Recette Suivante &rarr;
+                </a>
+            </div>
+        </div>
+    </main>
 
-  <div class="recette">
-    <a href="/index.html" class="bouton">Retour à la page d'acceuil</a>
-  </div>
-  <div class="recette-suivante">
-    <a href="stJaques7.html">⬅️ Recette précédente</a>
-    <a href="briocheEtoile9.html">Recette suivante ➡️</a>
-  </div>
+    <footer class="text-center py-8 mt-12 text-gray-500 dark:text-gray-400 text-sm">
+        <p>&copy; 2025 Le Coin Gourmand. Tous droits réservés.</p>
+    </footer>
 
-  <script>
-    function noterRecette(event) {
-      const etoiles = document.querySelectorAll('.etoile');
-      const notationContainer = document.querySelector('.notation');
-      const valeurNotation = event.target.getAttribute('data-valeur');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const themeIconSun = document.getElementById('theme-icon-sun');
+            const themeIconMoon = document.getElementById('theme-icon-moon');
 
-      etoiles.forEach(etoile => {
-        etoile.classList.remove('notee');
-      });
+            function applyDarkMode(isDark) {
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    if(themeIconSun && themeIconMoon) {
+                        themeIconSun.classList.add('hidden');
+                        themeIconMoon.classList.remove('hidden');
+                    }
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    if(themeIconSun && themeIconMoon) {
+                        themeIconSun.classList.remove('hidden');
+                        themeIconMoon.classList.add('hidden');
+                    }
+                }
+            }
 
-      for (let i = 0; i < valeurNotation; i++) {
-        etoiles[i].classList.add('notee');
-      }
+            if(darkModeToggle) {
+                darkModeToggle.addEventListener('click', () => {
+                    const isDarkMode = document.documentElement.classList.toggle('dark');
+                    localStorage.setItem('darkMode', isDarkMode);
+                    applyDarkMode(isDarkMode);
+                });
+            }
 
-      // Récupérer le commentaire
-      const commentaire = document.querySelector('.commentaire').value;
-      console.log('Commentaire:', commentaire);
+            // Appliquer le thème au chargement de la page
+            const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+            applyDarkMode(savedDarkMode);
+        });
+    </script>
 
-      // Vous pouvez envoyer le commentaire à un serveur ici pour le sauvegarder, ou le stocker localement.
-    }
-  </script>
 </body>
-
 </html>

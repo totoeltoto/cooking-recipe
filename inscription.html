@@ -1,225 +1,67 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscription</title>
-  <style>
-    /* Style global */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f8f8;
-      color: #333;
-      text-align: center;
-      padding: 50px 0;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    /* Titre */
-    h1 {
-      font-size: 2.5rem;
-      color: #6c5ce7;
-      margin-bottom: 40px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    /* Conteneur de l'inscription */
-    .register-container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* Effet de focus sur le conteneur */
-    .register-container:hover {
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Champ de saisie et menu déroulant */
-    .input-field,
-    .select-field {
-      width: 100%;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .input-field:focus,
-    .select-field:focus {
-      border-color: #6c5ce7;
-      box-shadow: 0 0 8px rgba(108, 92, 231, 0.5);
-      outline: none;
-    }
-
-    /* Code secret */
-    .secret-code-container {
-      display: none;
-      margin-top: 15px;
-    }
-
-    /* Bouton de soumission */
-    .btn {
-      padding: 15px 30px;
-      background-color: #6c5ce7;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      width: 100%;
-    }
-
-    .btn:hover {
-      background-color: #5e4bd9;
-      transform: scale(1.05);
-    }
-
-    /* Liens pour la connexion ou inscription */
-    a {
-      color: #6c5ce7;
-      text-decoration: none;
-      font-size: 1rem;
-      margin-top: 15px;
-      display: block;
-      transition: color 0.3s ease;
-    }
-
-    a:hover {
-      color: #5e4bd9;
-    }
-
-    /* Mode sombre */
-    body.dark-mode {
-      background-color: #2d3436;
-      color: #ddd;
-    }
-
-    body.dark-mode h1 {
-      color: #bb86fc;
-    }
-
-    body.dark-mode .register-container {
-      background-color: #333;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    body.dark-mode .input-field,
-    body.dark-mode .select-field {
-      background-color: #444;
-      color: #fff;
-      border: 1px solid #555;
-    }
-
-    body.dark-mode .input-field:focus,
-    body.dark-mode .select-field:focus {
-      border-color: #bb86fc;
-      box-shadow: 0 0 8px rgba(187, 134, 252, 0.5);
-    }
-
-    body.dark-mode .btn {
-      background-color: #bb86fc;
-    }
-
-    body.dark-mode .btn:hover {
-      background-color: #9a67d6;
-    }
-
-    /* Animation de transition */
-    body,
-    .register-container,
-    .btn,
-    .input-field {
-      transition: all 0.3s ease;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - Le Coin Gourmand</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* On garde les styles du mode sombre pour la cohérence */
+        .dark { color: #e2e8f0; }
+        .dark body { background-color: #1a202c; }
+        .dark .bg-white { background-color: #2d3748; }
+        .dark .text-gray-800 { color: #e2e8f0; }
+        .dark .text-gray-500 { color: #a0aec0; }
+        .dark .border-gray-300 { border-color: #4a5568; }
+    </style>
 </head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
 
-<body>
+    <div class="absolute top-4 left-4">
+        <a href="index.html" class="text-green-600 hover:underline">&larr; Retour à l'accueil</a>
+    </div>
 
-  <h1>S'inscrire</h1>
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-green-600 mb-6">Créer un compte</h1>
 
-  <div class="register-container">
-    <form id="register-form">
-      <input type="email" id="email" class="input-field" placeholder="Votre email" required>
-      <input type="password" id="password" class="input-field" placeholder="Votre mot de passe" required>
+        <!-- Zone pour afficher les messages d'erreur ou de succès -->
+        <div id="message-container" class="mb-4 text-center text-sm"></div>
 
-      <!-- Menu déroulant pour le rôle -->
-      <select id="role" class="select-field" required>
-        <option value="utilisateur">Utilisateur</option>
-        <option value="admin">Administrateur</option>
-      </select>
+        <form id="register-form" novalidate>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Mot de passe</label>
+                <input type="password" id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
+            </div>
+            <div class="mb-6">
+                <label for="role" class="block text-gray-700 text-sm font-bold mb-2">Vous êtes ?</label>
+                <select id="role" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <option value="utilisateur">Un utilisateur gourmand</option>
+                    <option value="admin">Un administrateur</option>
+                    <option value="fondateur">Le fondateur</option>
+                </select>
+            </div>
 
-      <!-- Code secret, caché par défaut -->
-      <div id="secret-code-container" class="secret-code-container">
-        <input type="text" id="secret-code" class="input-field" placeholder="Code secret">
-      </div>
+            <!-- Champ pour le code secret, caché par défaut -->
+            <div id="secret-code-container" class="mb-6 hidden">
+                <label for="secret-code" class="block text-gray-700 text-sm font-bold mb-2">Code secret (admin ou fondateur)</label>
+                <input type="password" id="secret-code" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+            </div>
 
-      <button type="submit" class="btn">S'inscrire</button>
-    </form>
-  </div>
+            <button type="submit" class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-600 transition-colors">S'inscrire</button>
+        </form>
+        <p class="text-center text-gray-500 text-sm mt-6">
+            Déjà un compte ? <a href="login.html" class="text-green-600 hover:underline">Connectez-vous</a>
+        </p>
+    </div>
 
-  <script>
-    // Afficher ou masquer le champ du code secret en fonction du choix du rôle
-    document.getElementById('role').addEventListener('change', function () {
-      const secretCodeContainer = document.getElementById('secret-code-container');
-      const secretCodeInput = document.getElementById('secret-code');
-      if (this.value === 'admin') {
-        secretCodeContainer.style.display = 'block';
-        secretCodeInput.setAttribute('required', 'required'); // Rendre requis uniquement quand il est visible
-      } else {
-        secretCodeContainer.style.display = 'none';
-        secretCodeInput.removeAttribute('required'); // Retirer l'attribut 'required' si le champ est masqué
-      }
-    });
-
-    // Fonction pour enregistrer un utilisateur
-    document.getElementById('register-form').addEventListener('submit', function (e) {
-      e.preventDefault(); // Empêcher l'envoi du formulaire
-
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const role = document.getElementById('role').value;
-      const secretCode = document.getElementById('secret-code').value;
-
-      // Vérifier si l'utilisateur existe déjà
-      const users = JSON.parse(localStorage.getItem('users')) || [];
-      const existingUser = users.find(u => u.email === email);
-
-      if (existingUser) {
-        alert("Cet email est déjà utilisé.");
-      } else {
-        // Si l'utilisateur veut être administrateur, vérifier le code secret
-        if (role === 'admin' && secretCode !== '123') {  // Remplace "monCodeSecret123" par ton vrai code secret
-          alert("Code secret incorrect.");
-          return;
-        }
-
-        // Ajouter l'utilisateur au localStorage
-        users.push({ email, password, role });
-        localStorage.setItem('users', JSON.stringify(users));
-        alert("Inscription réussie!");
-        window.location.href = '/login.html'; // Rediriger vers la page de connexion
-      }
-    });
-  </script>
-
+    <!-- On lie le nouveau fichier JavaScript -->
+    <script src="inscription.js"></script>
 </body>
-
 </html>
+

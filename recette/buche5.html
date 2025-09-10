@@ -1,129 +1,162 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/difficultée/difficile.css">
-    <title>Recette Tarte poires amandines</title>
+    <title>Recette : Bûche de Noël - Le Coin Gourmand</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .dark { color: #e2e8f0; }
+        .dark body { background-color: #1a202c; }
+        .dark .bg-white { background-color: #2d3748; }
+        .dark .text-gray-800 { color: #e2e8f0; }
+        .dark .text-gray-600 { color: #a0aec0; }
+        .dark .border-gray-200 { border-color: #4a5568; }
+        .dark .prose-li:before { background-color: #e2e8f0; }
+    </style>
 </head>
+<body class="bg-gray-50">
 
-<body>
-    <header>
-        <h1>Buche de Noël</h1>
-
+    <!-- Header simple avec lien de retour et bouton mode sombre -->
+    <header class="bg-white shadow-sm dark:bg-gray-800 dark:border-b dark:border-gray-700">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/index.html" class="text-green-600 font-bold hover:underline text-lg">
+                &larr; Le Coin Gourmand
+            </a>
+            <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="Changer le thème">
+              <svg id="theme-icon-sun" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+              </svg>
+          </button>
+        </div>
     </header>
-    <div class="recette">
-        <h2>Difficultée :</h2>
-        <p class="difficulte"><b>Difficile</b></p>
-        <h2>Ingrédients :</h2>
-        <h3>Pour le biscuit de la bûche</h3>
-        <ul class="ingredient">
-            <li>30g de beurre</li>
-            <li>1 sachet de levure</li>
-            <li>100g de farine tamisée</li>
-            <li>100g de sucre en poudre</li>
-            <li>4 oeufs</li>
-        </ul>
 
-        <h3>Pour la crème au beurre au pralin</h3>
-        <ul class="ingredient">
-            <li>60g de chocolat</li>
-            <li>200g de beurre</li>
-            <li>250g de sucre en poudre</li>
-            <li>100g de noisettes grillées</li>
-            <li>4 jaunes d'oeufs</li>
-            <li>1 cuillère à café de farine de maïs</li>
-            <li>25cl de lait</li>
-        </ul>
+    <main class="container mx-auto px-4 py-8">
 
-        <h2>Préparation :</h2>
-        <ol class="etapes">
-            <li class="etape">Préparation du biscuit. Préchauffer le four à 200°C (thermostat 6-7). Travailler dans une
-                terrine le sucre en poudre et les jaunes d'oeufs puis ajouter la farine tamisée avec la levure puis les
-                blancs d'oeufs battus en neige.</li>
-            <li class="etape">Enfin, ajouter le beurre fondu.</li>
-            <li class="etape">Placer sur une plaque en tôle une feuille de papier alu bien beurrée, y étaler la pâte à
-                biscuit en lui donnant une épaisseur régulière d'1 cm.</li>
-            <li class="etape">Faites cuire dans un four chaud 8 à 10 minutes en surveillant.</li>
-            <li class="etape">A la sortie du four, démouler l'abaisse sur votre plan de travail préalablement beurré et
-                recouvrir d'un torchon. Laisser reposer quelques minutes puis retirer le torchon et délicatement
-                l'aluminium (la pâte reste moelleuse).</li>
-            <li class="etape">Préparation de la crème au beurre au pralin. Faire cuire au caramel dans un poêlon 100 g
-                de sucre avec les noisettes.</li>
-            <li class="etape">Réduire en poudre au robot lorsque le caramel est refroidi.</li>
-            <li class="etape">Travailler dans une casserole 150 g sucre et les jaunes d'oeufs.</li>
-            <li class="etape">Y ajouter la farine de maïs et délayer avec le lait bouillant.</li>
-            <li class="etape">Lier cette crème sur feu très doux et tourner avec la spatule sans jamais laisser
-                bouillir, laisser épaissir.</li>
-            <li class="etape">Laisser bien refroidir au frais, c'est très important !</li>
-            <li class="etape">Fouetter le beurre ramolli dans une terrine et incorporer petit à petit la crème préparée
-                et bien refroidie. Ajouter le pralin à la fin.</li>
-            <li class="etape">Prélever 1 tiers de cette crème au beurre pralinée et ajouter le chocolat fondu au
-                bain-marie et refroidi. Mettre en réserve cette crème au chocolat destinée à masquer l'extérieur de la
-                bûche.</li>
-            <li class="etape">Dressage. Étaler la crème sur l'abaisse pas complètement refroidie (la crème pénètre mieux
-                le gâteau si le biscuit est encore un peu tiède) en une épaisseur régulière puis la rouler sur
-                elle-même.</li>
-            <li class="etape">Pour faire plus joli, couper les 2 extrémités. Garder une des extrémités pour décorer la
-                bûche comme une sorte de nœud sur le dessus. Napper de la crème chocolat.</li>
-            <li class="etape">Bien la protéger de papier aluminium et la mettre au frais plusieurs heures.</li>
-            <li class="etape">Saupoudrer de sucre glace et ajouter des sujets de décoration au moment de servir.</li>
-        </ol>
+        <div class="max-w-4xl mx-auto">
+            <!-- Titre et image -->
+            <div class="mb-8">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Bûche de Noël 🎅</h1>
+                <img src="/images/buche.jpg" alt="Bûche de Noël" class="w-full h-auto md:h-96 object-cover rounded-lg shadow-lg">
+            </div>
 
-        <img src="/images/buche.jpg" alt="Buche de Noël" class="image-recette">
+            <!-- Infos Clés -->
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <div class="text-center">
+                    <span class="text-gray-600 text-sm">Difficulté</span>
+                    <p class="font-bold text-lg">Difficile</p>
+                </div>
+                <div class="text-center">
+                    <span class="text-gray-600 text-sm">Temps Total</span>
+                    <p class="font-bold text-lg">~2h</p>
+                </div>
+                <div class="text-center">
+                    <span class="text-gray-600 text-sm">Portions</span>
+                    <p class="font-bold text-lg">8-10 personnes</p>
+                </div>
+            </div>
 
-        <div class="nutrition">
-            <h2>Informations Nutritionnelles :</h2>
-            <ul>
-                <li>Calories : 320</li>
-                <li>Protéines : 4.2g</li>
-                <li>Glucides : 36g</li>
-                <li>Lipides : 19.7g</li>
-                <li>Fibres : 1.3g</li>
-            </ul>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Colonne des ingrédients -->
+                <aside class="md:col-span-1 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4 border-b pb-2">Ingrédients</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-700 dark:text-gray-300">Pour le biscuit :</h3>
+                            <ul class="space-y-2 mt-2 list-disc list-inside">
+                                <li><span class="font-bold">4</span> oeufs</li>
+                                <li><span class="font-bold">100g</span> de sucre</li>
+                                <li><span class="font-bold">100g</span> de farine tamisée</li>
+                                <li><span class="font-bold">1</span> sachet de levure</li>
+                                <li><span class="font-bold">30g</span> de beurre fondu</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-700 dark:text-gray-300">Pour la crème pralinée :</h3>
+                            <ul class="space-y-2 mt-2 list-disc list-inside">
+                                <li><span class="font-bold">25cl</span> de lait</li>
+                                <li><span class="font-bold">4</span> jaunes d'oeufs</li>
+                                <li><span class="font-bold">250g</span> de sucre</li>
+                                <li><span class="font-bold">1 c.à.c</span> de Maïzena</li>
+                                <li><span class="font-bold">200g</span> de beurre mou</li>
+                                <li><span class="font-bold">100g</span> de noisettes</li>
+                                <li><span class="font-bold">60g</span> de chocolat noir</li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Colonne de la préparation -->
+                <article class="md:col-span-2 bg-white p-6 rounded-lg shadow-md prose max-w-none">
+                    <h2 class="text-2xl font-bold mb-4 border-b pb-2">Préparation</h2>
+                    <ol class="space-y-4">
+                        <li><strong>Le biscuit :</strong> Préchauffez le four à 200°C. Séparez les blancs des jaunes d'oeufs. Fouettez les jaunes avec le sucre jusqu'à ce que le mélange blanchisse. Incorporez la farine et la levure, puis délicatement les blancs montés en neige. Finissez par le beurre fondu.</li>
+                        <li>Étalez la pâte sur une plaque recouverte de papier sulfurisé sur 1 cm d'épaisseur. Enfournez pour 8-10 minutes. À la sortie du four, roulez le biscuit dans un torchon humide et laissez refroidir.</li>
+                        <li><strong>Le pralin :</strong> Faites un caramel à sec avec 100g de sucre, ajoutez les noisettes grillées, versez sur une plaque et laissez refroidir. Mixez le tout très finement pour obtenir une poudre de pralin.</li>
+                        <li><strong>La crème :</strong> Fouettez les 4 jaunes d'oeufs avec les 150g de sucre restants et la Maïzena. Portez le lait à ébullition et versez-le sur le mélange sans cesser de fouetter. Remettez sur feu doux et faites épaissir sans bouillir, comme une crème pâtissière. Laissez refroidir complètement.</li>
+                        <li>Travaillez le beurre mou au batteur pour le rendre pommade. Incorporez-y la crème pâtissière froide, cuillère par cuillère. Ajoutez ensuite la poudre de pralin.</li>
+                        <li><strong>Le glaçage :</strong> Prélevez 1/3 de la crème et ajoutez-y le chocolat noir fondu et refroidi.</li>
+                        <li><strong>Montage :</strong> Déroulez délicatement le biscuit. Étalez les 2/3 de la crème au pralin (sans chocolat). Roulez à nouveau le biscuit bien serré. Coupez les extrémités pour un rendu net. Recouvrez toute la bûche avec la crème au chocolat. Striez avec une fourchette pour imiter l'écorce.</li>
+                        <li>Réservez au frais plusieurs heures avant de servir. Décorez avec du sucre glace.</li>
+                    </ol>
+                </article>
+            </div>
+             <!-- Section Navigation -->
+            <div class="mt-12 flex justify-between items-center">
+                <a href="poireAmandine4.html" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                    &larr; Recette Précédente
+                </a>
+                <a href="pancakes6.html" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition-colors">
+                    Recette Suivante &rarr;
+                </a>
+            </div>
         </div>
-    </div>
+    </main>
 
-    <div class="notation">
-        <p>Noter la recette :</p>
-        <div class="etoiles" onclick="noterRecette(event)">
-            <span class="etoile" data-valeur="1">&#9733;</span>
-            <span class="etoile" data-valeur="2">&#9733;</span>
-            <span class="etoile" data-valeur="3">&#9733;</span>
-            <span class="etoile" data-valeur="4">&#9733;</span>
-            <span class="etoile" data-valeur="5">&#9733;</span>
-        </div>
-    <textarea class="commentaire" placeholder="Ajouter un commentaire..."></textarea>
-    </div>
-
-    <div class="recette">
-        <a href="/index.html" class="bouton">Retour à la page d'acceuil</a>
-    </div>
-    <div class="recette-suivante">
-        <a href="poireAmandine4.html">⬅️ Recette précédente</a>
-        <a href="pancakes6.html">Recette suivante ➡️</a>
-    </div>
+    <footer class="text-center py-8 mt-12 text-gray-500 dark:text-gray-400 text-sm">
+        <p>&copy; 2025 Le Coin Gourmand. Tous droits réservés.</p>
+    </footer>
 
     <script>
-        function noterRecette(event) {
-            const etoiles = document.querySelectorAll('.etoile');
-            const notationContainer = document.querySelector('.notation');
-            const valeurNotation = event.target.getAttribute('data-valeur');
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const themeIconSun = document.getElementById('theme-icon-sun');
+            const themeIconMoon = document.getElementById('theme-icon-moon');
 
-            etoiles.forEach(etoile => {
-                etoile.classList.remove('notee');
-            });
-
-            for (let i = 0; i < valeurNotation; i++) {
-                etoiles[i].classList.add('notee');
+            function applyDarkMode(isDark) {
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    if(themeIconSun && themeIconMoon) {
+                        themeIconSun.classList.add('hidden');
+                        themeIconMoon.classList.remove('hidden');
+                    }
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    if(themeIconSun && themeIconMoon) {
+                        themeIconSun.classList.remove('hidden');
+                        themeIconMoon.classList.add('hidden');
+                    }
+                }
             }
 
-            // Récupérer le commentaire
-            const commentaire = document.querySelector('.commentaire').value;
-            console.log('Commentaire:', commentaire);
+            if(darkModeToggle) {
+                darkModeToggle.addEventListener('click', () => {
+                    const isDarkMode = document.documentElement.classList.toggle('dark');
+                    localStorage.setItem('darkMode', isDarkMode);
+                    applyDarkMode(isDarkMode);
+                });
+            }
 
-            // Vous pouvez envoyer le commentaire à un serveur ici pour le sauvegarder, ou le stocker localement.
-        }
+            // Appliquer le thème au chargement de la page
+            const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+            applyDarkMode(savedDarkMode);
+        });
     </script>
+
 </body>
+</html>
