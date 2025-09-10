@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelEditButton = document.getElementById('cancel-edit-button');
     const logoutButton = document.getElementById('logout-button');
     const recipesSection = document.getElementById('recipes-section');
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const themeIconSun = document.getElementById('theme-icon-sun');
+    const themeIconMoon = document.getElementById('theme-icon-moon');
     
     // Modal d'avertissement
     const warningModal = document.getElementById('warning-modal');
@@ -33,6 +36,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewWarningsList = document.getElementById('view-warnings-list');
     const closeViewWarningsBtn = document.getElementById('close-view-warnings-btn');
 
+    // --- GESTION DU MODE SOMBRE (STYLE DE SCRIPT.JS) ---
+    function applyDarkMode(isDark) {
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+            themeIconSun.classList.add('hidden');
+            themeIconMoon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeIconSun.classList.remove('hidden');
+            themeIconMoon.classList.add('hidden');
+        }
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        const isDarkMode = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('darkMode', isDarkMode);
+        applyDarkMode(isDarkMode);
+    });
 
     // --- GESTION DES DONNÉES ET DE L'ÉTAT ---
     let users = JSON.parse(localStorage.getItem('users')) || [];
@@ -365,6 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- INITIALISATION ---
     function init() {
+        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        applyDarkMode(savedDarkMode);
         updateStats();
         displayUsers();
         

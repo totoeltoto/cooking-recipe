@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +14,12 @@
             font-family: 'Inter', sans-serif;
             transition: background-color 0.3s, color 0.3s;
         }
+
         .suggestions {
             max-height: 200px;
             overflow-y: auto;
         }
+
         /* Classe pour cacher visuellement un élément tout en le gardant accessible */
         .visually-hidden {
             position: absolute;
@@ -28,42 +31,152 @@
             clip: rect(0, 0, 0, 0);
             border: 0;
         }
+
         /* Styles pour le mode sombre */
         .dark {
             color: #e2e8f0;
         }
+
         .dark body {
             background-color: #1a202c;
         }
-        .dark .bg-white { background-color: #2d3748; }
-        .dark .text-gray-800 { color: #e2e8f0; }
-        .dark .text-gray-500 { color: #a0aec0; }
-        .dark .border-gray-300 { border-color: #4a5568; }
-        .dark .hover\:bg-gray-100:hover { background-color: #4a5568; }
-        .dark .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
 
+        .dark .bg-white {
+            background-color: #2d3748;
+        }
+
+        .dark .text-gray-800 {
+            color: #e2e8f0;
+        }
+
+        .dark .text-gray-500 {
+            color: #a0aec0;
+        }
+
+        .dark .border-gray-300 {
+            border-color: #4a5568;
+        }
+
+        .dark .hover\:bg-gray-100:hover {
+            background-color: #4a5568;
+        }
+
+        .dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* --- STYLES POUR L'ANIMATION DU LOGO --- */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9fafb;
+            /* bg-gray-50 */
+            animation: fadeOutSplashScreen 1s 2.5s forwards;
+        }
+
+        .dark #splash-screen {
+            background-color: #1a202c;
+            /* Le fond du splash en mode sombre */
+        }
+
+        /* L'animation est maintenant appliquée au conteneur du logo et du sous-titre */
+        #splash-content.animate {
+            animation: animateSplashContent 3s ease-in-out forwards;
+        }
+
+        #splash-subtitle {
+            opacity: 0;
+            animation: fadeInSubtitle 1s 0.8s forwards;
+            /* Apparition en fondu après 0.8s */
+        }
+
+        /* Cacher l'en-tête principal pendant l'animation */
+        header.main-header {
+            opacity: 0;
+            animation: fadeInHeader 1s 2.5s forwards;
+        }
+
+        @keyframes animateSplashContent {
+            0% {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+
+            30% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            70% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: var(--logo-end-transform, translate(0, 0) scale(1));
+                /* La position finale est une variable CSS */
+            }
+        }
+
+        @keyframes fadeInSubtitle {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOutSplashScreen {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes fadeInHeader {
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
+
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
-    <!-- En-tête de la page -->
-    <header class="container mx-auto px-4 py-8 flex justify-between items-center">
+    <!-- Écran de chargement avec le logo animé -->
+    <div id="splash-screen">
+        <div id="splash-content" class="text-center">
+            <h1 id="splash-logo" class="text-4xl font-bold text-green-600">Le Coin Gourmand</h1>
+            <p id="splash-subtitle" class="text-gray-500 mt-1">Toutes nos recettes, à portée de clic.</p>
+        </div>
+    </div>
+
+    <!-- En-tête de la page (initialement caché) -->
+    <header class="main-header container mx-auto px-4 py-8 flex justify-between items-center">
         <div>
-            <h1 class="text-4xl font-bold text-green-600">Le Coin Gourmand</h1>
+            <!-- Ajout d'un ID ici pour le cibler en JS -->
+            <h1 id="header-logo" class="text-4xl font-bold text-green-600">Le Coin Gourmand</h1>
             <p class="text-gray-500">Toutes nos recettes, à portée de clic.</p>
         </div>
         <div class="flex items-center space-x-4">
-          <div id="user-info" class="text-sm font-semibold">
-              <!-- Zone dynamique pour l'utilisateur connecté -->
-          </div>
-          <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="Changer le thème">
-              <svg id="theme-icon-sun" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-              </svg>
-              <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-              </svg>
-          </button>
+            <div id="user-info" class="text-sm font-semibold">
+                <!-- Zone dynamique pour l'utilisateur connecté -->
+            </div>
+            <button id="dark-mode-toggle"
+                class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                aria-label="Changer le thème">
+                <svg id="theme-icon-sun" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
         </div>
     </header>
 
@@ -74,30 +187,57 @@
         <section class="mb-8">
             <div class="relative">
                 <label for="search-input" class="visually-hidden">Rechercher une recette</label>
-                <input type="text" id="search-input" class="w-full p-4 pr-16 text-lg border-2 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Rechercher une recette, un ingrédient...">
-                <button id="search-button" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-green-500 text-white p-2 rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input type="text" id="search-input"
+                    class="w-full p-4 pr-16 text-lg border-2 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="Rechercher une recette, un ingrédient...">
+                <button id="search-button"
+                    class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-green-500 text-white p-2 rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
                 </button>
             </div>
             <ul id="suggestion-list" class="mt-2 bg-white border border-gray-300 rounded-lg shadow-md"></ul>
         </section>
 
         <!-- Filtres de navigation -->
-        <nav class="mb-8">
-            <h2 class="text-xl font-semibold mb-4">Catégories</h2>
-            <div id="filters-container" class="flex flex-wrap gap-3">
-                <button class="filter-button bg-green-500 text-white px-4 py-2 rounded-full" data-filter="tous">Tout</button>
-                <button class="filter-button bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-full border border-gray-300" data-filter="plat">Plats</button>
-                <button class="filter-button bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-full border border-gray-300" data-filter="dessert">Desserts</button>
-                <button class="filter-button bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-full border border-gray-300" data-filter="aperitif">Apéritifs</button>
+        <nav class="mb-8 flex items-center justify-between">
+            <div>
+                <h2 class="text-xl font-semibold mb-4">Catégories</h2>
+                <div id="filters-container" class="flex flex-wrap gap-3">
+                    <button class="filter-button bg-green-500 text-white px-4 py-2 rounded-full"
+                        data-filter="tous">Tout</button>
+                    <button
+                        class="filter-button bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-full border border-gray-300"
+                        data-filter="plat">Plats</button>
+                    <button
+                        class="filter-button bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-full border border-gray-300"
+                        data-filter="dessert">Desserts</button>
+                    <button
+                        class="filter-button bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-full border border-gray-300"
+                        data-filter="aperitif">Apéritifs</button>
+                </div>
+            </div>
+
+            <!-- MENU DE TRI -->
+            <div class="flex items-center gap-3">
+                <label for="sort-select" class="font-semibold">Trier par :</label>
+                <select id="sort-select" class="border border-gray-300 rounded-lg px-3 py-2">
+                    <option value="default">Par défaut</option>
+                    <option value="time-asc">⏱ Temps (croissant)</option>
+                    <option value="time-desc">⏱ Temps (décroissant)</option>
+                    <option value="difficulty">💪 Difficulté (Facile → Difficile)</option>
+                </select>
             </div>
         </nav>
+
 
         <!-- Liste des recettes (maintenant vide, sera remplie par script.js) -->
         <section>
             <h2 class="visually-hidden">Liste des recettes</h2>
             <ul id="recipe-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              <!-- Le contenu sera généré dynamiquement par JavaScript -->
+                <!-- Le contenu sera généré dynamiquement par JavaScript -->
             </ul>
         </section>
     </main>
@@ -110,5 +250,5 @@
     <script src="script.js"></script>
 
 </body>
-</html>
 
+</html>

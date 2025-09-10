@@ -1,12 +1,9 @@
 /**
- * Attend que le contenu de la page soit entièrement chargé avant d'exécuter le script.
- * C'est une bonne pratique pour s'assurer que tous les éléments HTML sont disponibles.
+ * script.js - version corrigée avec tri fonctionnel
  */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- BASE DE DONNÉES DES RECETTES ---
-    // Toutes les informations sont centralisées ici. Pour ajouter une recette,
-    // il suffit d'ajouter un nouvel objet dans ce tableau.
+    // --- BASE DES RECETTES ---
     const recipes = [
         { id: 1, name: "Salade de tomate mozzarella", href: "recette/tomateMozza1.html", image: "images/salade.jpg", type: "plat", time: "10 min", difficulty: "Facile" },
         { id: 2, name: "Cookie", href: "recette/cookie2.html", image: "images/cookie.jpg", type: "dessert", time: "25 min", difficulty: "Facile" },
@@ -20,10 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 10, name: "Tartiflette", href: "recette/tartiflette10.html", image: "images/Tartiflette.jpg", type: "plat", time: "50 min", difficulty: "Facile" },
         { id: 11, name: "Galette des Rois", href: "recette/galetteDesRois11.html", image: "images/galette.jpg", type: "dessert", time: "1h 15", difficulty: "Moyen" },
         { id: 12, name: "Verrines Guacamole Crevettes", href: "recette/verrinesCrevettes12.html", image: "images/verrine.jpg", type: "aperitif", time: "20 min", difficulty: "Facile" },
-        { id: 13, name: "Crème brulé", href: "recette/cremeBrulee13.html", image: "images/creme-brulee.jpg", type: "dessert", time: "20 min", difficulty: "Facile" }
+        { id: 13, name: "Crème brulé", href: "recette/cremeBrulee13.html", image: "images/creme-brulee.jpg", type: "dessert", time: "20 min", difficulty: "Facile" },
+        { id: 14, name: "Gyoza Japonais", href: "recette/gyoza14.html", image: "images/gyoza.jpg", type: "plat", time: "40 min", difficulty: "Moyen" },
+        { id: 15, name: "Mini Quiches Apéritives", href: "recette/miniQuiches15.html", image: "images/mini-quiches.jpg", type: "aperitif", time: "30 min", difficulty: "Facile" }
     ];
 
-    // --- SÉLECTION DES ÉLÉMENTS DU DOM ---
+    // --- DOM ---
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const themeIconSun = document.getElementById('theme-icon-sun');
     const themeIconMoon = document.getElementById('theme-icon-moon');
@@ -32,31 +31,82 @@ document.addEventListener('DOMContentLoaded', () => {
     const filtersContainer = document.getElementById('filters-container');
     const recipeList = document.getElementById('recipe-list');
     const userInfo = document.getElementById('user-info');
-    
-    // --- GESTION DE L'UTILISATEUR ---
+    const splashScreen = document.getElementById('splash-screen');
+    const splashContent = document.getElementById('splash-content');
+    const splashLogo = document.getElementById('splash-logo');
+    const headerLogo = document.getElementById('header-logo');
+    const sortSelect = document.getElementById('sort-select');
+
+    // --- Utilisateur (session) ---
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    if (currentUser && !currentUser.favorites) {
-        currentUser.favorites = []; // Initialise les favoris si l'utilisateur n'en a pas
-    }
+    if (currentUser && !currentUser.favorites) currentUser.favorites = [];
+
+    // --- Variables d'état ---
+    let currentDisplayedRecipes = [...recipes]; // le sous-ensemble affiché (filtré/recherché)
     
-    // --- INJECTION DES STYLES CSS POUR LES FAVORIS ---
+    // --- Injection styles favoris (léger) ---
     const style = document.createElement('style');
-    style.innerHTML = `
-        .favorite-btn.favorited svg {
-            fill: #f59e0b; /* Couleur de remplissage pour l'étoile favorite */
-            stroke: #f59e0b;
-        }
-    `;
+    style.innerHTML = `.favorite-btn.favorited svg { fill: #f59e0b; stroke: #f59e0b; }`;
     document.head.appendChild(style);
 
+    // --- ANIMATION LOGO (inchangé) ---
+    function setAndRunLogoAnimation() {
+        if (!splashLogo || !headerLogo || !splashContent) return;
+        const headerRect = headerLogo.getBoundingClientRect();
+        const splashRect = splashLogo.getBoundingClientRect();
+        const deltaX = headerRect.left - splashRect.left;
+        const deltaY = headerRect.top - splashRect.top;
+        splashContent.style.setProperty('--logo-end-transform', `translate(${deltaX}px, ${deltaY}px) scale(1)`);
+        splashContent.classList.add('animate');
+    }
 
-    // --- FONCTIONS PRINCIPALES ---
+    // --- PARSEUR DE TEMPS robuste ---
+    function parseTimeToMinutes(timeStr) {
+        if (!timeStr) return 0;
+        const s = String(timeStr).toLowerCase();
+        let hours = 0, minutes = 0;
+        const hMatch = s.match(/(\d+)\s*h/);
+        if (hMatch) hours = parseInt(hMatch[1], 10);
+        // minutes with 'min'
+        const mMatch = s.match(/(\d+)\s*min/);
+        if (mMatch) minutes = parseInt(mMatch[1], 10);
+        else {
+            // case like "1h 30" or "1h30" (number after h)
+            const afterH = s.match(/h\s*(\d+)/);
+            if (afterH) minutes = parseInt(afterH[1], 10);
+            else {
+                // case like "45" -> assume minutes
+                const onlyNum = s.match(/^(\d+)\s*$/);
+                if (onlyNum) minutes = parseInt(onlyNum[1], 10);
+            }
+        }
+        return hours * 60 + minutes;
+    }
 
-    /**
-     * Génère et affiche les cartes de recettes dans le HTML.
-     * @param {Array} recipesToDisplay - Le tableau des recettes à afficher.
-     */
+    // --- TRI ---
+    function sortRecipes(recipesArray, criteria) {
+        if (!criteria || criteria === 'default') return recipesArray;
+        const arr = [...recipesArray];
+        if (criteria === 'time-asc') {
+            arr.sort((a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time));
+            return arr;
+        }
+        if (criteria === 'time-desc') {
+            arr.sort((a, b) => parseTimeToMinutes(b.time) - parseTimeToMinutes(a.time));
+            return arr;
+        }
+        if (criteria === 'difficulty') {
+            const order = { 'Facile': 1, 'Moyen': 2, 'Difficile': 3 };
+            arr.sort((a, b) => (order[a.difficulty] || 99) - (order[b.difficulty] || 99));
+            return arr;
+        }
+        return arr;
+    }
+
+    // --- AFFICHAGE DES RECETTES ---
     function displayRecipes(recipesToDisplay) {
+        // Garde en mémoire l'ensemble affiché (pour tri ultérieur)
+        currentDisplayedRecipes = Array.isArray(recipesToDisplay) ? [...recipesToDisplay] : [];
         recipeList.innerHTML = '';
         if (recipesToDisplay.length === 0) {
             recipeList.innerHTML = `<p class="col-span-full text-center text-gray-500">Aucune recette ne correspond à votre recherche.</p>`;
@@ -65,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         recipesToDisplay.forEach(recipe => {
             const listItem = document.createElement('li');
-            listItem.className = 'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow relative'; // Ajout de 'relative' pour le positionnement du bouton
+            listItem.className = 'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow relative';
 
             const isFavorited = currentUser ? currentUser.favorites.includes(recipe.id) : false;
 
@@ -76,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </svg>
                 </button>
             ` : '';
-            
+
             listItem.innerHTML = `
                 ${favoriteButtonHTML}
                 <a href="${recipe.href}" class="block">
@@ -100,18 +150,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- GESTION DES CLICS (FAVORIS INCLUS) ---
+    // --- CLICS (favoris) ---
     recipeList.addEventListener('click', (event) => {
         const favoriteBtn = event.target.closest('.favorite-btn');
         if (favoriteBtn) {
-            event.preventDefault(); // Empêche de suivre le lien de la carte
+            event.preventDefault();
             event.stopPropagation();
-
-            if (!currentUser) return; // Sécurité, même si le bouton ne devrait pas être là
-
+            if (!currentUser) return;
             const recipeId = parseInt(favoriteBtn.dataset.recipeId, 10);
             const isFavorited = favoriteBtn.classList.toggle('favorited');
-
             if (isFavorited) {
                 if (!currentUser.favorites.includes(recipeId)) currentUser.favorites.push(recipeId);
             } else {
@@ -121,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- GESTION DU MODE SOMBRE ---
+    // --- MODE SOMBRE ---
     function applyDarkMode(isDark) {
         if (isDark) {
             document.documentElement.classList.add('dark');
@@ -133,15 +180,13 @@ document.addEventListener('DOMContentLoaded', () => {
             themeIconMoon.classList.add('hidden');
         }
     }
-
     darkModeToggle.addEventListener('click', () => {
         const isDarkMode = document.documentElement.classList.toggle('dark');
         localStorage.setItem('darkMode', isDarkMode);
         applyDarkMode(isDarkMode);
     });
 
-
-    // --- GESTION DES FILTRES ---
+    // --- FILTRES ---
     filtersContainer.addEventListener('click', (event) => {
         if (event.target.tagName === 'BUTTON') {
             document.querySelectorAll('#filters-container button').forEach(btn => {
@@ -152,20 +197,18 @@ document.addEventListener('DOMContentLoaded', () => {
             event.target.classList.remove('bg-white', 'text-gray-800', 'border', 'border-gray-300');
 
             const filterType = event.target.dataset.filter;
-            
             let filteredRecipes;
-            if (filterType === 'tous') {
-                filteredRecipes = recipes;
-            } else if (filterType === 'favoris') {
-                filteredRecipes = recipes.filter(recipe => currentUser.favorites.includes(recipe.id));
-            } else {
-                filteredRecipes = recipes.filter(recipe => recipe.type === filterType);
-            }
-            displayRecipes(filteredRecipes);
+            if (filterType === 'tous') filteredRecipes = recipes;
+            else if (filterType === 'favoris') filteredRecipes = currentUser ? recipes.filter(recipe => currentUser.favorites.includes(recipe.id)) : [];
+            else filteredRecipes = recipes.filter(recipe => recipe.type === filterType);
+
+            // applique le tri courant
+            const criteria = sortSelect ? sortSelect.value : 'default';
+            displayRecipes(sortRecipes(filteredRecipes, criteria));
         }
     });
 
-    // --- GESTION DE LA RECHERCHE ET SUGGESTIONS ---
+    // --- RECHERCHE / SUGGESTIONS ---
     searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase().trim();
         suggestionList.innerHTML = '';
@@ -182,21 +225,32 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-    
+
     document.addEventListener('click', (e) => {
         if (!searchInput.contains(e.target)) suggestionList.innerHTML = '';
     });
-    
+
     searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             const query = searchInput.value.toLowerCase().trim();
             const searchResult = recipes.filter(r => r.name.toLowerCase().includes(query));
-            displayRecipes(searchResult);
+            const criteria = sortSelect ? sortSelect.value : 'default';
+            displayRecipes(sortRecipes(searchResult, criteria));
             suggestionList.innerHTML = '';
         }
     });
 
-    // --- GESTION DE L'UTILISATEUR (Exemple) ---
+    // --- TRI: écoute le select (si présent) ---
+    if (sortSelect) {
+        sortSelect.addEventListener('change', () => {
+            const criteria = sortSelect.value;
+            // tri sur l'ensemble actuellement affiché
+            const sorted = sortRecipes(currentDisplayedRecipes, criteria);
+            displayRecipes(sorted);
+        });
+    }
+
+    // --- USER INFO / ajout filtre favoris si connecté ---
     function setupUserInfo() {
         if (currentUser) {
             const hasAdminAccess = ['admin', 'fondateur', 'co-fondateur'].includes(currentUser.role);
@@ -205,12 +259,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button onclick="logout()" class="ml-2 text-sm text-red-500 hover:underline">Déconnexion</button>
                 ${hasAdminAccess ? '<a href="admin.html" class="ml-4 text-sm text-green-600 hover:underline">Panel Admin</a>' : ''}
             `;
-            // Ajoute le filtre "Favoris" si l'utilisateur est connecté
-            const favoriteFilter = document.createElement('button');
-            favoriteFilter.className = "filter-button bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-full border border-gray-300";
-            favoriteFilter.dataset.filter = "favoris";
-            favoriteFilter.innerHTML = "⭐ Mes favoris";
-            filtersContainer.appendChild(favoriteFilter);
+            // Ajoute le filtre "Favoris"
+            if (!document.querySelector('#filters-container button[data-filter="favoris"]')) {
+                const favoriteFilter = document.createElement('button');
+                favoriteFilter.className = "filter-button bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-full border border-gray-300";
+                favoriteFilter.dataset.filter = "favoris";
+                favoriteFilter.innerHTML = "⭐ Mes favoris";
+                filtersContainer.appendChild(favoriteFilter);
+            }
         } else {
             userInfo.innerHTML = `
                 <a href="login.html" class="hover:underline">Se connecter</a>
@@ -218,20 +274,28 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
     }
-    
+
     window.logout = function() {
         sessionStorage.removeItem('currentUser');
         window.location.reload();
     }
 
-    // --- INITIALISATION DE LA PAGE ---
+    // --- INITIALISATION ---
     function init() {
+        if (splashScreen) {
+            setTimeout(() => setAndRunLogoAnimation(), 100);
+            window.addEventListener('resize', setAndRunLogoAnimation);
+            setTimeout(() => { if (splashScreen) splashScreen.style.display = 'none'; }, 3500);
+        }
+
         const savedDarkMode = localStorage.getItem('darkMode') === 'true';
         applyDarkMode(savedDarkMode);
         setupUserInfo();
-        displayRecipes(recipes);
+
+        // Affiche avec tri par défaut si nécessaire
+        const initialCriteria = sortSelect ? sortSelect.value : 'default';
+        displayRecipes(sortRecipes(recipes, initialCriteria));
     }
 
     init();
 });
-

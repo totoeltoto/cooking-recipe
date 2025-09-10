@@ -22,6 +22,44 @@
         .modal-overlay {
             transition: opacity 0.3s ease-in-out;
         }
+
+        /* STYLES POUR LE MODE SOMBRE */
+        html.dark {
+            color-scheme: dark;
+        }
+        html.dark body {
+            background-color: #1a202c; /* gray-900 */
+            color: #e2e8f0; /* gray-300 */
+        }
+        html.dark .bg-white { background-color: #2d3748; /* gray-800 */ }
+        html.dark .bg-gray-100 { background-color: #1a202c; /* gray-900 */ }
+        html.dark .text-gray-800 { color: #e2e8f0; /* gray-300 */ }
+        html.dark .text-gray-700 { color: #cbd5e1; /* gray-400 */ }
+        html.dark .text-gray-600 { color: #a0aec0; /* gray-500 */ }
+        html.dark .text-gray-500 { color: #a0aec0; /* gray-500 */ }
+        html.dark .border-b-2.border-gray-200 { border-color: #4a5568; }
+        html.dark .border-gray-200 { border-color: #4a5568; /* gray-700 */ }
+        html.dark .border-gray-300 { border-color: #5a6678; /* gray-600 */ }
+        html.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+            border-color: #4a5568; /* gray-700 */
+        }
+        html.dark .hover\:bg-gray-50:hover { background-color: #374151; }
+        html.dark .hover\:bg-gray-200:hover { background-color: #4a5568; }
+        html.dark input, html.dark select, html.dark textarea {
+            background-color: #4a5568;
+            color: #e2e8f0;
+            border-color: #5a6678;
+        }
+        html.dark .bg-green-100 { background-color: #2d3748; }
+        html.dark .bg-blue-100 { background-color: #2d3748; }
+        html.dark .text-green-600 { color: #48bb78; }
+        html.dark .text-blue-600 { color: #4299e1; }
+        html.dark .hover\:text-green-600:hover { color: #68d391; }
+        html.dark .hover\:bg-yellow-100:hover, 
+        html.dark .hover\:bg-red-100:hover, 
+        html.dark .hover\:bg-blue-100:hover { 
+            background-color: #4a5568;
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
@@ -29,8 +67,16 @@
     <header class="bg-white shadow-sm sticky top-0 z-20">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-green-600">Panel d'Administration</h1>
-            <div>
-                <a href="index.html" class="text-gray-600 hover:text-green-600 mr-6 transition-colors">Retour à l'accueil</a>
+            <div class="flex items-center space-x-4">
+                <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="Changer le thème">
+                  <svg id="theme-icon-sun" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                  </svg>
+                  <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                  </svg>
+                </button>
+                <a href="index.html" class="text-gray-600 hover:text-green-600 transition-colors">Retour à l'accueil</a>
                 <button id="logout-button" class="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors shadow-sm">Déconnexion</button>
             </div>
         </div>
@@ -173,4 +219,3 @@
     <script src="admin.js"></script>
 </body>
 </html>
-
