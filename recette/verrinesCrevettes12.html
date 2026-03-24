@@ -1,145 +1,134 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recette : Verrines Guacamole Crevettes - Le Coin Gourmand</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .dark { color: #e2e8f0; }
-        .dark body { background-color: #1a202c; }
-        .dark .bg-white { background-color: #2d3748; }
-        .dark .text-gray-800 { color: #e2e8f0; }
-        .dark .text-gray-600 { color: #a0aec0; }
-        .dark .border-gray-200 { border-color: #4a5568; }
-        .dark .prose-li:before { background-color: #e2e8f0; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verrines Guacamole & Crevettes — Le Coin Gourmand</title>
+  <link rel="stylesheet" href="../recette.css">
 </head>
-<body class="bg-gray-50">
+<body>
 
-    <!-- Header simple avec lien de retour et bouton mode sombre -->
-    <header class="bg-white shadow-sm dark:bg-gray-800 dark:border-b dark:border-gray-700">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/index.html" class="text-green-600 font-bold hover:underline text-lg">
-                &larr; Le Coin Gourmand
-            </a>
-            <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="Changer le thème">
-              <svg id="theme-icon-sun" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-              </svg>
-              <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-              </svg>
-          </button>
-        </div>
-    </header>
+<header class="recipe-header">
+  <a href="/index.html" class="back-link">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    Le Coin Gourmand
+  </a>
+  <button id="dark-mode-toggle" aria-label="Changer le thème">
+    <svg id="theme-icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+    </svg>
+    <svg id="theme-icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none;">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+    </svg>
+  </button>
+</header>
 
-    <main class="container mx-auto px-4 py-8">
+<main>
 
-        <div class="max-w-4xl mx-auto">
-            <!-- Titre et image -->
-            <div class="mb-8">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Verrines Guacamole & Crevettes</h1>
-                <img src="/images/verrine.jpg" alt="Verrines de Guacamole et Crevettes" class="w-full h-auto md:h-96 object-cover rounded-lg shadow-lg">
-            </div>
+  <!-- Hero -->
+  <div class="recipe-hero">
+    <h1>Verrines Guacamole & Crevettes</h1>
+    <img src="/images/verrine.jpg" alt="Verrines Guacamole Crevettes" class="hero-img" loading="eager">
+  </div>
 
-            <!-- Infos Clés -->
-            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                <div class="text-center">
-                    <span class="text-gray-600 text-sm">Difficulté</span>
-                    <p class="font-bold text-lg">Facile</p>
-                </div>
-                <div class="text-center">
-                    <span class="text-gray-600 text-sm">Temps Total</span>
-                    <p class="font-bold text-lg">~20 min</p>
-                </div>
-                <div class="text-center">
-                    <span class="text-gray-600 text-sm">Portions</span>
-                    <p class="font-bold text-lg">6 verrines</p>
-                </div>
-            </div>
+  <!-- Info bar -->
+  <div class="info-bar">
+    <div class="info-item">
+      <span class="label">Difficulté</span>
+      <span class="value diff-badge diff-facile">Facile</span>
+    </div>
+    <div class="info-item">
+      <span class="label">Temps total</span>
+      <span class="value">~20 min</span>
+    </div>
+    <div class="portions-ctrl">
+      <span class="label" id="portion-label">verrines</span>
+      <div class="portions-row">
+        <button class="btn-qty" id="btn-minus" aria-label="Moins">−</button>
+        <input type="number" id="portions-input" value="6" min="2" max="24">
+        <button class="btn-qty" id="btn-plus" aria-label="Plus">+</button>
+      </div>
+    </div>
+  </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Colonne des ingrédients -->
-                <aside class="md:col-span-1 bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-2xl font-bold mb-4 border-b pb-2">Ingrédients</h2>
-                    <ul class="space-y-2 text-gray-700 dark:text-gray-700">
-                        <li><span class="font-bold">2</span> avocats bien mûrs</li>
-                        <li><span class="font-bold">1</span> citron vert</li>
-                        <li><span class="font-bold">1/2</span> oignon rouge</li>
-                        <li><span class="font-bold">200g</span> de crevettes roses cuites</li>
-                        <li>Quelques brins de coriandre fraîche</li>
-                        <li>Piment d'Espelette</li>
-                        <li>Sel, poivre</li>
-                    </ul>
-                </aside>
+  <!-- Layout -->
+  <div class="recipe-layout">
 
-                <!-- Colonne de la préparation -->
-                <article class="md:col-span-2 bg-white p-6 rounded-lg shadow-md prose max-w-none">
-                    <h2 class="text-2xl font-bold mb-4 border-b pb-2">Préparation</h2>
-                    <ol class="space-y-4">
-                        <li>Écrasez la chair des avocats dans un bol à l'aide d'une fourchette. Arrosez immédiatement avec le jus du citron vert pour éviter que l'avocat noircisse.</li>
-                        <li>Ciselez très finement le demi-oignon rouge et la coriandre. Ajoutez-les au guacamole.</li>
-                        <li>Salez, poivrez et mélangez bien le tout.</li>
-                        <li>Répartissez le guacamole au fond de 6 petites verrines.</li>
-                        <li>Décortiquez les crevettes si ce n'est pas déjà fait. Disposez-les harmonieusement sur le guacamole.</li>
-                        <li>Saupoudrez chaque verrine d'une légère pincée de piment d'Espelette pour la couleur et le goût.</li>
-                        <li>Réservez au frais jusqu'au moment de servir.</li>
-                    </ol>
-                </article>
-            </div>
-             <!-- Section Navigation -->
-            <div class="mt-12 flex justify-between items-center">
-                <a href="galetteDesRois11.html" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
-                    &larr; Recette Précédente
-                </a>
-                <a href="cremeBrulee13.html" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition-colors">
-                    Recette Suivante &rarr;
-                </a>
-            </div>
-        </div>
-    </main>
+    <!-- Ingrédients -->
+    <aside class="card" style="align-self:start;">
+      <h2 class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+        </svg>
+        Ingrédients
+      </h2>
+      <ul class="ingredients-list" id="ingredients-list"></ul>
+    </aside>
 
-    <footer class="text-center py-8 mt-12 text-gray-500 dark:text-gray-400 text-sm">
-        <p>&copy; 2025 Le Coin Gourmand. Tous droits réservés.</p>
-    </footer>
+    <!-- Étapes -->
+    <article class="card">
+      <h2 class="card-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+        </svg>
+        Préparation
+      </h2>
+      <ol class="steps-list" id="steps-list"></ol>
+    </article>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            const themeIconSun = document.getElementById('theme-icon-sun');
-            const themeIconMoon = document.getElementById('theme-icon-moon');
+  </div>
 
-            function applyDarkMode(isDark) {
-                if (isDark) {
-                    document.documentElement.classList.add('dark');
-                    if(themeIconSun && themeIconMoon) {
-                        themeIconSun.classList.add('hidden');
-                        themeIconMoon.classList.remove('hidden');
-                    }
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    if(themeIconSun && themeIconMoon) {
-                        themeIconSun.classList.remove('hidden');
-                        themeIconMoon.classList.add('hidden');
-                    }
-                }
-            }
+  <!-- Navigation -->
+  <nav class="recipe-nav">
+    <a href="galetteDesRois11.html" class="nav-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Recette précédente
+    </a>
+    <a href="cremeBrulee13.html" class="nav-btn primary">
+      Recette suivante
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </nav>
 
-            if(darkModeToggle) {
-                darkModeToggle.addEventListener('click', () => {
-                    const isDarkMode = document.documentElement.classList.toggle('dark');
-                    localStorage.setItem('darkMode', isDarkMode);
-                    applyDarkMode(isDarkMode);
-                });
-            }
+</main>
 
-            const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-            applyDarkMode(savedDarkMode);
-        });
-    </script>
+<footer>
+  <p>&copy; 2025 Le Coin Gourmand. Tous droits réservés.</p>
+</footer>
 
+<script>
+window.RECIPE_DATA = {
+  basePortions: 6,
+  portionLabel: "verrines",
+  portionMin: 2,
+  portionMax: 24,
+  portionStep: 2,
+  ingredients: [
+  { "id":"avocats", "qty":2, "unit":"", "label":"avocat bien mûr", "plural":"avocats bien mûrs" },
+  { "id":"citron", "qty":1, "unit":"", "label":"citron vert" },
+  { "id":"oignon", "qty":0.5, "unit":"", "label":"oignon rouge" },
+  { "id":"crevettes", "qty":200, "unit":"g", "label":"crevettes roses cuites" },
+  { "id":null, "qty":null, "label":"Quelques brins de coriandre fraîche" },
+  { "id":null, "qty":null, "label":"Piment d'Espelette" },
+  { "id":null, "qty":null, "label":"Sel, poivre" }
+],
+  steps: [
+  { "text":"Écrasez la chair des avocats et arrosez immédiatement avec le jus du citron vert.", "timer":null },
+  { "text":"Ciselez finement le demi-oignon rouge et la coriandre. Ajoutez-les au guacamole.", "timer":null },
+  { "text":"Salez, poivrez et mélangez bien.", "timer":null },
+  { "text":"Répartissez le guacamole au fond des verrines.", "timer":null },
+  { "text":"Décortiquez les crevettes si besoin. Disposez-les harmonieusement sur le guacamole.", "timer":null },
+  { "text":"Saupoudrez d'une légère pincée de piment d'Espelette.", "timer":null },
+  { "text":"Réservez au frais jusqu'au moment de servir.", "timer":null }
+]
+};
+</script>
+<script src="../recette.js"></script>
 </body>
 </html>

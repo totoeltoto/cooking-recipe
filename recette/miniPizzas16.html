@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cookies aux Pépites de Chocolat — Le Coin Gourmand</title>
+  <title>Mini Pizzas Apéritives — Le Coin Gourmand</title>
   <link rel="stylesheet" href="../recette.css">
 </head>
 <body>
@@ -29,8 +29,8 @@
 
   <!-- Hero -->
   <div class="recipe-hero">
-    <h1>Cookies aux Pépites de Chocolat</h1>
-    <img src="/images/cookie.jpg" alt="Cookies aux pépites de chocolat" class="hero-img" loading="eager">
+    <h1>Mini Pizzas Apéritives</h1>
+    <img src="/images/mini-pizzas.jpg" alt="Mini Pizzas Apéritives" class="hero-img" loading="eager">
   </div>
 
   <!-- Info bar -->
@@ -44,10 +44,10 @@
       <span class="value">~25 min</span>
     </div>
     <div class="portions-ctrl">
-      <span class="label" id="portion-label">cookies</span>
+      <span class="label" id="portion-label">personnes</span>
       <div class="portions-row">
         <button class="btn-qty" id="btn-minus" aria-label="Moins">−</button>
-        <input type="number" id="portions-input" value="12" min="6" max="48">
+        <input type="number" id="portions-input" value="4" min="2" max="12">
         <button class="btn-qty" id="btn-plus" aria-label="Plus">+</button>
       </div>
     </div>
@@ -82,13 +82,13 @@
 
   <!-- Navigation -->
   <nav class="recipe-nav">
-    <a href="tomateMozza1.html" class="nav-btn">
+    <a href="miniQuiches15.html" class="nav-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
       </svg>
       Recette précédente
     </a>
-    <a href="tarteChocolat3.html" class="nav-btn primary">
+    <a href="brochettesPoulet17.html" class="nav-btn primary">
       Recette suivante
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
@@ -104,31 +104,28 @@
 
 <script>
 window.RECIPE_DATA = {
-  basePortions: 12,
-  portionLabel: "cookies",
-  portionMin: 6,
-  portionMax: 48,
-  portionStep: 6,
+  basePortions: 4,
+  portionLabel: "personnes",
+  portionMin: 2,
+  portionMax: 12,
+  portionStep: 1,
   ingredients: [
-  { "id":"beurre", "qty":110, "unit":"g", "label":"beurre mou" },
-  { "id":"sucre", "qty":110, "unit":"g", "label":"sucre (cassonade idéalement)" },
-  { "id":"sucreV", "qty":1, "unit":"", "label":"sachet de sucre vanillé", "plural":"sachets de sucre vanillé" },
-  { "id":"oeuf", "qty":1, "unit":"", "label":"oeuf", "plural":"oeufs" },
-  { "id":"farine", "qty":190, "unit":"g", "label":"farine" },
-  { "id":"levure", "qty":1, "unit":"c.à.c", "label":"levure chimique" },
-  { "id":null, "qty":null, "label":"1 pincée de sel" },
-  { "id":"pepites", "qty":125, "unit":"g", "label":"pépites de chocolat" }
+  { "id":"pate", "qty":1, "unit":"", "label":"pâte à pizza" },
+  { "id":"sauce", "qty":125, "unit":"ml", "label":"sauce tomate" },
+  { "id":"mozza", "qty":100, "unit":"g", "label":"mozzarella râpée" },
+  { "id":"pepperoni", "qty":50, "unit":"g", "label":"pepperoni" },
+  { "id":null, "qty":null, "label":"1 c.à.s d'origan séché" },
+  { "id":null, "qty":null, "label":"1 c.à.s d'huile d'olive" },
+  { "id":null, "qty":null, "label":"Sel et poivre" }
 ],
   steps: [
-  { "text":"Préchauffez votre four à <strong>180 °C</strong>.", "timer":null },
-  { "text":"Dans un grand saladier, travaillez le beurre mou avec le sucre et le sucre vanillé jusqu'à obtenir une consistance crémeuse.", "timer":null },
-  { "text":"Incorporez l'oeuf et mélangez bien.", "timer":null },
-  { "text":"Dans un autre bol, mélangez la farine, la levure chimique et la pincée de sel.", "timer":null },
-  { "text":"Ajoutez progressivement le mélange sec à la préparation humide jusqu'à obtenir une pâte homogène.", "timer":null },
-  { "text":"Incorporez les pépites de chocolat.", "timer":null },
-  { "text":"Sur une plaque de cuisson recouverte de papier sulfurisé, formez des petites boules de pâte en les espaçant bien.", "timer":null },
-  { "text":"<strong>Enfournez pour 10 à 12 minutes</strong>, jusqu'à ce que les bords soient dorés mais le centre encore un peu mou.", "timer":660 },
-  { "text":"Laissez refroidir quelques minutes sur la plaque avant de transférer sur une grille.", "timer":300 }
+  { "text":"Préchauffez le four à <strong>200 °C</strong>.", "timer":null },
+  { "text":"Découpez la pâte en petits cercles à l'aide d'un emporte-pièce ou d'un verre.", "timer":null },
+  { "text":"Étalez la sauce tomate sur chaque disque.", "timer":null },
+  { "text":"Ajoutez la mozzarella râpée puis quelques morceaux de pepperoni.", "timer":null },
+  { "text":"Assaisonnez avec l'origan, sel et poivre. Arrosez d'huile d'olive.", "timer":null },
+  { "text":"<strong>Enfournez pour 10 à 12 minutes</strong>, jusqu'à belle dorure et fromage fondu.", "timer":660 },
+  { "text":"Servez tièdes ou froides en apéritif.", "timer":null }
 ]
 };
 </script>

@@ -1,81 +1,139 @@
 /**
- * script.js - version corrigée avec tri fonctionnel
+ * script.js — Le Coin Gourmand (version améliorée)
+ * Nouveautés : favoris sans connexion (localStorage), notation par étoiles,
+ * tri par note, design amélioré, animations, mode sombre complet.
  */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- BASE DES RECETTES ---
+    // =====================================================================
+    // BASE DES RECETTES
+    // =====================================================================
     const recipes = [
-        { id: 1, name: "Salade de tomate mozzarella", href: "recette/tomateMozza1.html", image: "images/salade.jpg", type: "plat", time: "10 min", difficulty: "Facile" },
-        { id: 2, name: "Cookie", href: "recette/cookie2.html", image: "images/cookie.jpg", type: "dessert", time: "25 min", difficulty: "Facile" },
-        { id: 3, name: "Tarte au chocolat", href: "recette/tarteChocolat3.html", image: "images/tarteChocolat.jpg", type: "dessert", time: "45 min", difficulty: "Moyen" },
-        { id: 4, name: "Tarte poires amandines", href: "recette/poireAmandine4.html", image: "images/poirAmandine.jpg", type: "dessert", time: "1h", difficulty: "Moyen" },
-        { id: 5, name: "Bûche de Noël 🎅", href: "recette/buche5.html", image: "images/buche.jpg", type: "dessert", time: "2h", difficulty: "Difficile" },
-        { id: 6, name: "Pancakes", href: "recette/pancakes6.html", image: "images/pancakes.jpg", type: "dessert", time: "20 min", difficulty: "Facile" },
-        { id: 7, name: "Noix de St Jaques à la crème", href: "recette/stJaques7.html", image: "images/stJacque.jpg", type: "plat", time: "30 min", difficulty: "Moyen" },
-        { id: 8, name: "Petits Financiers", href: "recette/petitsFinaciers8.html", image: "images/petitsFinanciers.jpg", type: "dessert", time: "35 min", difficulty: "Facile" },
-        { id: 9, name: "Brioche étoilée à la pâte à tartiner", href: "recette/briocheEtoile9.html", image: "images/briocheEtoile.jpg", type: "dessert", time: "1h 30", difficulty: "Moyen" },
-        { id: 10, name: "Tartiflette", href: "recette/tartiflette10.html", image: "images/Tartiflette.jpg", type: "plat", time: "50 min", difficulty: "Facile" },
-        { id: 11, name: "Galette des Rois", href: "recette/galetteDesRois11.html", image: "images/galette.jpg", type: "dessert", time: "1h 15", difficulty: "Moyen" },
-        { id: 12, name: "Verrines Guacamole Crevettes", href: "recette/verrinesCrevettes12.html", image: "images/verrine.jpg", type: "aperitif", time: "20 min", difficulty: "Facile" },
-        { id: 13, name: "Crème brulé", href: "recette/cremeBrulee13.html", image: "images/creme-brulee.jpg", type: "dessert", time: "20 min", difficulty: "Facile" },
-        { id: 14, name: "Gyoza Japonais", href: "recette/gyoza14.html", image: "images/gyoza.jpg", type: "plat", time: "40 min", difficulty: "Moyen" },
-        { id: 15, name: "Mini Quiches Apéritives", href: "recette/miniQuiches15.html", image: "images/mini-quiches.jpg", type: "aperitif", time: "30 min", difficulty: "Facile" }
+        { id: 1,  name: "Salade de tomate mozzarella",          href: "recette/tomateMozza1.html",       image: "images/salade.jpg",           type: "plat",     time: "10 min",  difficulty: "Facile"    },
+        { id: 2,  name: "Cookie",                                href: "recette/cookie2.html",            image: "images/cookie.jpg",           type: "dessert",  time: "25 min",  difficulty: "Facile"    },
+        { id: 3,  name: "Tarte au chocolat",                     href: "recette/tarteChocolat3.html",     image: "images/tarteChocolat.jpg",    type: "dessert",  time: "45 min",  difficulty: "Moyen"     },
+        { id: 4,  name: "Tarte poires amandines",                href: "recette/poireAmandine4.html",     image: "images/poirAmandine.jpg",     type: "dessert",  time: "1h",      difficulty: "Moyen"     },
+        { id: 5,  name: "Bûche de Noël 🎅",                      href: "recette/buche5.html",             image: "images/buche.jpg",            type: "dessert",  time: "2h",      difficulty: "Difficile" },
+        { id: 6,  name: "Pancakes",                              href: "recette/pancakes6.html",          image: "images/pancakes.jpg",         type: "dessert",  time: "20 min",  difficulty: "Facile"    },
+        { id: 7,  name: "Noix de St Jaques à la crème",         href: "recette/stJaques7.html",          image: "images/stJacque.jpg",         type: "plat",     time: "30 min",  difficulty: "Moyen"     },
+        { id: 8,  name: "Petits Financiers",                     href: "recette/petitsFinaciers8.html",   image: "images/petitsFinanciers.jpg", type: "dessert",  time: "35 min",  difficulty: "Facile"    },
+        { id: 9,  name: "Brioche étoilée à la pâte à tartiner", href: "recette/briocheEtoile9.html",     image: "images/briocheEtoile.jpg",    type: "dessert",  time: "1h 30",   difficulty: "Moyen"     },
+        { id: 10, name: "Tartiflette",                           href: "recette/tartiflette10.html",      image: "images/Tartiflette.jpg",      type: "plat",     time: "50 min",  difficulty: "Facile"    },
+        { id: 11, name: "Galette des Rois",                      href: "recette/galetteDesRois11.html",   image: "images/galette.jpg",          type: "dessert",  time: "1h 15",   difficulty: "Moyen"     },
+        { id: 12, name: "Verrines Guacamole Crevettes",          href: "recette/verrinesCrevettes12.html",image: "images/verrine.jpg",          type: "aperitif", time: "20 min",  difficulty: "Facile"    },
+        { id: 13, name: "Crème brulée",                          href: "recette/cremeBrulee13.html",      image: "images/creme-brulee.jpg",     type: "dessert",  time: "20 min",  difficulty: "Facile"    },
+        { id: 14, name: "Gyoza Japonais",                        href: "recette/gyoza14.html",            image: "images/gyoza.jpg",            type: "plat",     time: "40 min",  difficulty: "Moyen"     },
+        { id: 15, name: "Mini Quiches Apéritives",               href: "recette/miniQuiches15.html",      image: "images/mini-quiches.jpg",     type: "aperitif", time: "30 min",  difficulty: "Facile"    },
+        { id: 16, name: "Mini Pizzas Apéritives",                href: "recette/miniPizzas16.html",       image: "images/mini-pizzas.jpg",      type: "aperitif", time: "25 min",  difficulty: "Facile"    },
+        { id: 17, name: "Mini Brochettes de Poulet au Miel et Moutarde", href: "recette/brochettesPoulet17.html", image: "images/brochettes-poulet.jpg", type: "aperitif", time: "20 min", difficulty: "Facile" }
     ];
 
-    // --- DOM ---
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const themeIconSun = document.getElementById('theme-icon-sun');
-    const themeIconMoon = document.getElementById('theme-icon-moon');
-    const searchInput = document.getElementById('search-input');
-    const suggestionList = document.getElementById('suggestion-list');
-    const filtersContainer = document.getElementById('filters-container');
-    const recipeList = document.getElementById('recipe-list');
-    const userInfo = document.getElementById('user-info');
-    const splashScreen = document.getElementById('splash-screen');
-    const splashContent = document.getElementById('splash-content');
-    const splashLogo = document.getElementById('splash-logo');
-    const headerLogo = document.getElementById('header-logo');
-    const sortSelect = document.getElementById('sort-select');
+    // =====================================================================
+    // ÉTAT PERSISTANT (localStorage)
+    // =====================================================================
 
-    // --- Utilisateur (session) ---
+    /**
+     * Favoris : Set d'IDs de recettes (stocké pour tout le monde, sans connexion requise)
+     */
+    function loadFavorites() {
+        try {
+            const saved = localStorage.getItem('lcg_favorites');
+            return saved ? new Set(JSON.parse(saved)) : new Set();
+        } catch { return new Set(); }
+    }
+
+    function saveFavorites(favSet) {
+        localStorage.setItem('lcg_favorites', JSON.stringify([...favSet]));
+    }
+
+    let favorites = loadFavorites();
+
+    /**
+     * Notations : { recipeId: { total: number, count: number } }
+     */
+    function loadRatings() {
+        try {
+            const saved = localStorage.getItem('lcg_ratings');
+            return saved ? JSON.parse(saved) : {};
+        } catch { return {}; }
+    }
+
+    function saveRatings(ratingsObj) {
+        localStorage.setItem('lcg_ratings', JSON.stringify(ratingsObj));
+    }
+
+    let ratingsData = loadRatings();
+
+    function getAvgRating(id) {
+        const r = ratingsData[id];
+        if (!r || r.count === 0) return 0;
+        return r.total / r.count;
+    }
+
+    function addRating(id, stars) {
+        if (!ratingsData[id]) ratingsData[id] = { total: 0, count: 0 };
+        ratingsData[id].total += stars;
+        ratingsData[id].count += 1;
+        saveRatings(ratingsData);
+    }
+
+    // =====================================================================
+    // DOM
+    // =====================================================================
+    const darkModeToggle   = document.getElementById('dark-mode-toggle');
+    const themeIconSun     = document.getElementById('theme-icon-sun');
+    const themeIconMoon    = document.getElementById('theme-icon-moon');
+    const searchInput      = document.getElementById('search-input');
+    const suggestionList   = document.getElementById('suggestion-list');
+    const filtersContainer = document.getElementById('filters-container');
+    const recipeList       = document.getElementById('recipe-list');
+    const userInfo         = document.getElementById('user-info');
+    const splashScreen     = document.getElementById('splash-screen');
+    const splashContent    = document.getElementById('splash-content');
+    const splashLogo       = document.getElementById('splash-logo');
+    const headerLogo       = document.getElementById('header-logo');
+    const sortSelect       = document.getElementById('sort-select');
+
+    // =====================================================================
+    // SESSION UTILISATEUR
+    // =====================================================================
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     if (currentUser && !currentUser.favorites) currentUser.favorites = [];
 
-    // --- Variables d'état ---
-    let currentDisplayedRecipes = [...recipes]; // le sous-ensemble affiché (filtré/recherché)
-    
-    // --- Injection styles favoris (léger) ---
-    const style = document.createElement('style');
-    style.innerHTML = `.favorite-btn.favorited svg { fill: #f59e0b; stroke: #f59e0b; }`;
-    document.head.appendChild(style);
+    // =====================================================================
+    // ÉTAT AFFICHÉ
+    // =====================================================================
+    let currentDisplayedRecipes = [...recipes];
 
-    // --- ANIMATION LOGO (inchangé) ---
+    // =====================================================================
+    // SPLASH SCREEN ANIMATION
+    // =====================================================================
     function setAndRunLogoAnimation() {
         if (!splashLogo || !headerLogo || !splashContent) return;
         const headerRect = headerLogo.getBoundingClientRect();
         const splashRect = splashLogo.getBoundingClientRect();
         const deltaX = headerRect.left - splashRect.left;
         const deltaY = headerRect.top - splashRect.top;
-        splashContent.style.setProperty('--logo-end-transform', `translate(${deltaX}px, ${deltaY}px) scale(1)`);
+        splashContent.style.setProperty('--logo-end-transform', `translate(${deltaX}px, ${deltaY}px) scale(0.75)`);
         splashContent.classList.add('animate');
     }
 
-    // --- PARSEUR DE TEMPS robuste ---
+    // =====================================================================
+    // PARSEUR DE TEMPS
+    // =====================================================================
     function parseTimeToMinutes(timeStr) {
         if (!timeStr) return 0;
         const s = String(timeStr).toLowerCase();
         let hours = 0, minutes = 0;
         const hMatch = s.match(/(\d+)\s*h/);
         if (hMatch) hours = parseInt(hMatch[1], 10);
-        // minutes with 'min'
         const mMatch = s.match(/(\d+)\s*min/);
-        if (mMatch) minutes = parseInt(mMatch[1], 10);
-        else {
-            // case like "1h 30" or "1h30" (number after h)
+        if (mMatch) {
+            minutes = parseInt(mMatch[1], 10);
+        } else {
             const afterH = s.match(/h\s*(\d+)/);
             if (afterH) minutes = parseInt(afterH[1], 10);
             else {
-                // case like "45" -> assume minutes
                 const onlyNum = s.match(/^(\d+)\s*$/);
                 if (onlyNum) minutes = parseInt(onlyNum[1], 10);
             }
@@ -83,216 +141,302 @@ document.addEventListener('DOMContentLoaded', () => {
         return hours * 60 + minutes;
     }
 
-    // --- TRI ---
-    function sortRecipes(recipesArray, criteria) {
-        if (!criteria || criteria === 'default') return recipesArray;
-        const arr = [...recipesArray];
-        if (criteria === 'time-asc') {
-            arr.sort((a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time));
-            return arr;
-        }
-        if (criteria === 'time-desc') {
-            arr.sort((a, b) => parseTimeToMinutes(b.time) - parseTimeToMinutes(a.time));
-            return arr;
-        }
+    // =====================================================================
+    // TRI
+    // =====================================================================
+    function sortRecipes(arr, criteria) {
+        if (!criteria || criteria === 'default') return arr;
+        const copy = [...arr];
+        if (criteria === 'time-asc')  return copy.sort((a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time));
+        if (criteria === 'time-desc') return copy.sort((a, b) => parseTimeToMinutes(b.time) - parseTimeToMinutes(a.time));
         if (criteria === 'difficulty') {
             const order = { 'Facile': 1, 'Moyen': 2, 'Difficile': 3 };
-            arr.sort((a, b) => (order[a.difficulty] || 99) - (order[b.difficulty] || 99));
-            return arr;
+            return copy.sort((a, b) => (order[a.difficulty] || 99) - (order[b.difficulty] || 99));
         }
-        return arr;
+        if (criteria === 'rating') {
+            return copy.sort((a, b) => getAvgRating(b.id) - getAvgRating(a.id));
+        }
+        return copy;
     }
 
-    // --- AFFICHAGE DES RECETTES ---
+    // =====================================================================
+    // RENDU DES ÉTOILES
+    // =====================================================================
+    function renderStars(recipeId) {
+        const avg   = getAvgRating(recipeId);
+        const count = ratingsData[recipeId] ? ratingsData[recipeId].count : 0;
+        let starsHTML = '';
+        for (let i = 1; i <= 5; i++) {
+            const filled = i <= Math.round(avg);
+            starsHTML += `<button class="star-btn ${filled ? 'active' : ''}" data-recipe-id="${recipeId}" data-star="${i}" aria-label="Noter ${i} étoile${i > 1 ? 's' : ''}">★</button>`;
+        }
+        const countLabel = count > 0 ? `<span class="rating-count">(${count})</span>` : '';
+        return `<div class="star-rating" data-rating-id="${recipeId}">
+            <span class="label">Note :</span>
+            ${starsHTML}
+            ${countLabel}
+        </div>`;
+    }
+
+    // =====================================================================
+    // BADGE CATÉGORIE
+    // =====================================================================
+    const categoryLabels = { plat: 'Plat', dessert: 'Dessert', aperitif: 'Apéritif' };
+
+    // =====================================================================
+    // BADGE DIFFICULTÉ
+    // =====================================================================
+    function difficultyBadge(difficulty) {
+        const cls = { 'Facile': 'diff-facile', 'Moyen': 'diff-moyen', 'Difficile': 'diff-difficile' };
+        return `<span class="meta-pill">
+            <span class="difficulty-dot ${cls[difficulty] || ''}"></span>${difficulty}
+        </span>`;
+    }
+
+    // =====================================================================
+    // AFFICHAGE DES RECETTES
+    // =====================================================================
     function displayRecipes(recipesToDisplay) {
-        // Garde en mémoire l'ensemble affiché (pour tri ultérieur)
         currentDisplayedRecipes = Array.isArray(recipesToDisplay) ? [...recipesToDisplay] : [];
         recipeList.innerHTML = '';
+
         if (recipesToDisplay.length === 0) {
-            recipeList.innerHTML = `<p class="col-span-full text-center text-gray-500">Aucune recette ne correspond à votre recherche.</p>`;
+            recipeList.innerHTML = `<li class="empty-state"><p>🍽</p><p>Aucune recette ne correspond à votre recherche.</p></li>`;
             return;
         }
 
         recipesToDisplay.forEach(recipe => {
-            const listItem = document.createElement('li');
-            listItem.className = 'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow relative';
+            const li = document.createElement('li');
+            li.className = 'recipe-card';
+            li.dataset.id = recipe.id;
 
-            const isFavorited = currentUser ? currentUser.favorites.includes(recipe.id) : false;
+            const isFav = favorites.has(recipe.id);
 
-            const favoriteButtonHTML = currentUser ? `
-                <button class="favorite-btn absolute top-2 right-2 p-1 rounded-full bg-white bg-opacity-75 text-gray-400 hover:text-yellow-500 transition-colors z-10 ${isFavorited ? 'favorited' : ''}" data-recipe-id="${recipe.id}" aria-label="Ajouter aux favoris">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            li.innerHTML = `
+                <a href="${recipe.href}" class="card-link" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="card-image-wrapper">
+                        <img src="${recipe.image}" alt="${recipe.name}" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <span class="card-badge">${categoryLabels[recipe.type] || recipe.type}</span>
+                    </div>
+                </a>
+                <button class="favorite-btn ${isFav ? 'favorited' : ''}" data-recipe-id="${recipe.id}" aria-label="${isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}">
+                    <svg viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
                     </svg>
                 </button>
-            ` : '';
-
-            listItem.innerHTML = `
-                ${favoriteButtonHTML}
-                <a href="${recipe.href}" class="block">
-                    <img src="${recipe.image}" alt="${recipe.name}" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">${recipe.name}</h3>
-                        <div class="flex justify-between text-sm text-gray-500">
-                           <span class="flex items-center">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <a href="${recipe.href}" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="card-body">
+                        <h3>${recipe.name}</h3>
+                        <div class="card-meta">
+                            <span class="meta-pill">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
                                 ${recipe.time}
-                           </span>
-                           <span class="flex items-center">
-                               <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                               ${recipe.difficulty}
-                           </span>
+                            </span>
+                            ${difficultyBadge(recipe.difficulty)}
                         </div>
+                        ${renderStars(recipe.id)}
                     </div>
                 </a>
             `;
-            recipeList.appendChild(listItem);
+            recipeList.appendChild(li);
         });
     }
 
-    // --- CLICS (favoris) ---
-    recipeList.addEventListener('click', (event) => {
-        const favoriteBtn = event.target.closest('.favorite-btn');
-        if (favoriteBtn) {
-            event.preventDefault();
-            event.stopPropagation();
-            if (!currentUser) return;
-            const recipeId = parseInt(favoriteBtn.dataset.recipeId, 10);
-            const isFavorited = favoriteBtn.classList.toggle('favorited');
-            if (isFavorited) {
-                if (!currentUser.favorites.includes(recipeId)) currentUser.favorites.push(recipeId);
+    // =====================================================================
+    // GESTION DES CLICS SUR LA LISTE (favoris + étoiles)
+    // =====================================================================
+    recipeList.addEventListener('click', (e) => {
+        // --- FAVORIS ---
+        const favBtn = e.target.closest('.favorite-btn');
+        if (favBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const id = parseInt(favBtn.dataset.recipeId, 10);
+            if (favorites.has(id)) {
+                favorites.delete(id);
+                favBtn.classList.remove('favorited');
+                favBtn.setAttribute('aria-label', 'Ajouter aux favoris');
+                favBtn.querySelector('svg').setAttribute('fill', 'none');
             } else {
-                currentUser.favorites = currentUser.favorites.filter(id => id !== recipeId);
+                favorites.add(id);
+                favBtn.classList.add('favorited');
+                favBtn.setAttribute('aria-label', 'Retirer des favoris');
+                favBtn.querySelector('svg').setAttribute('fill', 'currentColor');
             }
-            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            saveFavorites(favorites);
+
+            // Animation pop
+            favBtn.classList.remove('pop');
+            void favBtn.offsetWidth; // reflow
+            favBtn.classList.add('pop');
+
+            // Sync avec l'ancien système sessionStorage si connecté
+            if (currentUser) {
+                if (favorites.has(id)) {
+                    if (!currentUser.favorites.includes(id)) currentUser.favorites.push(id);
+                } else {
+                    currentUser.favorites = currentUser.favorites.filter(fid => fid !== id);
+                }
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+            return;
+        }
+
+        // --- ÉTOILES ---
+        const starBtn = e.target.closest('.star-btn');
+        if (starBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const id    = parseInt(starBtn.dataset.recipeId, 10);
+            const stars = parseInt(starBtn.dataset.star, 10);
+            addRating(id, stars);
+
+            // Mise à jour visuelle du bloc d'étoiles sans re-render la carte entière
+            const ratingBlock = recipeList.querySelector(`.star-rating[data-rating-id="${id}"]`);
+            if (ratingBlock) {
+                ratingBlock.outerHTML = renderStars(id);
+            }
         }
     });
 
-    // --- MODE SOMBRE ---
+    // =====================================================================
+    // MODE SOMBRE
+    // =====================================================================
     function applyDarkMode(isDark) {
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-            themeIconSun.classList.add('hidden');
-            themeIconMoon.classList.remove('hidden');
-        } else {
-            document.documentElement.classList.remove('dark');
-            themeIconSun.classList.remove('hidden');
-            themeIconMoon.classList.add('hidden');
-        }
+        document.documentElement.classList.toggle('dark', isDark);
+        themeIconSun.style.display  = isDark ? 'none' : '';
+        themeIconMoon.style.display = isDark ? '' : 'none';
     }
+
     darkModeToggle.addEventListener('click', () => {
-        const isDarkMode = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('darkMode', isDarkMode);
-        applyDarkMode(isDarkMode);
+        const isDark = !document.documentElement.classList.contains('dark');
+        localStorage.setItem('darkMode', isDark);
+        applyDarkMode(isDark);
     });
 
-    // --- FILTRES ---
-    filtersContainer.addEventListener('click', (event) => {
-        if (event.target.tagName === 'BUTTON') {
-            document.querySelectorAll('#filters-container button').forEach(btn => {
-                btn.classList.remove('bg-green-500', 'text-white');
-                btn.classList.add('bg-white', 'text-gray-800', 'border', 'border-gray-300');
-            });
-            event.target.classList.add('bg-green-500', 'text-white');
-            event.target.classList.remove('bg-white', 'text-gray-800', 'border', 'border-gray-300');
+    // =====================================================================
+    // FILTRES
+    // =====================================================================
+    filtersContainer.addEventListener('click', (e) => {
+        const btn = e.target.closest('.filter-button');
+        if (!btn) return;
 
-            const filterType = event.target.dataset.filter;
-            let filteredRecipes;
-            if (filterType === 'tous') filteredRecipes = recipes;
-            else if (filterType === 'favoris') filteredRecipes = currentUser ? recipes.filter(recipe => currentUser.favorites.includes(recipe.id)) : [];
-            else filteredRecipes = recipes.filter(recipe => recipe.type === filterType);
+        document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-            // applique le tri courant
-            const criteria = sortSelect ? sortSelect.value : 'default';
-            displayRecipes(sortRecipes(filteredRecipes, criteria));
-        }
+        const filter = btn.dataset.filter;
+        let filtered;
+        if (filter === 'tous')     filtered = recipes;
+        else if (filter === 'favoris') filtered = recipes.filter(r => favorites.has(r.id));
+        else filtered = recipes.filter(r => r.type === filter);
+
+        const criteria = sortSelect ? sortSelect.value : 'default';
+        displayRecipes(sortRecipes(filtered, criteria));
     });
 
-    // --- RECHERCHE / SUGGESTIONS ---
+    // =====================================================================
+    // RECHERCHE ET SUGGESTIONS
+    // =====================================================================
     searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase().trim();
         suggestionList.innerHTML = '';
-        if (query) {
-            const suggestions = recipes.filter(r => r.name.toLowerCase().includes(query)).slice(0, 5);
-            suggestions.forEach(suggestion => {
-                const li = document.createElement('li');
-                li.textContent = suggestion.name;
-                li.className = 'p-2 hover:bg-gray-100 cursor-pointer';
-                li.addEventListener('click', () => {
-                    window.location.href = suggestion.href;
-                });
-                suggestionList.appendChild(li);
-            });
-        }
+        if (!query) return;
+
+        const suggestions = recipes.filter(r => r.name.toLowerCase().includes(query)).slice(0, 6);
+        suggestions.forEach(s => {
+            const li = document.createElement('li');
+            li.textContent = s.name;
+            li.addEventListener('click', () => { window.location.href = s.href; });
+            suggestionList.appendChild(li);
+        });
     });
 
     document.addEventListener('click', (e) => {
-        if (!searchInput.contains(e.target)) suggestionList.innerHTML = '';
-    });
-
-    searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            const query = searchInput.value.toLowerCase().trim();
-            const searchResult = recipes.filter(r => r.name.toLowerCase().includes(query));
-            const criteria = sortSelect ? sortSelect.value : 'default';
-            displayRecipes(sortRecipes(searchResult, criteria));
+        if (!searchInput.contains(e.target) && !suggestionList.contains(e.target)) {
             suggestionList.innerHTML = '';
         }
     });
 
-    // --- TRI: écoute le select (si présent) ---
+    document.getElementById('search-button').addEventListener('click', () => {
+        triggerSearch();
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') triggerSearch();
+    });
+
+    function triggerSearch() {
+        const query = searchInput.value.toLowerCase().trim();
+        const results = query ? recipes.filter(r => r.name.toLowerCase().includes(query)) : recipes;
+        const criteria = sortSelect ? sortSelect.value : 'default';
+        displayRecipes(sortRecipes(results, criteria));
+        suggestionList.innerHTML = '';
+    }
+
+    // =====================================================================
+    // TRI
+    // =====================================================================
     if (sortSelect) {
         sortSelect.addEventListener('change', () => {
-            const criteria = sortSelect.value;
-            // tri sur l'ensemble actuellement affiché
-            const sorted = sortRecipes(currentDisplayedRecipes, criteria);
-            displayRecipes(sorted);
+            displayRecipes(sortRecipes(currentDisplayedRecipes, sortSelect.value));
         });
     }
 
-    // --- USER INFO / ajout filtre favoris si connecté ---
+    // =====================================================================
+    // INFORMATIONS UTILISATEUR
+    // =====================================================================
     function setupUserInfo() {
         if (currentUser) {
-            const hasAdminAccess = ['admin', 'fondateur', 'co-fondateur'].includes(currentUser.role);
+            const isAdmin = ['admin', 'fondateur', 'co-fondateur'].includes(currentUser.role);
             userInfo.innerHTML = `
-                <span>Bienvenue, ${currentUser.email} !</span>
-                <button onclick="logout()" class="ml-2 text-sm text-red-500 hover:underline">Déconnexion</button>
-                ${hasAdminAccess ? '<a href="admin.html" class="ml-4 text-sm text-green-600 hover:underline">Panel Admin</a>' : ''}
+                <span>${currentUser.email}</span>
+                <button onclick="logout()" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:0.82rem;font-family:inherit;padding:0.35rem 0.7rem;border-radius:999px;transition:background 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.background='none'">Déconnexion</button>
+                ${isAdmin ? '<a href="admin.html" style="color:var(--green);font-size:0.82rem;text-decoration:none;padding:0.35rem 0.7rem;border-radius:999px;" onmouseover="this.style.background=\'var(--green-pale)\'" onmouseout="this.style.background=\'none\'">Panel Admin</a>' : ''}
             `;
-            // Ajoute le filtre "Favoris"
-            if (!document.querySelector('#filters-container button[data-filter="favoris"]')) {
-                const favoriteFilter = document.createElement('button');
-                favoriteFilter.className = "filter-button bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-full border border-gray-300";
-                favoriteFilter.dataset.filter = "favoris";
-                favoriteFilter.innerHTML = "⭐ Mes favoris";
-                filtersContainer.appendChild(favoriteFilter);
-            }
         } else {
             userInfo.innerHTML = `
-                <a href="login.html" class="hover:underline">Se connecter</a>
-                <a href="inscription.html" class="ml-4 bg-green-500 text-white px-3 py-1 rounded-full hover:bg-green-600">S'inscrire</a>
+                <a href="login.html">Se connecter</a>
+                <a href="inscription.html" class="btn-register">S'inscrire</a>
             `;
+        }
+
+        // Bouton "Mes favoris" (visible pour tous, pas seulement les connectés)
+        if (!document.querySelector('#filters-container button[data-filter="favoris"]')) {
+            const favBtn = document.createElement('button');
+            favBtn.className = 'filter-button';
+            favBtn.dataset.filter = 'favoris';
+            favBtn.textContent = '♥ Mes favoris';
+            filtersContainer.appendChild(favBtn);
         }
     }
 
-    window.logout = function() {
+    window.logout = function () {
         sessionStorage.removeItem('currentUser');
         window.location.reload();
-    }
+    };
 
-    // --- INITIALISATION ---
+    // =====================================================================
+    // INITIALISATION
+    // =====================================================================
     function init() {
+        // Splash
         if (splashScreen) {
             setTimeout(() => setAndRunLogoAnimation(), 100);
             window.addEventListener('resize', setAndRunLogoAnimation);
             setTimeout(() => { if (splashScreen) splashScreen.style.display = 'none'; }, 3500);
         }
 
-        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-        applyDarkMode(savedDarkMode);
+        // Dark mode
+        const savedDark = localStorage.getItem('darkMode') === 'true';
+        applyDarkMode(savedDark);
+
+        // User
         setupUserInfo();
 
-        // Affiche avec tri par défaut si nécessaire
+        // Affichage initial
         const initialCriteria = sortSelect ? sortSelect.value : 'default';
         displayRecipes(sortRecipes(recipes, initialCriteria));
     }
