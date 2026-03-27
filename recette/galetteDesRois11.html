@@ -133,3 +133,72 @@ window.RECIPE_DATA = {
 <script src="../recette.js"></script>
 </body>
 </html>
+
+<!-- Commentaires -->
+  <section class="comments-section">
+    <div class="comments-header">
+      <h2>Commentaires <span id="comments-count"></span></h2>
+    </div>
+
+    <!-- Formulaire -->
+    <form id="comment-form">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="comment-author">Votre prénom</label>
+          <input type="text" id="comment-author" placeholder="Ex : Marie" maxlength="40" required>
+        </div>
+        <div class="form-field form-stars-row">
+          <label>Votre note</label>
+          <div class="form-stars">
+            <button type="button" class="form-star" data-value="1">★</button>
+            <button type="button" class="form-star" data-value="2">★</button>
+            <button type="button" class="form-star" data-value="3">★</button>
+            <button type="button" class="form-star" data-value="4">★</button>
+            <button type="button" class="form-star" data-value="5">★</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-field" style="margin-bottom:0.85rem;">
+        <label for="comment-text">Votre commentaire</label>
+        <textarea id="comment-text" rows="3" placeholder="Partagez votre expérience avec cette recette…" required></textarea>
+      </div>
+      <button type="submit" class="btn-submit-comment">Publier le commentaire</button>
+    </form>
+
+    <div id="comments-list"></div>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 Le Coin Gourmand. Tous droits réservés.</p>
+</footer>
+
+<script>
+window.RECIPE_DATA = {
+  id: 1,
+  basePortions: 2,
+  portionLabel: "personnes",
+  portionMin: 1,
+  portionMax: 20,
+  portionStep: 1,
+  ingredients: [
+  { "id":"tomates", "qty":2, "unit":"", "label":"grosse tomate mûre", "plural":"grosses tomates mûres" },
+  { "id":"mozza", "qty":1, "unit":"", "label":"boule de mozzarella di Bufala", "plural":"boules de mozzarella di Bufala" },
+  { "id":null, "qty":null, "label":"Quelques feuilles de basilic frais" },
+  { "id":null, "qty":null, "label":"Huile d'olive extra vierge" },
+  { "id":null, "qty":null, "label":"Vinaigre balsamique (optionnel)" },
+  { "id":null, "qty":null, "label":"Fleur de sel, poivre du moulin" }
+],
+  steps: [
+  { "text":"Lavez les tomates et coupez-les en belles rondelles d'environ 5 mm d'épaisseur.", "timer":null },
+  { "text":"Égouttez bien la mozzarella et coupez-la également en rondelles de la même épaisseur.", "timer":null },
+  { "text":"Sur un plat de service, disposez les tranches de tomates et de mozzarella en les alternant joliment.", "timer":null },
+  { "text":"Ciselez quelques feuilles de basilic et parsemez-les sur la salade.", "timer":null },
+  { "text":"Juste avant de servir, arrosez généreusement d'un bon filet d'huile d'olive. Ajoutez quelques gouttes de vinaigre balsamique si vous le souhaitez.", "timer":null },
+  { "text":"Assaisonnez avec de la fleur de sel et un tour de moulin à poivre.", "timer":null }
+]
+};
+</script>
+<script src="../recette.js"></script>
+</body>
+</html>

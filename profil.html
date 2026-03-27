@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Profil — Le Coin Gourmand</title>
+  <link rel="stylesheet" href="profil.css">
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="back-link">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    Le Coin Gourmand
+  </a>
+  <button id="dark-mode-toggle" aria-label="Changer le thème">
+    <svg id="theme-icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+    </svg>
+    <svg id="theme-icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none;">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+    </svg>
+  </button>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <div class="profile-hero">
+    <div class="avatar" id="avatar" title="Changer la photo">
+      <img id="avatar-img" class="avatar-img" src="" alt="" style="display:none;">
+      <span id="avatar-initials"></span>
+      <div class="avatar-edit-overlay">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        Modifier
+      </div>
+      <input type="file" id="avatar-input" accept="image/*" style="display:none;">
+    </div>
+
+    <div class="profile-info">
+      <span id="role-badge" class="profile-role"></span>
+      <div class="pseudo-row">
+        <h1 id="pseudo-display"></h1>
+        <input type="text" id="pseudo-input" maxlength="30" placeholder="Votre pseudo…">
+        <button class="btn-edit-pseudo" id="btn-edit-pseudo" title="Modifier le pseudo">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L16.732 3.732z"/>
+          </svg>
+        </button>
+      </div>
+      <p class="profile-email" id="profile-email"></p>
+    </div>
+  </div>
+
+  <!-- Stats rapides -->
+  <div class="quick-stats">
+    <div class="stat-pill">
+      <div class="num" id="stat-favs">0</div>
+      <div class="lbl">Favoris</div>
+    </div>
+    <div class="stat-pill">
+      <div class="num" id="stat-history">0</div>
+      <div class="lbl">Recettes vues</div>
+    </div>
+    <div class="stat-pill">
+      <div class="num" id="stat-notifs">0</div>
+      <div class="lbl">Notifications</div>
+    </div>
+    <div class="stat-pill">
+      <div class="num" id="stat-ratings">0</div>
+      <div class="lbl">Notes données</div>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+  <div class="profile-section">
+    <div class="section-head">
+      <div class="section-head-left">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+        </svg>
+        <h2>Notifications</h2>
+      </div>
+      <div class="notif-header-actions">
+        <span id="notif-badge" style="font-size:0.72rem;color:var(--text-muted);"></span>
+        <button class="btn-mark-all" id="btn-mark-all">Tout lire</button>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="notif-list" id="notif-list">
+        <p class="empty-msg">Aucune notification pour l'instant.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Historique -->
+  <div class="profile-section">
+    <div class="section-head">
+      <div class="section-head-left">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <h2>Historique de navigation</h2>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="history-list" id="history-list">
+        <p class="empty-msg">Vous n'avez encore consulté aucune recette.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Favoris -->
+  <div class="profile-section">
+    <div class="section-head">
+      <div class="section-head-left">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+        </svg>
+        <h2>Mes favoris</h2>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="fav-grid" id="fav-grid">
+        <p class="empty-msg" style="grid-column:1/-1;">Aucun favori pour l'instant.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="profile-section">
+    <div class="section-head">
+      <div class="section-head-left">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <h2>Newsletter</h2>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="newsletter-row">
+        <div class="newsletter-text">
+          <p>Recevoir les nouvelles recettes</p>
+          <span>Soyez le premier informé des ajouts sur Le Coin Gourmand</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="newsletter-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zone danger -->
+  <div class="profile-section">
+    <div class="section-head">
+      <div class="section-head-left">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color:#dc2626;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+        <h2>Zone sensible</h2>
+      </div>
+    </div>
+    <div class="danger-zone">
+      <p>Effacer votre historique de navigation et vos données locales</p>
+      <button class="btn-danger" id="btn-clear-history">Effacer l'historique</button>
+    </div>
+    <div class="danger-zone" style="border-top:1px solid var(--border);">
+      <p>Se déconnecter de la session en cours</p>
+      <button class="btn-danger" id="btn-logout">Se déconnecter</button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>&copy; 2025 Le Coin Gourmand. Tous droits réservés.</p>
+</footer>
+
+<script src="profil.js"></script>
+</body>
+</html>

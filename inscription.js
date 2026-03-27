@@ -1,96 +1,78 @@
+/**
+ * inscription.js — Le Coin Gourmand
+ * Rôles : utilisateur, admin, co-fondateur, fondateur.
+ */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- CONSTANTES DE SÉCURITÉ ---
-    const ADMIN_SECRET_CODE = '123'; // Code pour les administrateurs
-    const FOUNDER_SECRET_CODE = '111'; // Code pour le fondateur
-
-    // --- SÉLECTION DES ÉLÉMENTS DU DOM ---
-    const registerForm = document.getElementById('register-form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const roleSelect = document.getElementById('role');
-    const secretCodeContainer = document.getElementById('secret-code-container');
-    const secretCodeInput = document.getElementById('secret-code');
-    const messageContainer = document.getElementById('message-container');
-
-    /**
-     * Affiche un message à l'utilisateur.
-     * @param {string} text - Le message à afficher.
-     * @param {string} type - 'success' (vert) ou 'error' (rouge).
-     */
-    function showMessage(text, type = 'error') {
-        messageContainer.textContent = text;
-        messageContainer.className = `mb-4 text-center text-sm ${type === 'success' ? 'text-green-600' : 'text-red-600'}`;
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.documentElement.classList.add('dark');
     }
 
-    // --- ÉCOUTEURS D'ÉVÉNEMENTS ---
+    // Codes secrets par rôle
+    const SECRET_CODES = {
+        'admin':        '123',
+        'co-fondateur': '456',  // nouveau code pour le co-fondateur
+        'fondateur':    '111',
+    };
 
-    // Affiche/masque le champ du code secret en fonction du rôle
+    // Rôles pour lesquels un seul exemplaire est autorisé
+    const UNIQUE_ROLES = ['fondateur', 'co-fondateur'];
+
+    const registerForm        = document.getElementById('register-form');
+    const roleSelect          = document.getElementById('role');
+    const secretCodeContainer = document.getElementById('secret-code-container');
+    const secretCodeInput     = document.getElementById('secret-code');
+    const msgContainer        = document.getElementById('message-container');
+
+    function showMessage(text, type = 'error') {
+        msgContainer.textContent = text;
+        msgContainer.className   = `show ${type}`;
+    }
+
+    // Affiche/masque le champ code secret
     roleSelect.addEventListener('change', () => {
-        const selectedRole = roleSelect.value;
-        if (selectedRole === 'admin' || selectedRole === 'fondateur') {
-            secretCodeContainer.classList.remove('hidden');
-            secretCodeInput.required = true;
-        } else {
-            secretCodeContainer.classList.add('hidden');
-            secretCodeInput.required = false;
-        }
+        const role     = roleSelect.value;
+        const needCode = !!SECRET_CODES[role];
+        secretCodeContainer.classList.toggle('hidden', !needCode);
+        secretCodeInput.required = needCode;
+        if (!needCode) secretCodeInput.value = '';
     });
 
-    // Gère la soumission du formulaire
-    registerForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Empêche la page de se recharger
+    registerForm.addEventListener('submit', e => {
+        e.preventDefault();
+        msgContainer.className = '';
 
-        showMessage(''); // On efface les anciens messages
-
-        const email = emailInput.value;
-        const password = passwordInput.value;
-        const role = roleSelect.value;
+        const email      = document.getElementById('email').value.trim();
+        const password   = document.getElementById('password').value;
+        const role       = roleSelect.value;
         const secretCode = secretCodeInput.value;
 
-        // Validation simple
         if (!email || !password) {
-            showMessage("Veuillez remplir l'email et le mot de passe.");
-            return;
+            showMessage("Veuillez remplir l'e-mail et le mot de passe."); return;
         }
 
         const users = JSON.parse(localStorage.getItem('users')) || [];
-        const existingUser = users.find(u => u.email === email);
 
-        if (existingUser) {
-            showMessage("Cet email est déjà utilisé. Veuillez en choisir un autre.");
-            return;
+        if (users.find(u => u.email === email)) {
+            showMessage("Cet e-mail est déjà utilisé."); return;
         }
 
-        // Vérification des rôles et des codes secrets
-        if (role === 'admin') {
-            if (secretCode !== ADMIN_SECRET_CODE) {
-                showMessage("Le code secret administrateur est incorrect.");
-                return;
-            }
-        } else if (role === 'fondateur') {
-            if (secretCode !== FOUNDER_SECRET_CODE) {
-                showMessage("Le code secret fondateur est incorrect.");
-                return;
-            }
-            // On vérifie qu'il n'y a pas déjà un fondateur
-            const founderExists = users.some(u => u.role === 'fondateur');
-            if (founderExists) {
-                showMessage("Un compte fondateur existe déjà. Il ne peut y en avoir qu'un.");
-                return;
+        // Vérification du code secret si rôle spécial
+        if (SECRET_CODES[role]) {
+            if (secretCode !== SECRET_CODES[role]) {
+                showMessage(`Le code secret pour le rôle "${role}" est incorrect.`); return;
             }
         }
 
-        // Si tout est bon, on ajoute l'utilisateur
-        users.push({ email, password, role });
+        // Vérification unicité de certains rôles
+        if (UNIQUE_ROLES.includes(role) && users.some(u => u.role === role)) {
+            showMessage(`Un compte "${role}" existe déjà.`); return;
+        }
+
+        users.push({ email, password, role, favorites: [], warnings: [] });
         localStorage.setItem('users', JSON.stringify(users));
 
-        // Afficher un message de succès et rediriger
-        showMessage("Inscription réussie ! Vous allez être redirigé...", 'success');
-        
-        setTimeout(() => {
-            window.location.href = 'login.html'; // Redirige vers la page de connexion
-        }, 2000); // Laisse 2 secondes pour lire le message
+        showMessage("Inscription réussie ! Redirection…", 'success');
+        setTimeout(() => { window.location.href = 'login.html'; }, 1800);
     });
 });
-

@@ -1,52 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Le Coin Gourmand</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        /* On garde les styles du mode sombre pour la cohérence */
-        .dark { color: #e2e8f0; }
-        .dark body { background-color: #1a202c; }
-        .dark .bg-white { background-color: #2d3748; }
-        .dark .text-gray-800 { color: #e2e8f0; }
-        .dark .text-gray-500 { color: #a0aec0; }
-        .dark .border-gray-300 { border-color: #4a5568; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion — Le Coin Gourmand</title>
+  <link rel="stylesheet" href="auth.css">
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+<body>
 
-    <div class="absolute top-4 left-4">
-        <a href="index.html" class="text-green-600 hover:underline">&larr; Retour à l'accueil</a>
-    </div>
+  <a href="index.html" class="back-link">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    Retour à l'accueil
+  </a>
 
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-3xl font-bold text-center text-green-600 mb-6">Se connecter</h1>
+  <div class="auth-card">
+    <p class="auth-logo">Le Coin Gourmand</p>
+    <div class="auth-divider"></div>
+    <h1 class="auth-title">Se connecter</h1>
+    <p class="auth-subtitle">Bon retour parmi nous !</p>
 
-        <!-- Zone pour afficher les messages d'erreur ou de succès -->
-        <div id="message-container" class="mb-4 text-center text-sm"></div>
+    <div id="message-container" role="alert"></div>
 
-        <form id="login-form" novalidate>
-            <div class="mb-4">
-                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
-            </div>
-            <div class="mb-6">
-                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Mot de passe</label>
-                <input type="password" id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
-            </div>
+    <form id="login-form" novalidate>
+      <div class="field">
+        <label for="email">Adresse e-mail</label>
+        <input type="email" id="email" placeholder="vous@exemple.fr" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn-primary">Se connecter</button>
+    </form>
 
-            <button type="submit" class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-600 transition-colors">Connexion</button>
-        </form>
-        <p class="text-center text-gray-500 text-sm mt-6">
-            Pas encore de compte ? <a href="inscription.html" class="text-green-600 hover:underline">Inscrivez-vous</a>
-        </p>
-    </div>
+    <p class="auth-footer">
+      Pas encore de compte ? <a href="inscription.html">S'inscrire</a>
+    </p>
+  </div>
 
-    <!-- On lie le nouveau fichier JavaScript -->
-    <script src="login.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>

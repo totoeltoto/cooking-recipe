@@ -7,627 +7,256 @@
     <title>Le Coin Gourmand - Recettes Faciles</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* ===== VARIABLES & RESET ===== */
         :root {
-            --green: #2d6a4f;
+            --green:       #2d6a4f;
             --green-light: #40916c;
-            --green-pale: #d8f3dc;
-            --gold: #e9a825;
-            --gold-light: #fef3c7;
-            --cream: #faf8f4;
-            --text: #1c1917;
-            --text-muted: #78716c;
-            --border: #e7e5e4;
-            --card-bg: #ffffff;
-            --bg: #faf8f4;
-            --header-bg: #ffffff;
-            --shadow: 0 4px 24px rgba(0,0,0,0.07);
-            --shadow-hover: 0 12px 40px rgba(0,0,0,0.13);
-            --radius: 16px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --green-pale:  #d8f3dc;
+            --gold:        #e9a825;
+            --gold-light:  #fef3c7;
+            --cream:       #faf8f4;
+            --text:        #1c1917;
+            --text-muted:  #78716c;
+            --border:      #e7e5e4;
+            --card-bg:     #ffffff;
+            --bg:          #faf8f4;
+            --header-bg:   #ffffff;
+            --shadow:      0 4px 24px rgba(0,0,0,0.07);
+            --shadow-hover:0 12px 40px rgba(0,0,0,0.13);
+            --radius:      16px;
+            --transition:  0.3s cubic-bezier(0.4,0,0.2,1);
         }
 
         .dark {
-            --green: #52b788;
+            --green:       #52b788;
             --green-light: #74c69d;
-            --green-pale: #1b4332;
-            --gold: #fbbf24;
-            --gold-light: #2d2006;
-            --cream: #0f172a;
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border: #1e293b;
-            --card-bg: #1e293b;
-            --bg: #0f172a;
-            --header-bg: #1e293b;
-            --shadow: 0 4px 24px rgba(0,0,0,0.3);
-            --shadow-hover: 0 12px 40px rgba(0,0,0,0.5);
+            --green-pale:  #1b4332;
+            --gold:        #fbbf24;
+            --gold-light:  #2d2006;
+            --text:        #f1f5f9;
+            --text-muted:  #94a3b8;
+            --border:      #1e293b;
+            --card-bg:     #1e293b;
+            --bg:          #0f172a;
+            --header-bg:   #1e293b;
+            --shadow:      0 4px 24px rgba(0,0,0,0.3);
+            --shadow-hover:0 12px 40px rgba(0,0,0,0.5);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         html { scroll-behavior: smooth; }
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--bg); color: var(--text);
             transition: background-color var(--transition), color var(--transition);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            min-height: 100vh; display: flex; flex-direction: column;
         }
 
-        /* ===== SPLASH SCREEN ===== */
+        /* ── Splash ── */
         #splash-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; inset: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: center;
             background-color: var(--bg);
             animation: fadeOutSplash 0.6s 2.5s forwards;
         }
 
-        #splash-content.animate {
-            animation: animateSplash 3s ease-in-out forwards;
-        }
-
-        #splash-subtitle {
-            opacity: 0;
-            animation: fadeIn 0.8s 0.8s forwards;
-        }
-
-        header.main-header {
-            opacity: 0;
-            animation: fadeIn 0.6s 2.5s forwards;
-        }
+        #splash-content.animate { animation: animateSplash 3s ease-in-out forwards; }
+        #splash-subtitle { opacity: 0; animation: fadeIn 0.8s 0.8s forwards; }
+        header.main-header { opacity: 0; animation: fadeIn 0.6s 2.5s forwards; }
 
         @keyframes animateSplash {
-            0%   { opacity: 0; transform: scale(1.4); }
-            30%  { opacity: 1; transform: scale(1); }
-            70%  { opacity: 1; transform: scale(1); }
-            100% { opacity: 1; transform: var(--logo-end-transform, translate(0,0) scale(1)); }
+            0%   { opacity:0; transform:scale(1.4); }
+            30%  { opacity:1; transform:scale(1); }
+            70%  { opacity:1; transform:scale(1); }
+            100% { opacity:1; transform:var(--logo-end-transform,translate(0,0) scale(1)); }
         }
-        @keyframes fadeIn { to { opacity: 1; } }
-        @keyframes fadeOutSplash { to { opacity: 0; visibility: hidden; } }
+        @keyframes fadeIn { to { opacity:1; } }
+        @keyframes fadeOutSplash { to { opacity:0; visibility:hidden; } }
 
-        /* ===== HEADER ===== */
+        /* ── Header ── */
         header.main-header {
-            background: var(--header-bg);
-            border-bottom: 1px solid var(--border);
-            padding: 0 clamp(1rem, 4vw, 2.5rem);
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            box-shadow: 0 1px 0 var(--border);
+            background: var(--header-bg); border-bottom: 1px solid var(--border);
+            padding: 0 clamp(1rem,4vw,2.5rem); height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 50;
             transition: background-color var(--transition);
         }
 
-        .logo-block h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.4rem, 3vw, 1.8rem);
-            color: var(--green);
-            line-height: 1.1;
-            letter-spacing: -0.02em;
+        .logo-block h1 { font-family:'Playfair Display',serif; font-size:clamp(1.4rem,3vw,1.8rem); color:var(--green); line-height:1.1; letter-spacing:-0.02em; }
+        .logo-block p  { font-size:0.72rem; color:var(--text-muted); font-weight:300; letter-spacing:0.05em; text-transform:uppercase; }
+
+        .header-right { display:flex; align-items:center; gap:0.75rem; }
+
+        #user-info { font-size:0.82rem; color:var(--text-muted); display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+        #user-info a { color:var(--green); text-decoration:none; font-weight:500; padding:0.35rem 0.85rem; border-radius:999px; transition:background var(--transition); }
+        #user-info a:hover { background:var(--green-pale); }
+        #user-info .btn-register { background:var(--green); color:white; padding:0.4rem 1rem; }
+        #user-info .btn-register:hover { background:var(--green-light); }
+
+        #dark-mode-toggle { width:40px; height:40px; border-radius:50%; border:none; background:var(--border); cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); transition:background var(--transition),transform 0.2s; flex-shrink:0; }
+        #dark-mode-toggle:hover { background:var(--green-pale); transform:scale(1.08); }
+        #dark-mode-toggle svg { width:18px; height:18px; }
+
+        /* ── Main ── */
+        main { flex:1; max-width:1200px; width:100%; margin:0 auto; padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,4vw,2rem); }
+
+        /* ── Search ── */
+        .search-wrapper { margin-bottom:1rem; position:relative; }
+        .search-label { display:block; font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.6rem; }
+        .search-input-row { position:relative; display:flex; align-items:center; gap:0.5rem; }
+
+        #search-input { flex:1; padding:0.9rem 1rem 0.9rem 1.4rem; font-family:inherit; font-size:1rem; color:var(--text); background:var(--card-bg); border:2px solid var(--border); border-radius:999px; outline:none; transition:border-color var(--transition),box-shadow var(--transition); }
+        #search-input::placeholder { color:var(--text-muted); }
+        #search-input:focus { border-color:var(--green); box-shadow:0 0 0 4px rgba(45,106,79,0.12); }
+
+        #search-button { width:42px; height:42px; border-radius:50%; border:none; background:var(--green); color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background var(--transition),transform 0.15s; flex-shrink:0; }
+        #search-button:hover { background:var(--green-light); transform:scale(1.06); }
+        #search-button svg { width:18px; height:18px; }
+
+        /* Bouton filtre avancé */
+        #btn-advanced-search {
+            display:flex; align-items:center; gap:0.4rem;
+            padding:0.5rem 1rem; border-radius:999px;
+            border:1.5px solid var(--border); background:var(--card-bg);
+            color:var(--text-muted); font-family:inherit; font-size:0.82rem; font-weight:500;
+            cursor:pointer; transition:all var(--transition); white-space:nowrap; flex-shrink:0;
+        }
+        #btn-advanced-search:hover,
+        #btn-advanced-search[aria-expanded="true"] { border-color:var(--green); color:var(--green); background:var(--green-pale); }
+        #btn-advanced-search svg { width:14px; height:14px; }
+
+        /* Bouton surprise */
+        #btn-surprise {
+            padding:0.5rem 1rem; border-radius:999px;
+            border:1.5px solid var(--border); background:var(--card-bg);
+            color:var(--text-muted); font-family:inherit; font-size:0.82rem; font-weight:500;
+            cursor:pointer; transition:all var(--transition); flex-shrink:0;
+        }
+        #btn-surprise:hover { border-color:var(--gold); color:var(--gold); background:var(--gold-light); }
+
+        /* Panel recherche avancée */
+        #advanced-search-panel {
+            background:var(--card-bg); border:1px solid var(--border);
+            border-radius:14px; box-shadow:var(--shadow);
+            padding:1.1rem 1.25rem; margin-top:0.6rem;
+            display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.85rem;
+            max-height:0; overflow:hidden; opacity:0;
+            transition:max-height 0.35s ease, opacity 0.25s ease, padding 0.25s ease;
         }
 
-        .logo-block p {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
+        #advanced-search-panel.open { max-height:200px; opacity:1; }
+
+        .adv-field label { display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.35rem; }
+        .adv-field select, .adv-field input[type="number"] { width:100%; padding:0.5rem 0.75rem; font-family:inherit; font-size:0.85rem; color:var(--text); background:var(--bg); border:1.5px solid var(--border); border-radius:8px; outline:none; transition:border-color var(--transition); }
+        .adv-field select:focus, .adv-field input[type="number"]:focus { border-color:var(--green); }
+
+        /* Suggestions */
+        #suggestion-list { position:absolute; top:calc(100% + 6px); left:0; right:0; background:var(--card-bg); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); overflow:hidden; z-index:40; list-style:none; max-height:220px; overflow-y:auto; }
+        #suggestion-list:empty { display:none; }
+        #suggestion-list li { padding:0.7rem 1.2rem; cursor:pointer; font-size:0.93rem; color:var(--text); transition:background var(--transition); display:flex; align-items:center; gap:0.5rem; }
+        #suggestion-list li::before { content:'🍽'; font-size:0.85rem; }
+        #suggestion-list li:hover { background:var(--green-pale); }
+
+        /* ── Toolbar ── */
+        .toolbar { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; margin-bottom:2rem; flex-wrap:wrap; }
+        .filters-group h2 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--text); margin-bottom:0.65rem; }
+        #filters-container { display:flex; flex-wrap:wrap; gap:0.5rem; }
+
+        .filter-button { font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; padding:0.45rem 1.1rem; border-radius:999px; border:1.5px solid var(--border); background:var(--card-bg); color:var(--text-muted); cursor:pointer; transition:all var(--transition); white-space:nowrap; }
+        .filter-button:hover { border-color:var(--green); color:var(--green); background:var(--green-pale); }
+        .filter-button.active { background:var(--green); border-color:var(--green); color:white; }
+
+        .sort-group { display:flex; align-items:center; gap:0.6rem; flex-shrink:0; }
+        .sort-group label { font-size:0.82rem; font-weight:600; color:var(--text-muted); white-space:nowrap; }
+
+        #sort-select { font-family:'DM Sans',sans-serif; font-size:0.85rem; padding:0.45rem 0.9rem; border:1.5px solid var(--border); border-radius:10px; background:var(--card-bg); color:var(--text); cursor:pointer; outline:none; transition:border-color var(--transition); }
+        #sort-select:focus { border-color:var(--green); }
+
+        /* ── Cards ── */
+        #recipe-list { list-style:none; display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem; }
+
+        .recipe-card { background:var(--card-bg); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); transition:transform var(--transition),box-shadow var(--transition); position:relative; opacity:0; transform:translateY(20px); animation:cardIn 0.5s forwards; }
+        .recipe-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-hover); }
+
+        .recipe-card:nth-child(1)  { animation-delay:0.04s; }
+        .recipe-card:nth-child(2)  { animation-delay:0.08s; }
+        .recipe-card:nth-child(3)  { animation-delay:0.12s; }
+        .recipe-card:nth-child(4)  { animation-delay:0.16s; }
+        .recipe-card:nth-child(5)  { animation-delay:0.20s; }
+        .recipe-card:nth-child(6)  { animation-delay:0.24s; }
+        .recipe-card:nth-child(7)  { animation-delay:0.28s; }
+        .recipe-card:nth-child(8)  { animation-delay:0.32s; }
+        .recipe-card:nth-child(n+9){ animation-delay:0.36s; }
+
+        @keyframes cardIn { to { opacity:1; transform:translateY(0); } }
+
+        .card-image-wrapper { position:relative; height:200px; overflow:hidden; }
+        .card-image-wrapper img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s cubic-bezier(0.4,0,0.2,1); display:block; }
+        .recipe-card:hover .card-image-wrapper img { transform:scale(1.06); }
+
+        .card-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 60%); opacity:0; transition:opacity var(--transition); }
+        .recipe-card:hover .card-overlay { opacity:1; }
+
+        .card-badge { position:absolute; top:10px; left:10px; padding:0.25rem 0.65rem; border-radius:999px; font-size:0.7rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; backdrop-filter:blur(8px); background:rgba(255,255,255,0.85); color:var(--green); border:1px solid rgba(255,255,255,0.5); }
+        .dark .card-badge { background:rgba(30,41,59,0.85); }
+
+        .favorite-btn { position:absolute; top:10px; right:10px; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.88); backdrop-filter:blur(8px); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform 0.2s,background var(--transition); z-index:2; }
+        .dark .favorite-btn { background:rgba(30,41,59,0.88); }
+        .favorite-btn:hover { transform:scale(1.15); }
+        .favorite-btn svg { width:18px; height:18px; stroke:var(--text-muted); fill:none; transition:stroke 0.2s,fill 0.2s,transform 0.2s; }
+        .favorite-btn.favorited svg { stroke:var(--gold); fill:var(--gold); }
+        .favorite-btn.favorited { background:var(--gold-light); }
+        .favorite-btn.pop { animation:heartPop 0.3s ease; }
+        @keyframes heartPop { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1)} }
+
+        .card-body { padding:1rem 1.1rem 0.85rem; }
+        .card-body h3 { font-family:'Playfair Display',serif; font-size:1.02rem; font-weight:700; color:var(--text); margin-bottom:0.5rem; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+        .card-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.7rem; }
+        .meta-pill { display:flex; align-items:center; gap:0.3rem; font-size:0.78rem; color:var(--text-muted); font-weight:400; }
+        .meta-pill svg { width:13px; height:13px; flex-shrink:0; }
+
+        .difficulty-dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:4px; }
+        .diff-facile { background:#4ade80; }
+        .diff-moyen  { background:#fb923c; }
+        .diff-difficile { background:#f87171; }
+
+        .star-rating { display:flex; align-items:center; gap:2px; padding-top:0.55rem; border-top:1px solid var(--border); }
+        .star-rating span.label { font-size:0.72rem; color:var(--text-muted); margin-right:4px; font-weight:500; }
+        .star-btn { background:none; border:none; cursor:pointer; padding:0; line-height:1; font-size:1.1rem; transition:transform 0.15s; color:#d1d5db; }
+        .star-btn:hover, .star-btn.active { color:var(--gold); }
+        .star-btn:hover { transform:scale(1.2); }
+        .rating-count { font-size:0.72rem; color:var(--text-muted); margin-left:4px; }
+
+        .empty-state { grid-column:1/-1; text-align:center; padding:4rem 1rem; color:var(--text-muted); }
+        .empty-state p:first-child { font-size:2.5rem; margin-bottom:0.5rem; }
+        .empty-state p:last-child  { font-size:0.95rem; }
+
+        footer { text-align:center; padding:2rem 1rem; color:var(--text-muted); font-size:0.8rem; border-top:1px solid var(--border); margin-top:2rem; }
+
+        @media (max-width:640px) {
+            .toolbar { flex-direction:column; align-items:flex-start; }
+            .sort-group { width:100%; }
+            #sort-select { flex:1; }
+            #recipe-list { grid-template-columns:1fr; }
+            .header-right #user-info span { display:none; }
+            .search-input-row { flex-wrap:wrap; }
+            #btn-advanced-search, #btn-surprise { font-size:0.75rem; padding:0.4rem 0.7rem; }
         }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        #user-info {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        #user-info a {
-            color: var(--green);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.35rem 0.85rem;
-            border-radius: 999px;
-            transition: background var(--transition);
-        }
-
-        #user-info a:hover { background: var(--green-pale); }
-
-        #user-info .btn-register {
-            background: var(--green);
-            color: white;
-            padding: 0.4rem 1rem;
-        }
-
-        #user-info .btn-register:hover { background: var(--green-light); }
-
-        #dark-mode-toggle {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: var(--border);
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text);
-            transition: background var(--transition), transform 0.2s;
-            flex-shrink: 0;
-        }
-
-        #dark-mode-toggle:hover { background: var(--green-pale); transform: scale(1.08); }
-
-        #dark-mode-toggle svg { width: 18px; height: 18px; }
-
-        /* ===== MAIN ===== */
-        main { 
-            flex: 1;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 4vw, 2rem);
-        }
-
-        /* ===== SEARCH ===== */
-        .search-wrapper {
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .search-label {
-            display: block;
-            font-size: 0.78rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 0.6rem;
-        }
-
-        .search-input-row {
-            position: relative;
-            display: flex;
-        }
-
-        #search-input {
-            width: 100%;
-            padding: 0.9rem 3.5rem 0.9rem 1.4rem;
-            font-family: inherit;
-            font-size: 1rem;
-            color: var(--text);
-            background: var(--card-bg);
-            border: 2px solid var(--border);
-            border-radius: 999px;
-            outline: none;
-            transition: border-color var(--transition), box-shadow var(--transition);
-        }
-
-        #search-input::placeholder { color: var(--text-muted); }
-        #search-input:focus { border-color: var(--green); box-shadow: 0 0 0 4px rgba(45,106,79,0.12); }
-
-        #search-button {
-            position: absolute;
-            right: 6px; top: 50%;
-            transform: translateY(-50%);
-            width: 42px; height: 42px;
-            border-radius: 50%;
-            border: none;
-            background: var(--green);
-            color: white;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: background var(--transition), transform 0.15s;
-        }
-
-        #search-button:hover { background: var(--green-light); transform: translateY(-50%) scale(1.06); }
-        #search-button svg { width: 18px; height: 18px; }
-
-        #suggestion-list {
-            position: absolute;
-            top: calc(100% + 6px);
-            left: 0; right: 0;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            z-index: 40;
-            list-style: none;
-            max-height: 220px;
-            overflow-y: auto;
-        }
-
-        #suggestion-list:empty { display: none; }
-
-        #suggestion-list li {
-            padding: 0.7rem 1.2rem;
-            cursor: pointer;
-            font-size: 0.93rem;
-            color: var(--text);
-            transition: background var(--transition);
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-
-        #suggestion-list li::before {
-            content: '🍽';
-            font-size: 0.85rem;
-        }
-
-        #suggestion-list li:hover { background: var(--green-pale); }
-
-        /* ===== TOOLBAR (filters + sort) ===== */
-        .toolbar {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .filters-group h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            color: var(--text);
-            margin-bottom: 0.65rem;
-        }
-
-        #filters-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .filter-button {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 500;
-            padding: 0.45rem 1.1rem;
-            border-radius: 999px;
-            border: 1.5px solid var(--border);
-            background: var(--card-bg);
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all var(--transition);
-            white-space: nowrap;
-        }
-
-        .filter-button:hover {
-            border-color: var(--green);
-            color: var(--green);
-            background: var(--green-pale);
-        }
-
-        .filter-button.active {
-            background: var(--green);
-            border-color: var(--green);
-            color: white;
-        }
-
-        .sort-group {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            flex-shrink: 0;
-        }
-
-        .sort-group label {
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            white-space: nowrap;
-        }
-
-        #sort-select {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.85rem;
-            padding: 0.45rem 0.9rem;
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            background: var(--card-bg);
-            color: var(--text);
-            cursor: pointer;
-            outline: none;
-            transition: border-color var(--transition);
-        }
-
-        #sort-select:focus { border-color: var(--green); }
-
-        /* ===== RECIPE GRID ===== */
-        #recipe-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .recipe-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform var(--transition), box-shadow var(--transition);
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: cardIn 0.5s forwards;
-        }
-
-        .recipe-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* Stagger animation */
-        .recipe-card:nth-child(1)  { animation-delay: 0.04s; }
-        .recipe-card:nth-child(2)  { animation-delay: 0.08s; }
-        .recipe-card:nth-child(3)  { animation-delay: 0.12s; }
-        .recipe-card:nth-child(4)  { animation-delay: 0.16s; }
-        .recipe-card:nth-child(5)  { animation-delay: 0.20s; }
-        .recipe-card:nth-child(6)  { animation-delay: 0.24s; }
-        .recipe-card:nth-child(7)  { animation-delay: 0.28s; }
-        .recipe-card:nth-child(8)  { animation-delay: 0.32s; }
-        .recipe-card:nth-child(9)  { animation-delay: 0.36s; }
-        .recipe-card:nth-child(10) { animation-delay: 0.40s; }
-        .recipe-card:nth-child(11) { animation-delay: 0.44s; }
-        .recipe-card:nth-child(12) { animation-delay: 0.48s; }
-        .recipe-card:nth-child(n+13) { animation-delay: 0.52s; }
-
-        @keyframes cardIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Image container */
-        .card-image-wrapper {
-            position: relative;
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .card-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
-            display: block;
-        }
-
-        .recipe-card:hover .card-image-wrapper img {
-            transform: scale(1.06);
-        }
-
-        /* Overlay on hover */
-        .card-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity var(--transition);
-        }
-
-        .recipe-card:hover .card-overlay { opacity: 1; }
-
-        /* Category badge */
-        .card-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 0.25rem 0.65rem;
-            border-radius: 999px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            backdrop-filter: blur(8px);
-            background: rgba(255,255,255,0.85);
-            color: var(--green);
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-
-        .dark .card-badge {
-            background: rgba(30,41,59,0.85);
-            color: var(--green);
-        }
-
-        /* Favorite button */
-        .favorite-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255,255,255,0.88);
-            backdrop-filter: blur(8px);
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.2s, background var(--transition);
-            z-index: 2;
-        }
-
-        .dark .favorite-btn { background: rgba(30,41,59,0.88); }
-
-        .favorite-btn:hover { transform: scale(1.15); }
-
-        .favorite-btn svg {
-            width: 18px; height: 18px;
-            stroke: var(--text-muted);
-            fill: none;
-            transition: stroke 0.2s, fill 0.2s, transform 0.2s;
-        }
-
-        .favorite-btn.favorited svg {
-            stroke: var(--gold);
-            fill: var(--gold);
-        }
-
-        .favorite-btn.favorited { background: var(--gold-light); }
-
-        .favorite-btn.pop { animation: heartPop 0.3s ease; }
-
-        @keyframes heartPop {
-            0%   { transform: scale(1); }
-            50%  { transform: scale(1.4); }
-            100% { transform: scale(1); }
-        }
-
-        /* Card body */
-        .card-body {
-            padding: 1rem 1.1rem 0.85rem;
-        }
-
-        .card-body h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.02rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-            line-height: 1.35;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.7rem;
-        }
-
-        .meta-pill {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        .meta-pill svg { width: 13px; height: 13px; flex-shrink: 0; }
-
-        .difficulty-dot {
-            display: inline-block;
-            width: 7px; height: 7px;
-            border-radius: 50%;
-            margin-right: 4px;
-        }
-
-        .diff-facile { background: #4ade80; }
-        .diff-moyen  { background: #fb923c; }
-        .diff-difficile { background: #f87171; }
-
-        /* Star rating */
-        .star-rating {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            padding-top: 0.55rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .star-rating span.label {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            margin-right: 4px;
-            font-weight: 500;
-        }
-
-        .star-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            line-height: 1;
-            font-size: 1.1rem;
-            transition: transform 0.15s;
-            color: #d1d5db;
-        }
-
-        .star-btn:hover,
-        .star-btn.active { color: var(--gold); }
-
-        .star-btn:hover { transform: scale(1.2); }
-
-        .rating-count {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            margin-left: 4px;
-        }
-
-        /* Empty state */
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 4rem 1rem;
-            color: var(--text-muted);
-        }
-
-        .empty-state p:first-child { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .empty-state p:last-child { font-size: 0.95rem; }
-
-        /* ===== FOOTER ===== */
-        footer {
-            text-align: center;
-            padding: 2rem 1rem;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            border-top: 1px solid var(--border);
-            margin-top: 2rem;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 640px) {
-            .toolbar { flex-direction: column; align-items: flex-start; }
-            .sort-group { width: 100%; }
-            #sort-select { flex: 1; }
-            #recipe-list { grid-template-columns: 1fr; }
-            .header-right #user-info span { display: none; }
-        }
-
-        @media (max-width: 480px) {
-            header.main-header { height: 60px; }
-            .logo-block p { display: none; }
-        }
-
-        /* Visually hidden */
-        .visually-hidden {
-            position: absolute; width: 1px; height: 1px;
-            margin: -1px; padding: 0; overflow: hidden;
-            clip: rect(0,0,0,0); border: 0;
-        }
+        .visually-hidden { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); border:0; }
     </style>
 </head>
 
 <body>
 
-    <!-- Splash Screen -->
     <div id="splash-screen">
-        <div id="splash-content" class="text-center" style="text-align:center">
-            <h1 id="splash-logo" style="font-family:'Playfair Display',serif; font-size:2.4rem; font-weight:900; color:var(--green);">Le Coin Gourmand</h1>
-            <p id="splash-subtitle" style="color:var(--text-muted); margin-top:0.4rem; font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase;">Toutes nos recettes, à portée de clic.</p>
+        <div id="splash-content" style="text-align:center">
+            <h1 id="splash-logo" style="font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--green);">Le Coin Gourmand</h1>
+            <p id="splash-subtitle" style="color:var(--text-muted);margin-top:0.4rem;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;">Toutes nos recettes, à portée de clic.</p>
         </div>
     </div>
 
-    <!-- Header -->
     <header class="main-header">
         <div class="logo-block">
             <h1 id="header-logo">Le Coin Gourmand</h1>
@@ -639,16 +268,15 @@
                 <svg id="theme-icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
                 </svg>
-                <svg id="theme-icon-moon" class="hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none;">
+                <svg id="theme-icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none;">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                 </svg>
             </button>
         </div>
     </header>
 
-    <!-- Main -->
     <main>
-        <!-- Search -->
+        <!-- Recherche -->
         <section class="search-wrapper">
             <label for="search-input" class="search-label">Rechercher une recette</label>
             <div class="search-input-row">
@@ -658,7 +286,41 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                 </button>
+                <button id="btn-advanced-search" aria-expanded="false" title="Filtres avancés">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/>
+                    </svg>
+                    Filtres
+                </button>
+                <button id="btn-surprise" title="Recette aléatoire">🎲 Surprise</button>
             </div>
+
+            <!-- Panel recherche avancée -->
+            <div id="advanced-search-panel">
+                <div class="adv-field">
+                    <label for="adv-type">Catégorie</label>
+                    <select id="adv-type">
+                        <option value="">Toutes</option>
+                        <option value="plat">Plats</option>
+                        <option value="dessert">Desserts</option>
+                        <option value="aperitif">Apéritifs</option>
+                    </select>
+                </div>
+                <div class="adv-field">
+                    <label for="adv-difficulty">Difficulté</label>
+                    <select id="adv-difficulty">
+                        <option value="">Toutes</option>
+                        <option value="Facile">Facile</option>
+                        <option value="Moyen">Moyen</option>
+                        <option value="Difficile">Difficile</option>
+                    </select>
+                </div>
+                <div class="adv-field">
+                    <label for="adv-time">Temps max (min)</label>
+                    <input type="number" id="adv-time" min="0" max="300" placeholder="Ex : 30">
+                </div>
+            </div>
+
             <ul id="suggestion-list"></ul>
         </section>
 
@@ -681,11 +343,12 @@
                     <option value="time-desc">⏱ Temps ↓</option>
                     <option value="difficulty">💪 Difficulté</option>
                     <option value="rating">⭐ Note</option>
+                    <option value="views">👁 Popularité</option>
                 </select>
             </div>
         </nav>
 
-        <!-- Recipe list -->
+        <!-- Liste recettes -->
         <section>
             <h2 class="visually-hidden">Liste des recettes</h2>
             <ul id="recipe-list"></ul>

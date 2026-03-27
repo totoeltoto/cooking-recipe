@@ -1,0 +1,256 @@
+/* ============================================================
+   auth.css — Le Coin Gourmand · Pages d'authentification
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --green:       #2d6a4f;
+  --green-light: #40916c;
+  --green-pale:  #d8f3dc;
+  --text:        #1c1917;
+  --text-muted:  #78716c;
+  --border:      #e7e5e4;
+  --card-bg:     #ffffff;
+  --bg:          #faf8f4;
+  --error:       #dc2626;
+  --success:     #16a34a;
+  --shadow:      0 4px 32px rgba(0,0,0,0.08);
+  --tr:          0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+.dark {
+  --green:       #52b788;
+  --green-light: #74c69d;
+  --green-pale:  #1b4332;
+  --text:        #f1f5f9;
+  --text-muted:  #94a3b8;
+  --border:      #1e293b;
+  --card-bg:     #1e293b;
+  --bg:          #0f172a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: background var(--tr), color var(--tr);
+}
+
+/* Fond décoratif */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(45,106,79,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, rgba(45,106,79,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark body::before {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(82,183,136,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, rgba(82,183,136,0.04) 0%, transparent 60%);
+}
+
+/* Lien retour */
+.back-link {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--green);
+  text-decoration: none;
+  transition: gap var(--tr), opacity var(--tr);
+  z-index: 10;
+}
+
+.back-link:hover { gap: 0.65rem; }
+.back-link svg { width: 16px; height: 16px; }
+
+/* Carte principale */
+.auth-card {
+  position: relative;
+  z-index: 1;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 440px;
+  padding: clamp(2rem, 5vw, 2.75rem);
+  animation: cardIn 0.5s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Logo / Titre */
+.auth-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--green);
+  text-align: center;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.auth-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+/* Séparateur décoratif */
+.auth-divider {
+  width: 32px;
+  height: 3px;
+  background: var(--green);
+  border-radius: 99px;
+  margin: 0.6rem auto 1.75rem;
+}
+
+/* Message erreur/succès */
+#message-container {
+  min-height: 1.4rem;
+  font-size: 0.83rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1.1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  display: none;
+}
+
+#message-container.show { display: block; }
+
+#message-container.error {
+  background: #fee2e2;
+  color: var(--error);
+  border: 1px solid #fecaca;
+}
+
+.dark #message-container.error { background: #450a0a; border-color: #7f1d1d; }
+
+#message-container.success {
+  background: #dcfce7;
+  color: var(--success);
+  border: 1px solid #bbf7d0;
+}
+
+.dark #message-container.success { background: #14532d; border-color: #166534; }
+
+/* Champs */
+.field {
+  margin-bottom: 1.1rem;
+}
+
+.field label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.45rem;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color var(--tr), box-shadow var(--tr), background var(--tr);
+  -webkit-appearance: none;
+}
+
+.field input::placeholder { color: var(--text-muted); opacity: 0.7; }
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px rgba(45,106,79,0.12);
+  background: var(--card-bg);
+}
+
+.dark .field input,
+.dark .field select {
+  background: rgba(255,255,255,0.05);
+}
+
+/* Champ caché */
+.field.hidden { display: none; }
+
+/* Bouton principal */
+.btn-primary {
+  width: 100%;
+  padding: 0.85rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: white;
+  background: var(--green);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background var(--tr), transform 0.15s, box-shadow var(--tr);
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover {
+  background: var(--green-light);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(45,106,79,0.25);
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+/* Lien bas de page */
+.auth-footer {
+  text-align: center;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin-top: 1.5rem;
+}
+
+.auth-footer a {
+  color: var(--green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-footer a:hover { text-decoration: underline; }
